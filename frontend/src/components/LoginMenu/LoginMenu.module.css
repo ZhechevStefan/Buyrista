@@ -1,0 +1,25 @@
+.login-menu {
+  height: 4rem;
+  width: 20rem;
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  background-color: #636363;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #ffea00;
+  border-radius: 10px;
+  z-index: 11;
+  transform: translateY(3.6rem);
+  animation: show-modal 0.3s;
+}
+
+@keyframes show-modal {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(3.6rem);
+  }
+}

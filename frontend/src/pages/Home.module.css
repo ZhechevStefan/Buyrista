@@ -1,0 +1,11 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+}
+
+h1 {
+  margin-top: 0rem;
+  margin-left: 0.6rem;
+  margin-bottom: 0rem;
+}

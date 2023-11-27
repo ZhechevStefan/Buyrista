@@ -1,0 +1,27 @@
+.main-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3.5rem;
+  width: 100%;
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-bottom: 2px solid #ffea00;
+}
+
+.menus {
+  display: flex;
+  justify-content: center;
+  align-items: middle;
+}
+
+.logo {
+  margin-left: 1.5rem;
+}
+
+.cart {
+  margin-right: 1.5rem;
+  margin-left: 1.5rem;
+}

@@ -1,0 +1,66 @@
+*:not(.star-svg, .star-svg > *) {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  color: white;
+}
+
+body {
+  background-color: #a1a1a0;
+  margin: 0;
+}
+
+#root {
+  display: grid;
+  grid-template-rows: 3.5rem auto 3.5rem;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+}
+
+main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  margin: 1rem auto;
+  justify-content: center;
+  align-items: center;
+}
+
+footer {
+  grid-area: footer;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 2px solid #ffea00;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  color: black;
+}
+
+input {
+  color: black;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 10;
+}
