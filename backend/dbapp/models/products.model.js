@@ -9,27 +9,32 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    image: {
+    imageType: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    description: {
+    imageName: {
       type: DataTypes.STRING,
-      validate: {
-        len: [10, 300]
-      }
+      allowNull: false
+    },
+    imageData: {
+      type: DataTypes.BLOB("long"),
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     brand: {
       type: DataTypes.STRING,
       allowNull: false
     },
     category: {
-      type: DataTypes.STRING,
-      isIn: [["Electronics", "Accessories", "Others"]],
+      type: DataTypes.ENUM("Electronics", "Accessories", "Others"),
       allowNull: false
     },
     price: {
-      type: DataTypes.DECIMAL(2),
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
       min: 0
     },

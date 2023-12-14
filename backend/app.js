@@ -1,14 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const db = require("./dbapp/models");
+const cookieParser = require("cookie-parser");
 
+const db = require("./dbapp/models");
 const HttpError = require("./error-model/http-error.js");
 const usersRoutes = require("./routes/users-routes.js");
 const productsRoutes = require("./routes/products-routes.js");
 
 const app = express();
 
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

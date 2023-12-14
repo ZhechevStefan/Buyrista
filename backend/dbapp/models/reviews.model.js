@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     rating: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       min: 0,
       max: 5
     },
@@ -18,14 +17,14 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     productId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       references: {
         model: "Products",
         key: "id"
       }
     },
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       references: {
         model: "Users",
         key: "id"

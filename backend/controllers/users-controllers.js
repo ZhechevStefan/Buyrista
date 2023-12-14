@@ -1,7 +1,8 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-const db = require("../dbapp/models/index");
+const jwt = require("jsonwebtoken");
 
+const db = require("../dbapp/models/index");
 const HttpError = require("../error-model/http-error.js");
 const usersDbController = require("../dbapp/controllers/users-DBcontroller.js");
 
@@ -31,6 +32,12 @@ exports.register = async (req, res, next) => {
 
       let user = await usersDbController.createUser(createdUser);
 
+      const token = jwt.sign(
+        { userId: user.id, email: user.email },
+        process.env.JWT_KEY
+      );
+
+      res.cookie("authcookie", token, { maxAge: 15 * 60, httpOnly: true });
       res.status(201).json({ userId: user.id, email: user.email });
     } else {
       const error = new HttpError("Email already registered!", 409);
@@ -46,9 +53,8 @@ exports.register = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
-  const { email, password } = req.body;
-
   try {
+    const { email, password } = req.body;
     let user = await usersDbController.getUserByEmail(email);
 
     if (!user) {
@@ -63,7 +69,13 @@ exports.login = async (req, res, next) => {
       return next(error);
     }
 
-    res.json({ userId: user.id, email: user.email });
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.JWT_KEY
+    );
+
+    res.cookie("authcookie", token, { maxAge: 15 * 60, httpOnly: true });
+    res.status(201).json({ userId: user.id, email: user.email });
   } catch (err) {
     const error = new HttpError(
       "Could not login, please try again later!",
