@@ -1,7 +1,7 @@
 const express = require("express");
 const { body } = require("express-validator");
 
-const productsControllers = require("../controllers/products-controllers.js");
+const productsController = require("../controllers/products-controllers.js");
 const imageUpload = require("../middleware/file-upload.js");
 
 const router = express.Router();
@@ -21,7 +21,7 @@ router.post(
     body("price").custom(val => val > 0),
     body("countInStock").custom(val => val >= 0)
   ],
-  productsControllers.createProduct
+  productsController.createProduct
 );
 
 module.exports = router;

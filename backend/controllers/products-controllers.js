@@ -6,13 +6,13 @@ exports.getAllProducts = async (req, res, next) => {
 
   try {
     data = await productsDbController.getAllProducts();
-    const productImage = data.imageData.toString("base64");
-    data.imageData = productImage;
-  } catch {
-    const error = new HttpError(
-      "Couldn't load data, please try again later!",
-      500
-    );
+    data = data.map(product => {
+      const productImage = product.imageData.toString("base64");
+      product.imageData = productImage;
+      return product;
+    });
+  } catch (err) {
+    const error = new HttpError(err.message, 500);
     return next(error);
   }
 
@@ -48,18 +48,19 @@ exports.createProduct = async (req, res, next) => {
   try {
     const productInfo = req.body;
     const imageInfo = req.file;
+    // console.log(`${imageInfo.mimetype}`);
 
-    if (
-      imageInfo.mimetype !== "jpg" ||
-      imageInfo.mimetype !== "jpeg" ||
-      imageInfo.mimetype !== "png"
-    ) {
-      const error = new HttpError(
-        "The server supports only .jpg, .jpeg or .png image formats!",
-        400
-      );
-      return next(error);
-    }
+    // if (
+    //   imageInfo.mimetype !== "image/jpg" ||
+    //   imageInfo.mimetype !== "image/jpeg" ||
+    //   imageInfo.mimetype !== "image/png"
+    // ) {
+    //   const error = new HttpError(
+    //     "The server supports only .jpg, .jpeg or .png image formats!",
+    //     400
+    //   );
+    //   return next(error);
+    // }
 
     const product = {
       name: productInfo.name,
