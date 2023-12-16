@@ -48,19 +48,6 @@ exports.createProduct = async (req, res, next) => {
   try {
     const productInfo = req.body;
     const imageInfo = req.file;
-    // console.log(`${imageInfo.mimetype}`);
-
-    // if (
-    //   imageInfo.mimetype !== "image/jpg" ||
-    //   imageInfo.mimetype !== "image/jpeg" ||
-    //   imageInfo.mimetype !== "image/png"
-    // ) {
-    //   const error = new HttpError(
-    //     "The server supports only .jpg, .jpeg or .png image formats!",
-    //     400
-    //   );
-    //   return next(error);
-    // }
 
     const product = {
       name: productInfo.name,

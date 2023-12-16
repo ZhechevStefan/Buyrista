@@ -5,25 +5,25 @@ import Button from "../Button/Button.jsx";
 import StarRating from "../StarRating/StarRating.jsx";
 
 const ProductCard = props => {
-  const { product } = props;
-
   return (
     <article className={styles["product-wrapper"]}>
       <section className={styles["product-info"]}>
         <div className={styles["image-wrapper"]}>
-          <img src={product.image} alt={product.name} />
+          <img
+            className={styles.img}
+            src={`data:${props.imageType};base64, ${props.imageData}`}
+            alt={props.name}
+          />
         </div>
         <div className={styles["info-wrapper"]}>
           <div className={styles.title}>
-            <h2>{product.name}</h2>
+            <h2>{props.name}</h2>
           </div>
           <div className={styles.rating}>
-            <StarRating initialValue={product.rating} readOnly={true} />
-            <p>{product.numReviews} reviews</p>
+            <StarRating initialValue={props.rating} readOnly={true} />
+            <p>{props.numReviews} reviews</p>
           </div>
-          <p className={styles.description}>
-            Description: {product.description}
-          </p>
+          <p className={styles.description}>Description: {props.description}</p>
         </div>
       </section>
       <Form className={styles["order-info-form"]}>
@@ -31,11 +31,11 @@ const ProductCard = props => {
           <tbody>
             <tr>
               <th scope="row">Price:</th>
-              <td>${product.price}</td>
+              <td>${props.price}</td>
             </tr>
             <tr>
               <th scope="row">Status:</th>
-              <td>{product.countInStock > 0 ? "In Stock" : "Out of Stock"}</td>
+              <td>{props.countInStock > 0 ? "In Stock" : "Out of Stock"}</td>
             </tr>
             <tr>
               <th scope="row">Quantity:</th>

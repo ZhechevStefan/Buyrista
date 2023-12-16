@@ -5,7 +5,11 @@ const Card = props => {
   return (
     <div className={styles.wrapper} id={props.id}>
       <div className={styles["img-container"]}>
-        <img className={styles.img} src={props.img} alt={props.name} />
+        <img
+          className={styles.img}
+          src={`data:${props.imageType};base64, ${props.imageData}`}
+          alt={props.name}
+        />
       </div>
       <div className={styles.name}>{props.name}</div>
       <div className={styles["reviews-wrapper"]}>

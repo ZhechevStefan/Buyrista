@@ -1,4 +1,10 @@
-import { Form } from "react-router-dom";
+import {
+  Form,
+  useActionData,
+  useNavigation,
+  json,
+  redirect
+} from "react-router-dom";
 
 import Input from "../components/Input/Input.jsx";
 import useForm from "../hooks/form-hook.jsx";
@@ -11,6 +17,10 @@ import Button from "../components/Button/Button.jsx";
 import styles from "./Register.module.css";
 
 const RegisterPage = () => {
+  const data = useActionData();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+
   const [formState, inputChangeHandler] = useForm(
     {
       firstName: {
@@ -34,7 +44,15 @@ const RegisterPage = () => {
   );
 
   return (
-    <Form className={styles["form-control"]}>
+    <Form method="post" className={styles["form-control"]}>
+      {data && data.errors && (
+        <ul>
+          {Object.values(data.errors).map(err => {
+            return <li key={err}>{err}</li>;
+          })}
+        </ul>
+      )}
+      {data && data.message && <p>{data.message}</p>}
       <Input
         id="firstName"
         element="input"
@@ -85,9 +103,42 @@ const RegisterPage = () => {
         onChange={inputChangeHandler}
         validators={[VALIDATOR_MINLENGTH(6)]}
       /> */}
-      <Button disabled={!formState.isValid}>Save</Button>
+      <Button disabled={!formState.isValid || isSubmitting}>
+        {isSubmitting ? "Submitting..." : "Save"}
+      </Button>
     </Form>
   );
 };
 
 export default RegisterPage;
+
+export async function action({ request }) {
+  const data = await request.formData();
+  const authData = {
+    email: data.get("email"),
+    password: data.get("password"),
+    firstName: data.get("firstName"),
+    lastName: data.get("lastName")
+  };
+
+  const response = await fetch("http://localhost:5000/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(authData)
+  });
+
+  if (
+    response.status === 422 ||
+    response.status === 409 ||
+    response.status === 500
+  ) {
+    return response;
+  }
+
+  const resData = await response.json();
+
+  //Cookie handle
+  return redirect("/");
+}

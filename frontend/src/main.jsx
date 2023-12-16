@@ -4,31 +4,37 @@ import ReactDOM from "react-dom/client";
 
 import "./index.css";
 import App from "./App.jsx";
-import HomePage from "./pages/Home.jsx";
-import ProductPage from "./pages/Product.jsx";
-import LoginPage from "./pages/Login.jsx";
-import RegisterPage from "./pages/Register.jsx";
+import HomePage, { loadProducts } from "./pages/Home.jsx";
+import ProductPage, { loadProduct } from "./pages/Product.jsx";
+import LoginPage, { action as loginAction } from "./pages/Login.jsx";
+import RegisterPage, { action as registerAction } from "./pages/Register.jsx";
+import ErrorPage from "./pages/Error.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <HomePage />
+        element: <HomePage />,
+        loader: loadProducts
       },
       {
         path: "products/:productId",
-        element: <ProductPage />
+        element: <ProductPage />,
+        loader: loadProduct
       },
       {
         path: "users/login",
-        element: <LoginPage />
+        element: <LoginPage />,
+        action: loginAction
       },
       {
         path: "users/register",
-        element: <RegisterPage />
+        element: <RegisterPage />,
+        action: registerAction
       }
     ]
   }
