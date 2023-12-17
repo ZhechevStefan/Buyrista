@@ -21,7 +21,7 @@ const ProductCard = props => {
           </div>
           <div className={styles.rating}>
             <StarRating initialValue={props.rating} readOnly={true} />
-            <p>{props.numReviews} reviews</p>
+            <p>{props.numReviews ? props.numReviews : "No"} reviews</p>
           </div>
           <p className={styles.description}>Description: {props.description}</p>
         </div>

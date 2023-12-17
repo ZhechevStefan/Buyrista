@@ -12,7 +12,9 @@ const ProductPage = () => {
       name={product.name}
       rating={product.rating}
       numReviews={product.numReviews}
+      description={product.description}
       price={product.price}
+      countInStock={product.countInStock}
       imageType={product.imageType}
       imageData={product.imageData}
     />

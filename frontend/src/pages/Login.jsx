@@ -70,7 +70,7 @@ export async function action({ request }) {
     password: data.get("password")
   };
 
-  const response = await fetch("http://localhost:5000/register", {
+  const response = await fetch("http://localhost:5000/users/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

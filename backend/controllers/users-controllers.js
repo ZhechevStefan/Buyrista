@@ -10,7 +10,7 @@ exports.register = async (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    const error = new HttpError("Invalid inputs! Please check your data!", 422);
+    const error = new HttpError(errors.msg, 422);
     return next(error);
   }
 
@@ -44,10 +44,7 @@ exports.register = async (req, res, next) => {
       next(error);
     }
   } catch (err) {
-    const error = new HttpError(
-      "Could not register, please try again later!",
-      500
-    );
+    const error = new HttpError(err.message, 500);
     return next(error);
   }
 };

@@ -121,7 +121,7 @@ export async function action({ request }) {
     lastName: data.get("lastName")
   };
 
-  const response = await fetch("http://localhost:5000/register", {
+  const response = await fetch("http://localhost:5000/users/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

@@ -6,26 +6,30 @@ import styles from "./Home.module.css";
 const HomePage = props => {
   const { products } = useLoaderData();
 
-  return (
-    <>
-      <h1 className={styles.title}>Latest Products</h1>
-      <div className={styles.wrapper}>
-        {products.map(product => (
-          <Link key={product.id} to={`/products/${product.id}`}>
-            <Card
-              id={product.id}
-              name={product.name}
-              rating={product.rating}
-              numReviews={product.numReviews}
-              price={product.price}
-              imageType={product.imageType}
-              imageData={product.imageData}
-            />
-          </Link>
-        ))}
-      </div>
-    </>
-  );
+  if (products) {
+    return (
+      <>
+        <h1 className={styles.title}>Latest Products</h1>
+        <div className={styles.wrapper}>
+          {products.map(product => (
+            <Link key={product.id} to={`/products/${product.id}`}>
+              <Card
+                id={product.id}
+                name={product.name}
+                rating={product.rating}
+                numReviews={product.numReviews}
+                price={product.price}
+                imageType={product.imageType}
+                imageData={product.imageData}
+              />
+            </Link>
+          ))}
+        </div>
+      </>
+    );
+  } else {
+    return <div>Sorry, no products to show!</div>;
+  }
 };
 
 export default HomePage;
