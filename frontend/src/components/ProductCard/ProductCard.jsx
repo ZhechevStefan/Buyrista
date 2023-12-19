@@ -49,7 +49,7 @@ const ProductCard = props => {
               </td>
             </tr>
             <tr>
-              <td colSpan={2} style={{ "text-align": "center" }}>
+              <td colSpan={2} style={{ textAlign: "center" }}>
                 <Button>Add to Cart</Button>
               </td>
             </tr>

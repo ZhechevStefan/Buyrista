@@ -17,7 +17,7 @@ const HomePage = props => {
                 id={product.id}
                 name={product.name}
                 rating={product.rating}
-                numReviews={product.numReviews}
+                numReviews={product.ratingCount}
                 price={product.price}
                 imageType={product.imageType}
                 imageData={product.imageData}

@@ -1,25 +1,31 @@
 const db = require("../models/index.js");
 
 const Product = db.products;
-const Review = db.reviews;
 
 exports.getAllProducts = async () => {
   const [products, metadata] = await db.sequelize
-    .query(`SELECT products.id, name, "imageType", "imageName", "imageData", price, "countInStock", AVG(rating) AS rated, COUNT(rating) AS reviewCount  FROM products
-  LEFT JOIN reviews ON products.id=reviews."productId"
+    .query(`SELECT products.id, name, "imageType", "imageName", "imageData", price, "countInStock", AVG(rating) AS rating, COUNT(rating) AS "ratingCount" FROM products
+  LEFT JOIN ratings ON products.id=ratings."productId"
   GROUP BY products.id;`);
 
   return products;
 };
 
 exports.getProductById = async productId => {
-  const product = await Product.findByPk(productId);
-  const [reviews, metadata] = await db.sequelize.query(
-    `SELECT AVG(rating) AS rating FROM reviews`
-  );
+  const [product, metadata] = await db.sequelize
+    .query(`SELECT products.id, name, "imageType", "imageName", "imageData", description, price, "countInStock", AVG(rating) AS rating, COUNT(rating) AS "ratingCount" FROM products
+    LEFT JOIN ratings ON products.id=ratings."productId"
+    WHERE products.id='${productId}'
+    GROUP BY products.id;`);
 
-  product.dataValues.rating = Math.round(Number(reviews[0].rating) * 10) / 10;
-  return product;
+  console.log(product[0]);
+
+  if (!product[0].rating) {
+    product[0].rating = Math.round(Number(product[0].rating) * 10) / 10;
+    product[0].ratingCount = Number(product[0].ratingCount);
+  }
+
+  return product[0];
 };
 
 exports.createProduct = async product => {

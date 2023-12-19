@@ -2,29 +2,25 @@ const db = require("../models/index.js");
 
 const User = db.users;
 
-exports.getAllUsers = () => {
-  return User.findAll({
+exports.getAllUsers = async () => {
+  return await User.findAll({
     attributes: ["id", "name", "email"]
-  }).then(users => {
-    return users;
   });
 };
 
-exports.getUserByEmail = email => {
-  return User.findOne({
+exports.getUserByEmail = async email => {
+  return await User.findOne({
     where: {
-      email: email
+      email
     }
   });
 };
 
-exports.createUser = user => {
-  return User.create({
+exports.createUser = async user => {
+  return await User.create({
     name: user.name,
     email: user.email,
     password: user.password,
     isAdmin: user.isAdmin
-  }).then(user => {
-    return user;
   });
 };

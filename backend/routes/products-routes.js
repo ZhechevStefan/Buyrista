@@ -10,6 +10,8 @@ router.get("/", productsController.getAllProducts);
 
 router.get("/:productId", productsController.getProductById);
 
+router.get("/comments/:productId", productsController.getCommentsByProductId);
+
 router.post(
   "/upload",
   imageUpload.single("image"),

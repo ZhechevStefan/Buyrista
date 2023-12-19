@@ -2,22 +2,26 @@ import { useLoaderData, json } from "react-router-dom";
 
 // import styles from "./Product.module.css";
 import ProductCard from "../components/ProductCard/ProductCard.jsx";
+import Comments from "../components/Comments/Comments.jsx";
 
 const ProductPage = () => {
   const { product } = useLoaderData();
 
   return (
-    <ProductCard
-      id={product.id}
-      name={product.name}
-      rating={product.rating}
-      numReviews={product.numReviews}
-      description={product.description}
-      price={product.price}
-      countInStock={product.countInStock}
-      imageType={product.imageType}
-      imageData={product.imageData}
-    />
+    <>
+      <ProductCard
+        id={product.id}
+        name={product.name}
+        rating={product.rating}
+        numReviews={product.ratingCount}
+        description={product.description}
+        price={product.price}
+        countInStock={product.countInStock}
+        imageType={product.imageType}
+        imageData={product.imageData}
+      />
+      <Comments productId={product.id} />
+    </>
   );
 };
 

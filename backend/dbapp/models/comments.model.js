@@ -1,14 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-  const Reviews = sequelize.define("review", {
+  const Comments = sequelize.define("comment", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
-    },
-    rating: {
-      type: DataTypes.INTEGER,
-      min: 0,
-      max: 5
     },
     comment: {
       type: DataTypes.STRING,
@@ -18,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     productId: {
       type: DataTypes.UUID,
+      allowNull: false,
       references: {
         model: "Products",
         key: "id"
@@ -25,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       type: DataTypes.UUID,
+      allowNull: false,
       references: {
         model: "Users",
         key: "id"
@@ -32,5 +29,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  return Reviews;
+  return Comments;
 };

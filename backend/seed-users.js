@@ -10,20 +10,20 @@ const createManyUsers = async users => {
 };
 
 const usersArr = [
+  // {
+  //   name: "Charlize Theron",
+  //   email: "test1@test.com",
+  //   password: "123456",
+  //   isAdmin: false
+  // },
+  // {
+  //   name: "Scarlett Johanson",
+  //   email: "test2@test.com",
+  //   password: "123456",
+  //   isAdmin: false
+  // },
   {
-    name: "Charlize Theron",
-    email: "test1@test.com",
-    password: "123456",
-    isAdmin: false
-  },
-  {
-    name: "Scarlett Johanson",
-    email: "test2@test.com",
-    password: "123456",
-    isAdmin: false
-  },
-  {
-    name: "Megan Fox",
+    name: "Emma Watson",
     email: "test3@test.com",
     password: "123456",
     isAdmin: false
@@ -44,6 +44,12 @@ const usersArr = [
   {
     name: "Eva Green",
     email: "test6@test.com",
+    password: "123456",
+    isAdmin: false
+  },
+  {
+    name: "Natalie Portman",
+    email: "test7@test.com",
     password: "123456",
     isAdmin: false
   }
