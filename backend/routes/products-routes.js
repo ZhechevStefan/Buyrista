@@ -2,6 +2,7 @@ const express = require("express");
 const { body } = require("express-validator");
 
 const productsController = require("../controllers/products-controllers.js");
+const reviewsController = require("../controllers/reviews-controllers.js");
 const imageUpload = require("../middleware/file-upload.js");
 
 const router = express.Router();
@@ -10,7 +11,7 @@ router.get("/", productsController.getAllProducts);
 
 router.get("/:productId", productsController.getProductById);
 
-router.get("/comments/:productId", productsController.getCommentsByProductId);
+router.get("/reviews/:productId", reviewsController.getRevewsByProductId);
 
 router.post(
   "/upload",

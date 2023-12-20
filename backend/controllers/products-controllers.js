@@ -1,6 +1,5 @@
 const HttpError = require("../error-model/http-error.js");
 const productsDbController = require("../dbapp/controllers/products-DBcontroller.js");
-const commentsDbController = require("../dbapp/controllers/comments-DBcontroller.js");
 
 exports.getAllProducts = async (req, res, next) => {
   let data;
@@ -39,19 +38,6 @@ exports.getProductById = async (req, res, next) => {
     product.imageData = productImage;
 
     res.json({ product });
-  } catch (err) {
-    const error = new HttpError(err.message, 500);
-    return next(error);
-  }
-};
-
-exports.getCommentsByProductId = async (req, res, next) => {
-  try {
-    const productId = req.params.productId;
-
-    let comments = await commentsDbController.getCommentsByProductId(productId);
-
-    res.json({ comments });
   } catch (err) {
     const error = new HttpError(err.message, 500);
     return next(error);

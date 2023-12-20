@@ -5,7 +5,7 @@ const Product = db.products;
 exports.getAllProducts = async () => {
   const [products, metadata] = await db.sequelize
     .query(`SELECT products.id, name, "imageType", "imageName", "imageData", price, "countInStock", AVG(rating) AS rating, COUNT(rating) AS "ratingCount" FROM products
-  LEFT JOIN ratings ON products.id=ratings."productId"
+  LEFT JOIN reviews ON products.id=reviews."productId"
   GROUP BY products.id;`);
 
   return products;
@@ -14,7 +14,7 @@ exports.getAllProducts = async () => {
 exports.getProductById = async productId => {
   const [product, metadata] = await db.sequelize
     .query(`SELECT products.id, name, "imageType", "imageName", "imageData", description, price, "countInStock", AVG(rating) AS rating, COUNT(rating) AS "ratingCount" FROM products
-    LEFT JOIN ratings ON products.id=ratings."productId"
+    LEFT JOIN reviews ON products.id=reviews."productId"
     WHERE products.id='${productId}'
     GROUP BY products.id;`);
 

@@ -2,7 +2,7 @@ import { useLoaderData, json } from "react-router-dom";
 
 // import styles from "./Product.module.css";
 import ProductCard from "../components/ProductCard/ProductCard.jsx";
-import Comments from "../components/Comments/Comments.jsx";
+import Reviews from "../components/Comments/Reviews.jsx";
 
 const ProductPage = () => {
   const { product } = useLoaderData();
@@ -20,7 +20,7 @@ const ProductPage = () => {
         imageType={product.imageType}
         imageData={product.imageData}
       />
-      <Comments productId={product.id} />
+      <Reviews productId={product.id} />
     </>
   );
 };
@@ -41,7 +41,7 @@ export const loadProduct = async ({ request, params }) => {
     );
   } else {
     const resData = await response.json();
-    console.log(resData);
+    // console.log(resData);
     return resData;
   }
 };

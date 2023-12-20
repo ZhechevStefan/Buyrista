@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Ratings = sequelize.define(
-    "rating",
+  const Reviews = sequelize.define(
+    "review",
     {
       id: {
         type: DataTypes.UUID,
@@ -9,11 +9,22 @@ module.exports = (sequelize, DataTypes) => {
       },
       rating: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         min: 1,
         max: 5
       },
+      title: {
+        type: DataTypes.TEXT,
+        validate: {
+          len: [0, 50]
+        }
+      },
+      comment: {
+        type: DataTypes.TEXT
+      },
       productId: {
         type: DataTypes.UUID,
+        allowNull: false,
         references: {
           model: "Products",
           key: "id"
@@ -22,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         type: DataTypes.UUID,
+        allowNull: false,
         references: {
           model: "Users",
           key: "id"
@@ -34,9 +46,16 @@ module.exports = (sequelize, DataTypes) => {
         actions_unique: {
           fields: ["productId", "userId"]
         }
+      },
+      validate: {
+        bothOrNone() {
+          if ((this.title === undefined) !== (this.comment === undefined)) {
+            throw new Error("Either both title and comment, or neither.");
+          }
+        }
       }
     }
   );
 
-  return Ratings;
+  return Reviews;
 };
