@@ -1,11 +1,16 @@
 const db = require("../models/index.js");
 
 const Review = db.reviews;
+const User = db.users;
 
 exports.getReviewsByProductId = async productId => {
   return await Review.findAll({
     where: {
       productId
+    },
+    include: {
+      model: User,
+      attributes: ["name"]
     }
   });
 };

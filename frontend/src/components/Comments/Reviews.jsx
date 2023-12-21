@@ -53,9 +53,11 @@ const Reviews = props => {
         return (
           <Review
             key={review.createdAt}
+            rating={review.rating}
             title={review.title}
-            createdAt={review.createdAt}
             comment={review.comment}
+            createdAt={Date.parse(review.createdAt)}
+            author={review.user.name}
           />
         );
       })}
