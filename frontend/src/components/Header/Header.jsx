@@ -16,7 +16,7 @@ const Header = props => {
         Buyrista
       </Link>
       <nav className={styles.menus}>
-        <NavLink onClick={loginModeHandler}>Login</NavLink>
+        <button onClick={loginModeHandler}>Login</button>
         <div className={styles.cart}>Cart</div>
         {isShown && <LoginMenu onClick={loginModeHandler} />}
         {isShown && <Backdrop onClick={loginModeHandler} />}

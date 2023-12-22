@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import styles from "./Reviews.module.css";
 import Review from "./Review.jsx";
 
 const Reviews = props => {
@@ -48,7 +49,8 @@ const Reviews = props => {
   }
 
   return (
-    <>
+    <section className={styles.wrapper}>
+      <div className={styles["section-title"]}>User Reviews</div>
       {loadedReviews.map(review => {
         return (
           <Review
@@ -56,12 +58,12 @@ const Reviews = props => {
             rating={review.rating}
             title={review.title}
             comment={review.comment}
-            createdAt={Date.parse(review.createdAt)}
+            createdAt={review.createdAt}
             author={review.user.name}
           />
         );
       })}
-    </>
+    </section>
   );
 };
 

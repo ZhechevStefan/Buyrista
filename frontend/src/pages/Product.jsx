@@ -1,8 +1,7 @@
 import { useLoaderData, json } from "react-router-dom";
 
-// import styles from "./Product.module.css";
 import ProductCard from "../components/ProductCard/ProductCard.jsx";
-import Reviews from "../components/Comments/Reviews.jsx";
+import Reviews from "../components/Reviews/Reviews.jsx";
 
 const ProductPage = () => {
   const { product } = useLoaderData();

@@ -25,3 +25,8 @@
   margin-right: 1.5rem;
   margin-left: 1.5rem;
 }
+
+.main-wrapper nav button {
+  all: unset;
+  cursor: pointer;
+}
