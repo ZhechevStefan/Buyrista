@@ -1,5 +1,5 @@
 import { useRouteError } from "react-router-dom";
-// import MainNavigation from "../components/MainNavigation";
+import Header from "../components/Header/Header.jsx";
 
 function ErrorPage() {
   const error = useRouteError();
@@ -18,6 +18,7 @@ function ErrorPage() {
 
   return (
     <>
+      <Header />
       <div>
         <h1>{title}</h1>
         <p>{message}</p>
