@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import styles from "./Reviews.module.css";
 import Review from "./Review.jsx";
+import WriteAReview from "./WriteAReview.jsx";
 
 const Reviews = props => {
   const productId = props.productId;
@@ -33,8 +34,6 @@ const Reviews = props => {
     fetchReviews(productId);
   }, [productId]);
 
-  console.log(JSON.stringify(loadedReviews));
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -63,6 +62,7 @@ const Reviews = props => {
           />
         );
       })}
+      <WriteAReview />
     </section>
   );
 };

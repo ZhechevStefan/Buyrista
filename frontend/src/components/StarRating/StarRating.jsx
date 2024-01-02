@@ -4,6 +4,7 @@ import { Rating } from "react-simple-star-rating";
 function StarRating(props) {
   const initialValue = props.initialValue;
   const readOnly = props.readOnly;
+  const allowFraction = props.allowFraction ?? true;
 
   const [rating, setRating] = useState(initialValue || 0);
 
@@ -24,14 +25,13 @@ function StarRating(props) {
         onClick={handleRating}
         initialValue={initialValue}
         readonly={readOnly}
-        allowFraction={true}
+        allowFraction={allowFraction}
         size={16}
         fillStyle={{ color: "yellow" }}
         // style={{ color: "#f1a545" }}
         // onPointerEnter={onPointerEnter}
         // onPointerLeave={onPointerLeave}
         // onPointerMove={onPointerMove}
-        /* Available Props */
       />
     </div>
   );
