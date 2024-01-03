@@ -11,8 +11,7 @@ function StarRating(props) {
   // Catch Rating value
   const handleRating = rate => {
     setRating(rate);
-
-    // other logic
+    props.getRating(rate);
   };
   // Optinal callback functions
   //   const onPointerEnter = () => console.log("Enter");

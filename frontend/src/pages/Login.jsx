@@ -1,63 +1,79 @@
-import { Form, useActionData, redirect, useNavigation } from "react-router-dom";
+import {
+  Form,
+  useActionData,
+  redirect,
+  useNavigation,
+  useSubmit
+} from "react-router-dom";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
-import useForm from "../hooks/form-hook.jsx";
 import Input from "../components/Input/Input.jsx";
-import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from "../util/validators.js";
 import Button from "../components/Button/Button.jsx";
 
 const LoginPage = () => {
   const data = useActionData();
   const navigation = useNavigation();
+  const submit = useSubmit();
   const isSubmitting = navigation.state === "submitting";
 
-  const [formState, inputChangeHandler] = useForm(
-    {
-      email: {
-        value: "",
-        isValid: false
-      },
-      password: {
-        value: "",
-        isValid: false
-      }
-    },
-    false
-  );
-
   return (
-    <Form method="POST">
-      {data && data.errors && (
-        <ul>
-          {Object.values(data.errors).map(err => {
-            return <li key={err}>{err}</li>;
-          })}
-        </ul>
+    <Formik
+      initialValues={{
+        email: "",
+        password: ""
+      }}
+      validationSchema={Yup.object({
+        email: Yup.string()
+          .trim()
+          .email("Invalid email address")
+          .required("All fields are required"),
+        password: Yup.string()
+          .trim()
+          .required("All fields are required")
+          .min(6, "Password must be at least 6 characters long")
+      })}
+      validateOnMount={true}
+      onSubmit={async values => {
+        submit(values, { method: "POST" });
+      }}
+    >
+      {formik => (
+        <Form method="POST">
+          {data && data.errors && (
+            <ul>
+              {Object.values(data.errors).map(err => {
+                return <li key={err}>{err}</li>;
+              })}
+            </ul>
+          )}
+          {data && data.message && <p>{data.message}</p>}
+          <Input
+            id="email"
+            element="input"
+            type="text"
+            label="Email"
+            placeholder="Your email"
+            isInvalid={formik.touched.email && formik.errors.email}
+            errors={formik.errors.email}
+            {...formik.getFieldProps("email")}
+          />
+          <Input
+            id="password"
+            element="input"
+            type="password"
+            label="Password"
+            placeholder="Password"
+            isInvalid={formik.touched.password && formik.errors.password}
+            errors={formik.errors.password}
+            {...formik.getFieldProps("password")}
+          />
+          <Button disabled={!formik.isValid || isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Save"}
+          </Button>
+        </Form>
       )}
-      {data && data.message && <p>{data.message}</p>}
-      <Input
-        id="email"
-        element="input"
-        type="text"
-        label="Email"
-        placeholder="Your email"
-        errorText="Please enter a valid email!"
-        onChange={inputChangeHandler}
-        validators={[VALIDATOR_EMAIL()]}
-      />
-      <Input
-        id="password"
-        element="input"
-        type="password"
-        label="Password"
-        placeholder="Your Password"
-        errorText="Please enter a valid password!"
-        onChange={inputChangeHandler}
-        validators={[VALIDATOR_MINLENGTH(6)]}
-      />
-      <Button disabled={!formState.isValid || isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Save"}
-      </Button>
-    </Form>
+    </Formik>
   );
 };
 

@@ -2,111 +2,111 @@ import {
   Form,
   useActionData,
   useNavigation,
-  json,
+  useSubmit,
   redirect
 } from "react-router-dom";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 import Input from "../components/Input/Input.jsx";
-import useForm from "../hooks/form-hook.jsx";
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_REQUIRE
-} from "../util/validators.js";
 import Button from "../components/Button/Button.jsx";
 import styles from "./Register.module.css";
 
 const RegisterPage = () => {
   const data = useActionData();
   const navigation = useNavigation();
+  const submit = useSubmit();
   const isSubmitting = navigation.state === "submitting";
 
-  const [formState, inputChangeHandler] = useForm(
-    {
-      firstName: {
-        value: "",
-        isValid: false
-      },
-      lastName: {
-        value: "",
-        isValid: false
-      },
-      email: {
-        value: "",
-        isValid: false
-      },
-      password: {
-        value: "",
-        isValid: false
-      }
-    },
-    false
-  );
-
   return (
-    <Form method="post" className={styles["form-control"]}>
-      {data && data.errors && (
-        <ul>
-          {Object.values(data.errors).map(err => {
-            return <li key={err}>{err}</li>;
-          })}
-        </ul>
-      )}
-      {data && data.message && <p>{data.message}</p>}
-      <Input
-        id="firstName"
-        element="input"
-        type="text"
-        label="First name"
-        placeholder="First name"
-        errorText="Please enter a valid name!"
-        onChange={inputChangeHandler}
-        validators={[VALIDATOR_REQUIRE()]}
-      />
-      <Input
-        id="lastName"
-        element="input"
-        type="text"
-        label="Last name"
-        placeholder="Last name"
-        errorText="Please enter a valid name!"
-        onChange={inputChangeHandler}
-        validators={[VALIDATOR_REQUIRE()]}
-      />
-      <Input
-        id="email"
-        element="input"
-        type="text"
-        label="Email"
-        placeholder="Your email"
-        errorText="Please enter a valid email!"
-        onChange={inputChangeHandler}
-        validators={[VALIDATOR_EMAIL()]}
-      />
-      <Input
-        id="password"
-        element="input"
-        type="password"
-        label="Password"
-        placeholder="Password"
-        errorText="Please enter a valid password!"
-        onChange={inputChangeHandler}
-        validators={[VALIDATOR_MINLENGTH(6)]}
-      />
-      {/* <Input
+    <Formik
+      initialValues={{
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
+      }}
+      validationSchema={Yup.object({
+        firstName: Yup.string().trim().required("All fields are required"),
+        lastName: Yup.string().trim().required("All fields are required"),
+        email: Yup.string()
+          .trim()
+          .email("Invalid email address")
+          .required("All fields are required"),
+        password: Yup.string()
+          .trim()
+          .required("All fields are required")
+          .min(6, "Password must be at least 6 characters long")
+      })}
+      validateOnMount={true}
+      onSubmit={async values => {
+        submit(values, { method: "POST" });
+      }}
+    >
+      {formik => (
+        <Form method="POST" className={styles["form-control"]}>
+          {data && data.errors && (
+            <ul>
+              {Object.values(data.errors).map(err => {
+                return <li key={err}>{err}</li>;
+              })}
+            </ul>
+          )}
+          {data && data.message && <p>{data.message}</p>}
+          <Input
+            id="firstName"
+            element="input"
+            type="text"
+            label="First name"
+            placeholder="First name"
+            isInvalid={formik.touched.firstName && formik.errors.firstName}
+            errors={formik.errors.firstName}
+            {...formik.getFieldProps("firstName")}
+          />
+          <Input
+            id="lastName"
+            element="input"
+            type="text"
+            label="Last name"
+            placeholder="Last name"
+            isInvalid={formik.touched.lastName && formik.errors.lastName}
+            errors={formik.errors.lastName}
+            {...formik.getFieldProps("lastName")}
+          />
+          <Input
+            id="email"
+            element="input"
+            type="text"
+            label="Email"
+            placeholder="Your email"
+            isInvalid={formik.touched.email && formik.errors.email}
+            errors={formik.errors.email}
+            {...formik.getFieldProps("email")}
+          />
+          <Input
+            id="password"
+            element="input"
+            type="password"
+            label="Password"
+            placeholder="Password"
+            isInvalid={formik.touched.password && formik.errors.password}
+            errors={formik.errors.password}
+            {...formik.getFieldProps("password")}
+          />
+          {/* <Input
         id="confirm-password"
         element="input"
         type="passowrd"
         label="Confirm Password"
         placeholder="Confirm Passowrd"
-        errorText="Both Passwords are different!"
-        onChange={inputChangeHandler}
-        validators={[VALIDATOR_MINLENGTH(6)]}
+        {...formik.getFieldProps("password")}
       /> */}
-      <Button disabled={!formState.isValid || isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Save"}
-      </Button>
-    </Form>
+          <Button disabled={!formik.isValid || isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Save"}
+          </Button>
+        </Form>
+      )}
+    </Formik>
   );
 };
 
