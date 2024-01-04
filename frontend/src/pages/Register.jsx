@@ -1,10 +1,4 @@
-import {
-  Form,
-  useActionData,
-  useNavigation,
-  useSubmit,
-  redirect
-} from "react-router-dom";
+import { Form, useActionData, useNavigation, redirect } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -15,7 +9,6 @@ import styles from "./Register.module.css";
 const RegisterPage = () => {
   const data = useActionData();
   const navigation = useNavigation();
-  const submit = useSubmit();
   const isSubmitting = navigation.state === "submitting";
 
   return (
@@ -39,9 +32,6 @@ const RegisterPage = () => {
           .min(6, "Password must be at least 6 characters long")
       })}
       validateOnMount={true}
-      onSubmit={async values => {
-        submit(values, { method: "POST" });
-      }}
     >
       {formik => (
         <Form method="POST" className={styles["form-control"]}>
@@ -101,7 +91,7 @@ const RegisterPage = () => {
         placeholder="Confirm Passowrd"
         {...formik.getFieldProps("password")}
       /> */}
-          <Button disabled={!formik.isValid || isSubmitting}>
+          <Button type="submit" disabled={!formik.isValid || isSubmitting}>
             {isSubmitting ? "Submitting..." : "Save"}
           </Button>
         </Form>

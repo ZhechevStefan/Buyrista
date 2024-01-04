@@ -8,6 +8,7 @@ import HomePage, { loadProducts } from "./pages/Home.jsx";
 import ProductPage, { loadProduct } from "./pages/Product.jsx";
 import LoginPage, { action as loginAction } from "./pages/Login.jsx";
 import RegisterPage, { action as registerAction } from "./pages/Register.jsx";
+import { action as postReviewAction } from "./components/Reviews/WriteAReview.jsx";
 import ErrorPage from "./pages/Error.jsx";
 
 const router = createBrowserRouter([
@@ -24,7 +25,8 @@ const router = createBrowserRouter([
       {
         path: "products/:productId",
         element: <ProductPage />,
-        loader: loadProduct
+        loader: loadProduct,
+        action: postReviewAction
       },
       {
         path: "users/login",

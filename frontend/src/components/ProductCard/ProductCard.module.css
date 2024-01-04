@@ -64,6 +64,7 @@
   table-layout: fixed;
   width: 100%;
   border: 2px solid;
+  border-radius: 4px;
   border-collapse: collapse;
 }
 

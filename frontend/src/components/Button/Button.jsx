@@ -27,7 +27,7 @@ const Button = props => {
       className={`${styles.button} ${styles.button}--${
         props.size || "default"
       } ${props.inverse && styles["button--inverse"]} ${
-        props.danger && styles["button--danger"]
+        props.neutral && styles["button--neutral"]
       }`}
     >
       {props.children}

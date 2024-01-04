@@ -1,80 +1,163 @@
-import { useNavigation, useSubmit, Form } from "react-router-dom";
-import { useState } from "react";
-import { Formik, useFormik, useFormikContext } from "formik";
+import { useNavigation, Form } from "react-router-dom";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import Input from "../Input/Input.jsx";
 import StarRating from "../StarRating/StarRating.jsx";
 import Button from "../Button/Button.jsx";
+import styles from "./WriteAReview.module.css";
 
-const WriteAReview = () => {
+const WriteAReview = props => {
   const navigation = useNavigation();
-  const submit = useSubmit();
   const isSubmitting = navigation.state === "submitting";
-  const [rating, setRating] = useState(0);
+  const isHidden = props.isHidden;
 
   const formik = useFormik({
     initialValues: {
       starRating: "",
-      email: "",
-      password: ""
+      title: "",
+      comment: ""
     },
-    validationSchema: Yup.object({
-      starRating: Yup.number().required("Rating is required"),
-      title: Yup.string().trim().required("All fields are required"),
-      comment: Yup.string().trim().required("All fields are required")
-    }),
-    validateOnMount: true,
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-    }
+    validationSchema: Yup.object().shape(
+      {
+        starRating: Yup.number().required("Rating is required"),
+        title: Yup.string()
+          .trim()
+          .when("comment", {
+            is: comm => Boolean(comm),
+            then: Yup.string().required(
+              "Title is required when you write a comment."
+            )
+          }),
+        comment: Yup.string()
+          .trim()
+          .when("title", {
+            is: ttl => Boolean(ttl),
+            then: Yup.string().required(
+              "Comment is required when you have a title."
+            )
+          })
+      },
+      [
+        ["comment", "title"],
+        ["title", "comment"]
+      ]
+    ),
+    validateOnMount: true
   });
 
+  //   const schema2 = Yup.object().shape({
+  //   areas: Yup.array().of(
+  //     Yup.object().shape({
+  //       name: Yup.string().trim().when('description', {
+  //         is: desc => Boolean(desc),
+  //         then: Yup.string().required('Required'),
+  //       }),
+  //       description: Yup.string().trim().when('name', {
+  //         is: name => Boolean(name),
+  //         then: Yup.string().required('Required')
+  //       })
+  //     }, [['description', 'name'], ['name', 'description']])
+  //   )
+  // })
+
   const getRating = rat => {
-    setRating(rat);
+    formik.setFieldTouched("starRating", true, false);
     formik.setFieldValue("starRating", rat);
-    formik.setFieldTouched("starRating");
   };
 
+  //
+
   return (
-    <Form method="POST">
-      <div>Write a Customer Review</div>
-      <StarRating
-        readOnly={false}
-        allowFraction={false}
-        getRating={getRating}
-      />
-      <div style={{ display: "none" }}>
+    <div
+      className={styles["form-wrapper"]}
+      style={isHidden ? { display: "none" } : { display: "block" }}
+    >
+      <Form method="POST">
+        <div className={styles["title"]}>Write a Customer Review</div>
+        <div className={styles["rating"]}>
+          <div>Your Rating:</div>
+          <StarRating
+            readOnly={false}
+            allowFraction={false}
+            getRating={getRating}
+          />
+        </div>
+
+        <div style={{ display: "none" }}>
+          <Input
+            id="starRating"
+            element="input"
+            type="number"
+            label="starRating"
+            isInvalid={formik.touched.title && formik.errors.title}
+            errors={formik.errors.title}
+            {...formik.getFieldProps("starRating")}
+          />
+        </div>
         <Input
-          id="starRating"
-          element="input"
-          type="number"
-          label="starRating"
+          id="title"
+          label="Title"
+          rows="1"
           isInvalid={formik.touched.title && formik.errors.title}
           errors={formik.errors.title}
-          {...formik.getFieldProps("starRating")}
+          {...formik.getFieldProps("title")}
         />
-      </div>
-      <Input
-        id="title"
-        label="Title"
-        rows="1"
-        isInvalid={formik.touched.title && formik.errors.title}
-        errors={formik.errors.title}
-        {...formik.getFieldProps("title")}
-      />
-      <Input
-        id="comment"
-        label="Comment"
-        isInvalid={formik.touched.comment && formik.errors.comment}
-        errors={formik.errors.comment}
-        {...formik.getFieldProps("comment")}
-      />
-      <Button disabled={!formik.isValid || isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Save"}
-      </Button>
-    </Form>
+        <Input
+          id="comment"
+          label="Comment"
+          isInvalid={formik.touched.comment && formik.errors.comment}
+          errors={formik.errors.comment}
+          {...formik.getFieldProps("comment")}
+        />
+        <div className={styles.buttons}>
+          <div>
+            If you do not want to write a comment, you can leave us just a
+            rating.
+          </div>
+          <Button
+            type="button"
+            disabled={isSubmitting}
+            onClick={props.hideWriteAComment}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" disabled={!formik.isValid || isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Save"}
+          </Button>
+        </div>
+      </Form>
+    </div>
   );
 };
 
 export default WriteAReview;
+
+export async function action({ request }) {
+  const data = await request.formData();
+
+  const authData = {
+    rating: data.get("starRating"),
+    title: data.get("title"),
+    comment: data.get("comment")
+  };
+
+  console.log(authData);
+
+  // const response = await fetch("http://localhost:5000/users/login", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json"
+  //   },
+  //   body: JSON.stringify(authData)
+  // });
+
+  // if (response.status === 401 || response.status === 500) {
+  //   return response;
+  // }
+
+  // const resData = await response.json();
+
+  // console.log(resData);
+  // return redirect("/");
+}

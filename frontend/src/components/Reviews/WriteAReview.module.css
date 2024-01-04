@@ -1,0 +1,32 @@
+.form-wrapper {
+  background-color: #7c7c7b;
+  margin-top: 2rem;
+  padding: 1.2rem;
+  width: 57%;
+  border: 2px solid yellow;
+  border-radius: 4px;
+}
+
+.title {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.rating {
+  display: flex;
+}
+
+.rating div {
+  margin-right: 1rem;
+}
+
+.buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: end;
+}
+
+.buttons div {
+  font-size: 0.8rem;
+}
