@@ -1,3 +1,5 @@
+const { validationResult } = require("express-validator");
+
 const HttpError = require("../error-model/http-error.js");
 const productsDbController = require("../dbapp/controllers/products-DBcontroller.js");
 
@@ -45,6 +47,13 @@ exports.getProductById = async (req, res, next) => {
 };
 
 exports.createProduct = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const error = new HttpError("Invalid field value.", 400);
+    return next(error);
+  }
+
   try {
     const productInfo = req.body;
     const imageInfo = req.file;

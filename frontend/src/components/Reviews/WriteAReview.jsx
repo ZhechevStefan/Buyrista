@@ -21,45 +21,29 @@ const WriteAReview = props => {
     validationSchema: Yup.object().shape(
       {
         starRating: Yup.number().required("Rating is required"),
-        title: Yup.string()
-          .trim()
-          .when("comment", {
-            is: comm => Boolean(comm),
-            then: Yup.string().required(
-              "Title is required when you write a comment."
-            )
-          }),
         comment: Yup.string()
           .trim()
           .when("title", {
-            is: ttl => Boolean(ttl),
-            then: Yup.string().required(
-              "Comment is required when you have a title."
-            )
+            is: ttl => !!ttl,
+            then: () =>
+              Yup.string().required(
+                "Comment is required when you have a title."
+              )
+          }),
+        title: Yup.string()
+          .trim()
+          .when("comment", {
+            is: comm => !!comm,
+            then: () =>
+              Yup.string().required(
+                "Title is required when you write a comment."
+              )
           })
       },
-      [
-        ["comment", "title"],
-        ["title", "comment"]
-      ]
+      [["title", "comment"]]
     ),
     validateOnMount: true
   });
-
-  //   const schema2 = Yup.object().shape({
-  //   areas: Yup.array().of(
-  //     Yup.object().shape({
-  //       name: Yup.string().trim().when('description', {
-  //         is: desc => Boolean(desc),
-  //         then: Yup.string().required('Required'),
-  //       }),
-  //       description: Yup.string().trim().when('name', {
-  //         is: name => Boolean(name),
-  //         then: Yup.string().required('Required')
-  //       })
-  //     }, [['description', 'name'], ['name', 'description']])
-  //   )
-  // })
 
   const getRating = rat => {
     formik.setFieldTouched("starRating", true, false);

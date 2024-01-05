@@ -1,27 +1,28 @@
 const usersDbController = require("./dbapp/controllers/users-DBcontroller.js");
+const usersControllers = require("./controllers/users-controllers");
 
 // db.sequelize.sync();
 
 const createManyUsers = async users => {
   return users.map(async user => {
-    const current = await usersDbController.createUser(user);
+    const current = await usersControllers.register(user);
     console.log(current.toJSON());
   });
 };
 
 const usersArr = [
-  // {
-  //   name: "Charlize Theron",
-  //   email: "test1@test.com",
-  //   password: "123456",
-  //   isAdmin: false
-  // },
-  // {
-  //   name: "Scarlett Johanson",
-  //   email: "test2@test.com",
-  //   password: "123456",
-  //   isAdmin: false
-  // },
+  {
+    name: "Charlize Theron",
+    email: "test1@test.com",
+    password: "123456",
+    isAdmin: false
+  },
+  {
+    name: "Scarlett Johanson",
+    email: "test2@test.com",
+    password: "123456",
+    isAdmin: false
+  },
   {
     name: "Emma Watson",
     email: "test3@test.com",
