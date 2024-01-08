@@ -1,16 +1,17 @@
 const express = require("express");
-const { body, oneOf } = require("express-validator");
+const { body } = require("express-validator");
 
 const productsController = require("../controllers/products-controllers.js");
 const reviewsController = require("../controllers/reviews-controllers.js");
 const imageUpload = require("../middleware/file-upload.js");
 const HttpError = require("../error-model/http-error.js");
+const protect = require("../middleware/check-auth.js");
 
 const router = express.Router();
 
 router.get("/", productsController.getAllProducts);
 
-router.get("/:productId", productsController.getProductById);
+router.get("/:productId", protect, productsController.getProductById);
 
 router.get("/reviews/:productId", reviewsController.getRevewsByProductId);
 

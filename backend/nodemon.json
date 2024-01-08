@@ -3,6 +3,7 @@
     "DB_USER": "postgres",
     "DB_PASSWORD": "levski1914",
     "DB_NAME": "buyrista",
-    "JWT_KEY": "hmvWoialKfjwiOtuM"
+    "JWT_KEY": "hmvWoialKfjwiOtuM",
+    "NODE_ENV": "development"
   }
 }
