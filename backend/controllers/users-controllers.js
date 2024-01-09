@@ -65,10 +65,7 @@ exports.login = async (req, res, next) => {
     generateToken(res, user.id);
 
     res.status(200).json({
-      userId: user.id,
-      email: user.email,
-      environment: `${process.env.NODE_ENV}`,
-      drugo: `${process.env.DB_NAME}`
+      userId: user.id
     });
   } catch (err) {
     const error = new HttpError(

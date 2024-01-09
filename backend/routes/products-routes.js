@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/", productsController.getAllProducts);
 
-router.get("/:productId", protect, productsController.getProductById);
+router.get("/:productId", productsController.getProductById);
 
 router.get("/reviews/:productId", reviewsController.getRevewsByProductId);
 

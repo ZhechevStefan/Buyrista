@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
   try {
     const authcookie = req.cookies.authcookie;
     const decodedToken = jwt.verify(authcookie, process.env.JWT_KEY);
-    req.userData = { userId: decodedToken.userId, email: user.email };
+    req.userData = { userId: decodedToken.userId };
     next();
   } catch (err) {
     res.clearCookie("authcookie");
