@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./Header.module.css";
 import LoginMenu from "../LoginMenu/LoginMenu.jsx";
 import Backdrop from "../Backdrop.jsx";
+import HeaderCartButton from "./HeaderCartBtn.jsx";
 
 const Header = props => {
   const [isShown, setIsShown] = useState(false);
@@ -17,7 +18,9 @@ const Header = props => {
       </Link>
       <nav className={styles.menus}>
         <button onClick={loginModeHandler}>Login</button>
-        <div className={styles.cart}>Cart</div>
+        <div className={styles.cart}>
+          <HeaderCartButton onClick={props.onShowCart} />
+        </div>
         {isShown && <LoginMenu onClick={loginModeHandler} />}
         {isShown && <Backdrop onClick={loginModeHandler} />}
       </nav>
