@@ -69,6 +69,7 @@ const WriteAReview = props => {
         </div>
 
         <div style={{ display: "none" }}>
+          <input name="formId" defaultValue={"reviewForm"} />
           <Input
             id="starRating"
             element="input"
@@ -106,7 +107,7 @@ const WriteAReview = props => {
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={!formik.isValid || isSubmitting}>
+          <Button disabled={!formik.isValid || isSubmitting}>
             {isSubmitting ? "Submitting..." : "Save"}
           </Button>
         </div>
@@ -116,32 +117,3 @@ const WriteAReview = props => {
 };
 
 export default WriteAReview;
-
-export async function action({ request }) {
-  const data = await request.formData();
-
-  const authData = {
-    rating: data.get("starRating"),
-    title: data.get("title"),
-    comment: data.get("comment")
-  };
-
-  console.log(authData);
-
-  // const response = await fetch("http://localhost:5000/users/login", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json"
-  //   },
-  //   body: JSON.stringify(authData)
-  // });
-
-  // if (response.status === 401 || response.status === 500) {
-  //   return response;
-  // }
-
-  // const resData = await response.json();
-
-  // console.log(resData);
-  // return redirect("/");
-}

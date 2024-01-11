@@ -5,6 +5,7 @@ import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import CartProvider from "./context/cartProvider.jsx";
 import Cart from "./components/Cart/Cart.jsx";
+import Backdrop from "./components/Backdrop.jsx";
 
 function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
@@ -20,6 +21,7 @@ function App() {
   return (
     <CartProvider>
       {cartIsShown && <Cart onClose={hideCartHandler} />}
+      {cartIsShown && <Backdrop onClick={hideCartHandler} />}
       <Header onShowCart={showCartHandler} />
       <main>
         <Outlet />

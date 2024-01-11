@@ -1,10 +1,26 @@
-import { Form } from "react-router-dom";
+import { useRef, useState } from "react";
 
 import styles from "./ProductCard.module.css";
 import Button from "../Button/Button.jsx";
 import StarRating from "../StarRating/StarRating.jsx";
 
 const ProductCard = props => {
+  const [quantityIsValid, setQuantityIsValid] = useState(true);
+  const quantityInputRef = useRef();
+  const submitHandler = event => {
+    event.preventDefault();
+
+    const enteredQuantity = quantityInputRef.current.value;
+    const enteredQuantityNumber = +enteredQuantity;
+
+    if (enteredQuantity.trim().length === 0 || enteredQuantityNumber < 1) {
+      setQuantityIsValid(false);
+      return;
+    }
+
+    props.onAddToCart(enteredQuantityNumber);
+  };
+
   return (
     <article className={styles["product-wrapper"]}>
       <section className={styles["product-info"]}>
@@ -26,7 +42,7 @@ const ProductCard = props => {
           <p className={styles.description}>Description: {props.description}</p>
         </div>
       </section>
-      <Form className={styles["order-info-form"]}>
+      <form className={styles["order-info-form"]} onSubmit={submitHandler}>
         <table>
           <tbody>
             <tr>
@@ -41,21 +57,26 @@ const ProductCard = props => {
               <th scope="row">Quantity:</th>
               <td>
                 <input
-                  type="text"
-                  inputMode="numeric"
+                  ref={quantityInputRef}
                   id="quantity"
                   name="quantity"
+                  inputMode="numeric"
+                  type="number"
+                  min={1}
+                  max={props.countInStock}
+                  defaultValue={1}
                 ></input>
               </td>
             </tr>
             <tr>
               <td colSpan={2} style={{ textAlign: "center" }}>
-                <Button>Add to Cart</Button>
+                <Button type="submit">Add to Cart</Button>
               </td>
             </tr>
           </tbody>
         </table>
-      </Form>
+        {!quantityIsValid && <p>Please enter a valid quantity.</p>}
+      </form>
     </article>
   );
 };

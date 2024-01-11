@@ -7,9 +7,9 @@ import Backdrop from "../Backdrop.jsx";
 import HeaderCartButton from "./HeaderCartBtn.jsx";
 
 const Header = props => {
-  const [isShown, setIsShown] = useState(false);
+  const [loginMenuIsShown, setLoginMenuIsShown] = useState(false);
 
-  const loginModeHandler = () => setIsShown(!isShown);
+  const loginModeHandler = () => setLoginMenuIsShown(!loginMenuIsShown);
 
   return (
     <header className={styles["main-wrapper"]}>
@@ -17,12 +17,12 @@ const Header = props => {
         Buyrista
       </Link>
       <nav className={styles.menus}>
-        <button onClick={loginModeHandler}>Login</button>
-        <div className={styles.cart}>
-          <HeaderCartButton onClick={props.onShowCart} />
-        </div>
-        {isShown && <LoginMenu onClick={loginModeHandler} />}
-        {isShown && <Backdrop onClick={loginModeHandler} />}
+        <button className={styles["header-btn"]} onClick={loginModeHandler}>
+          Login
+        </button>
+        <HeaderCartButton onClick={props.onShowCart} />
+        {loginMenuIsShown && <LoginMenu onClick={loginModeHandler} />}
+        {loginMenuIsShown && <Backdrop onClick={loginModeHandler} />}
       </nav>
     </header>
   );

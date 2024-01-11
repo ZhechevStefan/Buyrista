@@ -10,7 +10,7 @@ const HeaderCartButton = props => {
   const { items } = cartCtx;
 
   const numberOfCartItems = items.reduce((cur, item) => {
-    return cur + item.amount;
+    return cur + item.quantity;
   }, 0);
 
   const btnClasses = `${styles.button} ${btnIsHighlighted ? styles.bump : ""}`;
@@ -32,10 +32,7 @@ const HeaderCartButton = props => {
 
   return (
     <button className={btnClasses} onClick={props.onClick}>
-      <span className={styles.icon}>
-        <CartIcon val={numberOfCartItems} />
-        <span className={styles.badge}>{numberOfCartItems}</span>
-      </span>
+      <CartIcon numberOfCartItems={numberOfCartItems} />
     </button>
   );
 };

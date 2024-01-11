@@ -3,6 +3,7 @@ import Modal from "../Modal/Modal.jsx";
 import CartItem from "./CartItem.jsx";
 import styles from "./Cart.module.css";
 import CartContext from "../../context/cart-context.jsx";
+import Button from "../Button/Button.jsx";
 // import Checkout from "./Checkout.jsx";
 
 const Cart = props => {
@@ -19,7 +20,7 @@ const Cart = props => {
   };
 
   const cartItemAddHandler = item => {
-    cartCtx.addItem({ ...item, amount: 1 });
+    cartCtx.addItem({ ...item, quantity: 1 });
   };
 
   const orderHandler = () => {
@@ -50,7 +51,7 @@ const Cart = props => {
         <CartItem
           key={item.id}
           name={item.name}
-          amount={item.amount}
+          quantity={item.quantity}
           price={item.price}
           onRemove={cartItemRemoveHandler.bind(null, item.id)}
           onAdd={cartItemAddHandler.bind(null, item)}
@@ -61,13 +62,13 @@ const Cart = props => {
 
   const modalActions = (
     <div className={styles.actions}>
-      <button className={styles["button--alt"]} onClick={props.onClose}>
+      <Button type="button" neutral onClick={props.onClose}>
         Close
-      </button>
+      </Button>
       {hasItems && (
-        <button className={styles.button} onClick={orderHandler}>
+        <Button type="button" onClick={orderHandler}>
           Order
-        </button>
+        </Button>
       )}
     </div>
   );
@@ -91,7 +92,7 @@ const Cart = props => {
   const didSubmitModal = <p>Successfull order!</p>;
 
   return (
-    <Modal onClose={props.onClose}>
+    <Modal onClose={props.onClose} header="Your cart:">
       {!isSubmitting && !didSubmit && cartModalContent}
       {isSubmitting && isSubmittingModal}
       {!isSubmitting && didSubmit && didSubmitModal}

@@ -15,15 +15,10 @@
 .menus {
   display: flex;
   justify-content: center;
-  align-items: middle;
+  align-items: center;
 }
 
 .logo {
-  margin-left: 1.5rem;
-}
-
-.cart {
-  margin-right: 1.5rem;
   margin-left: 1.5rem;
 }
 

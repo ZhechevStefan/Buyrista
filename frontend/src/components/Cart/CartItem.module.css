@@ -2,14 +2,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #8a2b06;
+  border-bottom: 2px solid yellow;
   padding: 1rem 0;
   margin: 1rem 0;
 }
 
 .cart-item h2 {
   margin: 0 0 0.5rem 0;
-  color: #363636;
+  color: white;
 }
 
 .summary {
@@ -24,7 +24,7 @@
   color: #8a2b06;
 }
 
-.amount {
+.quantity {
   font-weight: bold;
   border: 1px solid #ccc;
   padding: 0.25rem 0.75rem;
