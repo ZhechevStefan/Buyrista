@@ -4,7 +4,7 @@ const CartIcon = props => {
   return (
     <span className={styles.icon}>
       <img
-        className={`${styles.img} badge`}
+        className={`${styles.img}`}
         src="/src/assets/icons/shopping-cart.png"
         alt="shopping cart"
       />

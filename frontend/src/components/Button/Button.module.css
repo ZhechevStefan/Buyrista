@@ -9,6 +9,7 @@
   margin: 0 1rem;
   text-decoration: none;
   display: inline-block;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .button:focus {
@@ -31,6 +32,18 @@
 .button--inverse:active {
   color: white;
   background: black;
+}
+
+.grow {
+  animation: grow 1.5s ease-in;
+}
+@keyframes grow {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 /* .button--danger {

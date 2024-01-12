@@ -44,15 +44,10 @@ const Reviews = props => {
   const hideWriteAComment = () => setIsHidden(true);
 
   return (
-    <section className={styles.wrapper}>
+    <section className={`${styles.wrapper} ${styles["bounce-in-left"]}`}>
       <div className={styles["title-wrapper"]}>
         <div className={styles["section-title"]}>User Reviews</div>
-        <Button
-          type="button"
-          inverse
-          onClick={showWriteAComment}
-          disabled={!isHidden}
-        >
+        <Button type="button" onClick={showWriteAComment} disabled={!isHidden}>
           + Write your review
         </Button>
       </div>

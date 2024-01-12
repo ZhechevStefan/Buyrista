@@ -2,9 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid yellow;
-  padding: 1rem 0;
+  padding: 1rem 1rem;
   margin: 1rem 0;
+  background-color: #7c7c7b;
+  border: 2px solid yellow;
+  border-radius: 4px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .cart-item h2 {

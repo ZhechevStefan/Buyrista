@@ -5,8 +5,9 @@
   left: 10%;
   width: 80%;
   background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
   border-radius: 8px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .modal__header {
@@ -22,7 +23,8 @@
 
 .modal__content {
   background-color: #a1a1a0;
-  padding: 1rem 0.5rem;
+  padding: 0.5rem 1rem;
+  padding-top: 0;
 }
 
 .modal__footer {

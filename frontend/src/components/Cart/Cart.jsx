@@ -75,9 +75,15 @@ const Cart = props => {
 
   const cartModalContent = (
     <>
-      {cartItems}
+      {hasItems ? (
+        cartItems
+      ) : (
+        <h4 className={styles["empty-basket"]}>
+          You have no items in your basket.
+        </h4>
+      )}
       <div className={styles.total}>
-        <span>Total Amount</span>
+        <span>Total Amount:</span>
         <span>{totalAmount}</span>
       </div>
       {/* {isCheckout && (

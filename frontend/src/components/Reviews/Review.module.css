@@ -1,8 +1,12 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  padding: 1rem;
   margin-top: 20px;
-  margin-left: 10px;
+  background-color: #7c7c7b;
+  border: 2px solid yellow;
+  border-radius: 4px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .header {

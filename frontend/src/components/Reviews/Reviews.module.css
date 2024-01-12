@@ -5,11 +5,13 @@
 }
 
 .section-title {
-  border: 2px solid white;
+  background-color: #7c7c7b;
+  border: 2px solid yellow;
   padding: 10px;
   padding-left: 10px;
   width: 40%;
   border-radius: 4px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .title-wrapper {
@@ -19,4 +21,24 @@
 .no-comments-message {
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+.bounce-in-left {
+  animation: bounce-in-left 1s ease-in;
+}
+@keyframes bounce-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-2000px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(30px);
+  }
+  80% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }

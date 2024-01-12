@@ -24,7 +24,7 @@ const Button = props => {
       type={props.type}
       onClick={props.onClick}
       disabled={props.disabled}
-      className={`${styles.button} ${styles.button}--${
+      className={`${styles.button} ${styles.grow} ${styles.button}--${
         props.size || "default"
       } ${props.inverse && styles["button--inverse"]} ${
         props.neutral && styles["button--neutral"]

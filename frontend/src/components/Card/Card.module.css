@@ -8,6 +8,7 @@
   justify-content: start;
   align-items: center;
   background-color: #636363;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .img-container {

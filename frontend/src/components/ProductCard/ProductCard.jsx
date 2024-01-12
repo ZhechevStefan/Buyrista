@@ -22,7 +22,9 @@ const ProductCard = props => {
   };
 
   return (
-    <article className={styles["product-wrapper"]}>
+    <article
+      className={`${styles["product-wrapper"]} ${styles["bounce-in-right"]}`}
+    >
       <section className={styles["product-info"]}>
         <div className={styles["image-wrapper"]}>
           <img
