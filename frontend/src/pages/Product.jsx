@@ -10,12 +10,13 @@ const ProductPage = () => {
   const cartCtx = useContext(CartContext);
 
   const onAddToCartHandler = quantity => {
-    console.log(quantity);
     cartCtx.addItem({
       id: product.id,
       name: product.name,
       quantity: quantity,
-      price: product.price
+      countInStock: product.countInStock - 1,
+      price: product.price,
+      image: product.imageData
     });
   };
 

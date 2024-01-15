@@ -23,7 +23,7 @@ const ProductCard = props => {
 
   return (
     <article
-      className={`${styles["product-wrapper"]} ${styles["bounce-in-right"]}`}
+      className={`${styles["product-wrapper"]} ${styles["slide-in-right"]}`}
     >
       <section className={styles["product-info"]}>
         <div className={styles["image-wrapper"]}>
@@ -53,26 +53,32 @@ const ProductCard = props => {
             </tr>
             <tr>
               <th scope="row">Status:</th>
-              <td>{props.countInStock > 0 ? "In Stock" : "Out of Stock"}</td>
+              <td>{props.countInStock ? "In Stock" : "Out of Stock"}</td>
             </tr>
             <tr>
               <th scope="row">Quantity:</th>
               <td>
-                <input
-                  ref={quantityInputRef}
-                  id="quantity"
-                  name="quantity"
-                  inputMode="numeric"
-                  type="number"
-                  min={1}
-                  max={props.countInStock}
-                  defaultValue={1}
-                ></input>
+                {props.countInStock ? (
+                  <input
+                    ref={quantityInputRef}
+                    id="quantity"
+                    name="quantity"
+                    inputMode="numeric"
+                    type="number"
+                    min={1}
+                    max={props.countInStock}
+                    defaultValue={1}
+                  ></input>
+                ) : (
+                  "Out of Stock"
+                )}
               </td>
             </tr>
             <tr>
               <td colSpan={2} style={{ textAlign: "center" }}>
-                <Button type="submit">Add to Cart</Button>
+                <Button type="submit" disabled={!props.countInStock}>
+                  Add to Cart
+                </Button>
               </td>
             </tr>
           </tbody>

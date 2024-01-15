@@ -11,6 +11,11 @@
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
+.wrapper:hover {
+  border: 2px solid yellow;
+  background-color: #7c7c7b;
+}
+
 .img-container {
   overflow: hidden;
   width: 90%;

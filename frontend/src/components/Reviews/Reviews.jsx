@@ -44,7 +44,7 @@ const Reviews = props => {
   const hideWriteAComment = () => setIsHidden(true);
 
   return (
-    <section className={`${styles.wrapper} ${styles["bounce-in-left"]}`}>
+    <section className={`${styles.wrapper} ${styles["slide-in-left"]}`}>
       <div className={styles["title-wrapper"]}>
         <div className={styles["section-title"]}>User Reviews</div>
         <Button type="button" onClick={showWriteAComment} disabled={!isHidden}>

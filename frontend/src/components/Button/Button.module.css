@@ -34,7 +34,7 @@
   background: black;
 }
 
-.grow {
+/* .grow {
   animation: grow 1.5s ease-in;
 }
 @keyframes grow {
@@ -44,7 +44,7 @@
   to {
     transform: scale(1);
   }
-}
+} */
 
 /* .button--danger {
   background: #830000;

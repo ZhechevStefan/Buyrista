@@ -21,8 +21,9 @@ const Header = props => {
           Login
         </button>
         <HeaderCartButton onClick={props.onShowCart} />
+        <div id="login-menu-hook"></div>
         {loginMenuIsShown && <LoginMenu onClick={loginModeHandler} />}
-        {loginMenuIsShown && <Backdrop onClick={loginModeHandler} />}
+        {/* {loginMenuIsShown && <Backdrop onClick={loginModeHandler} />} */}
       </nav>
     </header>
   );

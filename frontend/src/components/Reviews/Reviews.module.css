@@ -23,10 +23,10 @@
   margin-bottom: 2rem;
 }
 
-.bounce-in-left {
-  animation: bounce-in-left 1s ease-in;
+.slide-in-left {
+  animation: slide-in-left 1s ease-in;
 }
-@keyframes bounce-in-left {
+@keyframes slide-in-left {
   0% {
     opacity: 0;
     transform: translateX(-2000px);

@@ -10,7 +10,7 @@
   align-items: center;
   border: 2px solid #ffea00;
   border-radius: 10px;
-  z-index: 11;
+  z-index: 8;
   transform: translateY(3.6rem);
   animation: show-modal 0.3s;
 }

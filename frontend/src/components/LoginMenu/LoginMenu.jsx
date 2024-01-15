@@ -9,7 +9,7 @@ const LoginMenu = props => {
       <Button to="/users/login">Login</Button>
       <Button to="/users/register">Register</Button>
     </div>,
-    document.getElementById("modal-hook")
+    document.getElementById("login-menu-hook")
   );
 };
 

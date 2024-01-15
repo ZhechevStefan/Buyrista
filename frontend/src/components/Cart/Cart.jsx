@@ -53,6 +53,7 @@ const Cart = props => {
           name={item.name}
           quantity={item.quantity}
           price={item.price}
+          countInStock={item.countInStock}
           onRemove={cartItemRemoveHandler.bind(null, item.id)}
           onAdd={cartItemAddHandler.bind(null, item)}
         />
@@ -62,7 +63,7 @@ const Cart = props => {
 
   const modalActions = (
     <div className={styles.actions}>
-      <Button type="button" neutral onClick={props.onClose}>
+      <Button type="button" inverse onClick={props.onClose}>
         Close
       </Button>
       {hasItems && (

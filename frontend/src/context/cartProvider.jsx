@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import CartContext from "./cart-context.jsx";
 
 const defaultCartState = {
@@ -24,13 +24,19 @@ const cartReducer = (state, action) => {
     if (existingCartItem) {
       const updatedItem = {
         ...existingCartItem,
-        quantity: existingCartItem.quantity + action.item.quantity
+        quantity: existingCartItem.quantity + action.item.quantity,
+        countInStock: existingCartItem.countInStock - action.item.quantity
       };
       updatedItems = [...state.items];
       updatedItems[existingCartItemIndex] = updatedItem;
     } else {
       updatedItems = state.items.concat(action.item);
     }
+
+    //save to Local Storage
+    const stringifiedItems = JSON.stringify(updatedItems);
+    localStorage.setItem("items", stringifiedItems);
+    localStorage.setItem("amount", updatedTotalAmount);
 
     return {
       items: updatedItems,
@@ -55,11 +61,17 @@ const cartReducer = (state, action) => {
     } else {
       const updatedItem = {
         ...existingItem,
-        quantity: existingItem.quantity - 1
+        quantity: existingItem.quantity - 1,
+        countInStock: existingItem.countInStock + 1
       };
       updatedItems = [...state.items];
       updatedItems[existingCartItemIndex] = updatedItem;
     }
+
+    //save to local Storage
+    const stringifiedItems = JSON.stringify(updatedItems);
+    localStorage.setItem("items", stringifiedItems);
+    localStorage.setItem("amount", updatedTotalAmount);
 
     return {
       items: updatedItems,
@@ -68,6 +80,7 @@ const cartReducer = (state, action) => {
   }
 
   if (action.type === "CLEAR") {
+    localStorage.clear();
     return defaultCartState;
   }
 
@@ -75,6 +88,14 @@ const cartReducer = (state, action) => {
 };
 
 const CartProvider = props => {
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("items"));
+    if (items) {
+      defaultCartState.items = items;
+      defaultCartState.totalAmount = +localStorage.getItem("amount");
+    }
+  }, []);
+
   const [cartState, dispatchCartAction] = useReducer(
     cartReducer,
     defaultCartState

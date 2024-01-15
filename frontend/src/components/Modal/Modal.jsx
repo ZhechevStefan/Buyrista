@@ -5,16 +5,12 @@ import styles from "./Modal.module.css";
 
 const ModalOverlay = props => {
   const content = (
-    <div className={`${styles.modal} ${props.className}`} style={props.style}>
-      <header className={`${styles["modal__header"]} ${props.headerClass}`}>
+    <div className={`${styles.modal}`}>
+      <header className={`${styles["modal__header"]}`}>
         <h2>{props.header}</h2>
       </header>
-      <div className={`${styles["modal__content"]} ${props.content}`}>
-        {props.children}
-      </div>
-      <footer className={`${styles["modal__footer"]} ${props.footerClass}`}>
-        {props.footer}
-      </footer>
+      <div className={`${styles["modal__content"]}`}>{props.children}</div>
+      <footer className={`${styles["modal__footer"]}`}>{props.footer}</footer>
     </div>
   );
   return ReactDOM.createPortal(content, document.getElementById("modal-hook"));

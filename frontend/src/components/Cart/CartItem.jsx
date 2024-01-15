@@ -3,6 +3,8 @@ import styles from "./CartItem.module.css";
 const CartItem = props => {
   // const price = `$${props.price.toFixed(2)}`;
 
+  const countInStock = props.countInStock;
+
   return (
     <li className={styles["cart-item"]}>
       <div>
@@ -14,7 +16,9 @@ const CartItem = props => {
       </div>
       <div className={styles.actions}>
         <button onClick={props.onRemove}>−</button>
-        <button onClick={props.onAdd}>+</button>
+        <button onClick={props.onAdd} disabled={!countInStock}>
+          +
+        </button>
       </div>
     </li>
   );
