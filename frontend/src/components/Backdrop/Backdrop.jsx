@@ -1,8 +1,13 @@
 import ReactDOM from "react-dom";
 
+import styles from "./Backdrop.module.css";
+
 const Backdrop = props => {
   return ReactDOM.createPortal(
-    <div className="backdrop" onClick={props.onClick}></div>,
+    <div
+      className={`${styles.backdrop} ${props.dark && styles.dark}`}
+      onClick={props.onClick}
+    ></div>,
     document.getElementById("backdrop-hook")
   );
 };

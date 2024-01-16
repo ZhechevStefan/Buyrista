@@ -13,6 +13,7 @@ const Cart = props => {
   const cartCtx = useContext(CartContext);
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
+
   const hasItems = cartCtx.items.length > 0;
 
   const cartItemRemoveHandler = id => {
@@ -54,6 +55,8 @@ const Cart = props => {
           quantity={item.quantity}
           price={item.price}
           countInStock={item.countInStock}
+          image={item.image}
+          imageType={item.imageType}
           onRemove={cartItemRemoveHandler.bind(null, item.id)}
           onAdd={cartItemAddHandler.bind(null, item)}
         />
@@ -85,7 +88,7 @@ const Cart = props => {
       )}
       <div className={styles.total}>
         <span>Total Amount:</span>
-        <span>{totalAmount}</span>
+        <span>{hasItems ? totalAmount : "$0.00"}</span>
       </div>
       {/* {isCheckout && (
         <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />

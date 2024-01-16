@@ -1,7 +1,7 @@
 .login-menu {
   height: 4rem;
   width: 20rem;
-  position: absolute;
+  position: fixed;
   top: 0rem;
   right: 0rem;
   background-color: #636363;
@@ -10,7 +10,7 @@
   align-items: center;
   border: 2px solid #ffea00;
   border-radius: 10px;
-  z-index: 8;
+  z-index: 10;
   transform: translateY(3.6rem);
   animation: show-modal 0.3s;
 }

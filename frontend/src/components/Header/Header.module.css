@@ -9,9 +9,25 @@
   top: 0;
   left: 0;
   border-bottom: 2px solid #ffea00;
-  z-index: 8;
+  z-index: 7;
   /* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
   box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+.adminpanel {
+  margin-right: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-link {
+  margin-right: 1rem;
+}
+
+.admin-link:hover {
+  color: yellow;
+  text-decoration: underline;
 }
 
 .menus {

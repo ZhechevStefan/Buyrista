@@ -7,12 +7,19 @@ const CartItem = props => {
 
   return (
     <li className={styles["cart-item"]}>
-      <div>
-        <h2>{props.name}</h2>
-        <div className={styles.summary}>
-          <span className={styles.price}>{props.price}</span>
-          <span className={styles.quantity}>x {props.quantity}</span>
-        </div>
+      <div className={styles["product-info"]}>
+        <span className={styles["image-wrapper"]}>
+          <img
+            className={styles.img}
+            src={`data:${props.imageType};base64, ${props.image}`}
+            alt={props.name}
+          />
+        </span>
+        <h3 className={styles["product-name"]}>{props.name}</h3>
+      </div>
+      <div className={styles.summary}>
+        <span className={styles.price}>{props.price}</span>
+        <span className={styles.quantity}>x {props.quantity}</span>
       </div>
       <div className={styles.actions}>
         <button onClick={props.onRemove}>−</button>

@@ -10,9 +10,27 @@
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
-.cart-item h2 {
-  margin: 0 0 0.5rem 0;
-  color: white;
+.product-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.product-name {
+  vertical-align: middle;
+}
+
+.image-wrapper {
+  width: 30%;
+  max-height: 6rem;
+  overflow: hidden;
+}
+
+.image-wrapper img {
+  max-height: 5rem;
+  width: 100%;
+  object-fit: scale-down;
 }
 
 .summary {

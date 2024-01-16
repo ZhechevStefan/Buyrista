@@ -5,11 +5,16 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import HomePage, { loadProducts } from "./pages/Home.jsx";
-import ProductPage, { loadProduct } from "./pages/Product.jsx";
+import ProductPage, {
+  loadProduct,
+  action as productActions
+} from "./pages/Product.jsx";
 import LoginPage, { action as loginAction } from "./pages/Login.jsx";
 import RegisterPage, { action as registerAction } from "./pages/Register.jsx";
-import { action as productActions } from "./pages/Product.jsx";
 import ErrorPage from "./pages/Error.jsx";
+import UsersPage, { loader as adminUsersLoader } from "./pages/Users.jsx";
+import AddProductPage from "./pages/AddProduct.jsx";
+import OrdersPage from "./pages/Orders.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +42,19 @@ const router = createBrowserRouter([
         path: "users/register",
         element: <RegisterPage />,
         action: registerAction
+      },
+      {
+        path: "admin/users",
+        element: <UsersPage />,
+        loader: adminUsersLoader
+      },
+      {
+        path: "admin/addproduct",
+        element: <AddProductPage />
+      },
+      {
+        path: "admin/orders",
+        element: <OrdersPage />
       }
     ]
   }

@@ -1,7 +1,6 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 
-const db = require("../dbapp/models/index");
 const HttpError = require("../error-model/http-error.js");
 const usersDbController = require("../dbapp/controllers/users-DBcontroller.js");
 const generateToken = require("../utils/generateToken.js");

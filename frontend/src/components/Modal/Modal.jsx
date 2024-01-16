@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 
-import Backdrop from "../Backdrop.jsx";
+import Backdrop from "../Backdrop/Backdrop.jsx";
 import styles from "./Modal.module.css";
 
 const ModalOverlay = props => {
@@ -19,7 +19,7 @@ const ModalOverlay = props => {
 const Modal = props => {
   return (
     <>
-      {props.show && <Backdrop onClick={props.onCancel} />}
+      {props.show && <Backdrop onClick={props.onCancel} dark />}
       <ModalOverlay {...props} />
     </>
   );

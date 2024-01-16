@@ -29,7 +29,7 @@ const ProductCard = props => {
         <div className={styles["image-wrapper"]}>
           <img
             className={styles.img}
-            src={`data:${props.imageType};base64, ${props.imageData}`}
+            src={`data:${props.imageType};base64, ${props.image}`}
             alt={props.name}
           />
         </div>

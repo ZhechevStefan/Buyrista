@@ -16,7 +16,8 @@ const ProductPage = () => {
       quantity: quantity,
       countInStock: product.countInStock - 1,
       price: product.price,
-      image: product.imageData
+      image: product.imageData,
+      imageType: product.imageType
     });
   };
 
@@ -30,8 +31,8 @@ const ProductPage = () => {
         description={product.description}
         price={product.price}
         countInStock={product.countInStock}
+        image={product.imageData}
         imageType={product.imageType}
-        imageData={product.imageData}
         onAddToCart={onAddToCartHandler}
       />
       <Reviews productId={product.id} />

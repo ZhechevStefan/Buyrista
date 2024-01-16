@@ -1,0 +1,20 @@
+.users-table {
+  border-collapse: collapse;
+}
+
+.users-table th {
+  border-bottom: 2px solid;
+}
+
+.users-table td {
+  border-bottom: 2px solid;
+  padding: 0.2rem 1.2rem;
+}
+
+.users-table tr:nth-of-type(odd) {
+  background-color: #7c7c7b;
+}
+
+.users-table th {
+  background-color: #a1a1a0;
+}

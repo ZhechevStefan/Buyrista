@@ -4,7 +4,7 @@ const User = db.users;
 
 exports.getAllUsers = async () => {
   return await User.findAll({
-    attributes: ["id", "name", "email"]
+    attributes: ["id", "name", "email", "isAdmin"]
   });
 };
 

@@ -1,9 +1,9 @@
 .modal {
   z-index: 100;
   position: fixed;
-  top: 22vh;
-  left: 10%;
-  width: 80%;
+  top: 11vh;
+  left: 15%;
+  width: 70%;
   background-color: #a1a1a0;
   border-radius: 8px;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
