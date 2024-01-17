@@ -30,17 +30,35 @@
   text-decoration: underline;
 }
 
+.header-btn {
+  background-color: inherit;
+  font: inherit;
+  border: none;
+  height: 70%;
+  margin: 0 0.5rem;
+}
+
+.favourites {
+  font-size: 1.6rem;
+  margin-right: 0.3rem;
+}
+
 .menus {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  margin-right: 0.5rem;
 }
 
 .logo {
   margin-left: 1.5rem;
 }
 
+.open {
+  color: yellow;
+}
+
 .main-wrapper nav button {
-  all: unset;
   cursor: pointer;
 }

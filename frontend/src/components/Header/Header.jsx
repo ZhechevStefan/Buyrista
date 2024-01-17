@@ -9,7 +9,10 @@ import HeaderCartButton from "./HeaderCartBtn.jsx";
 const Header = props => {
   const [loginMenuIsShown, setLoginMenuIsShown] = useState(false);
 
-  const loginModeHandler = () => setLoginMenuIsShown(!loginMenuIsShown);
+  let timeout;
+  const openLoginMode = () => setLoginMenuIsShown(true);
+  const closeLoginMode = () =>
+    (timeout = setTimeout(() => setLoginMenuIsShown(false), 1000));
 
   return (
     <header className={styles["main-wrapper"]}>
@@ -28,12 +31,31 @@ const Header = props => {
             Orders
           </NavLink>
         </div>
-        <button className={styles["header-btn"]} onClick={loginModeHandler}>
-          Login
+        <button
+          className={`${styles["header-btn"]} ${
+            loginMenuIsShown ? styles.open : ""
+          }`}
+          onMouseEnter={
+            loginMenuIsShown ? () => clearTimeout(timeout) : openLoginMode
+          }
+          onMouseLeave={closeLoginMode}
+        >
+          웃 My account▾
         </button>
-        <HeaderCartButton onClick={props.onShowCart} />
-        {loginMenuIsShown && <LoginMenu onClick={loginModeHandler} />}
-        {loginMenuIsShown && <Backdrop onClick={loginModeHandler} dark />}
+        <button className={styles["header-btn"]}>⭐ Favourites</button>
+        <HeaderCartButton
+          onClick={props.onShowCart}
+          className={styles["header-btn"]}
+        />
+        <div id="login-menu-hook"></div>
+        {loginMenuIsShown && (
+          <LoginMenu
+            onClick={openLoginMode}
+            onMouseLeave={closeLoginMode}
+            onMouseEnter={() => clearTimeout(timeout)}
+          />
+        )}
+        {/* {loginMenuIsShown && <Backdrop onClick={closeLoginMode} dark />} */}
       </nav>
     </header>
   );

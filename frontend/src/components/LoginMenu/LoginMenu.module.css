@@ -1,25 +1,37 @@
 .login-menu {
-  height: 4rem;
-  width: 20rem;
+  height: 6rem;
+  width: 19rem;
   position: fixed;
   top: 0rem;
-  right: 0rem;
+  right: 11rem;
   background-color: #636363;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: start;
   align-items: center;
   border: 2px solid #ffea00;
   border-radius: 10px;
   z-index: 10;
   transform: translateY(3.6rem);
-  animation: show-modal 0.3s;
+  /* animation: show-modal 0.3s; */
 }
 
-@keyframes show-modal {
+.message {
+  font-size: 0.8rem;
+  margin: 1rem 0;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* @keyframes show-modal {
   0% {
     transform: translateY(0);
   }
   100% {
     transform: translateY(3.6rem);
   }
-}
+} */

@@ -28,7 +28,7 @@ const Button = props => {
         props.size || "default"
       } ${props.inverse && styles["button--inverse"]} ${
         props.neutral && styles["button--neutral"]
-      }`}
+      } ${props.danger && styles["button--danger"]}`}
     >
       {props.children}
     </button>

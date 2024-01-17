@@ -4,7 +4,6 @@ const { body } = require("express-validator");
 const productsController = require("../controllers/products-controllers.js");
 const reviewsController = require("../controllers/reviews-controllers.js");
 const HttpError = require("../error-model/http-error.js");
-const protect = require("../middleware/check-auth.js");
 
 const router = express.Router();
 

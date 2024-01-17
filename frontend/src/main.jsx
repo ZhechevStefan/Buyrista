@@ -13,7 +13,9 @@ import LoginPage, { action as loginAction } from "./pages/Login.jsx";
 import RegisterPage, { action as registerAction } from "./pages/Register.jsx";
 import ErrorPage from "./pages/Error.jsx";
 import UsersPage, { loader as adminUsersLoader } from "./pages/Users.jsx";
-import AddProductPage from "./pages/AddProduct.jsx";
+import AddProductPage, {
+  action as addProductAction
+} from "./pages/AddProduct.jsx";
 import OrdersPage from "./pages/Orders.jsx";
 
 const router = createBrowserRouter([
@@ -50,7 +52,8 @@ const router = createBrowserRouter([
       },
       {
         path: "admin/addproduct",
-        element: <AddProductPage />
+        element: <AddProductPage />,
+        action: addProductAction
       },
       {
         path: "admin/orders",

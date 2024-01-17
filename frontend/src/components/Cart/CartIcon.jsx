@@ -26,6 +26,7 @@ const CartIcon = props => {
         src="/src/assets/icons/shopping-cart.png"
         alt="shopping cart"
       />
+      <span className={styles.label}>My cart</span>
       <span
         className={props.numberOfCartItems ? styles.badge : styles.invisible}
       >
