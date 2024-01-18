@@ -7,10 +7,6 @@ const HeaderCartButton = props => {
 
   let { items } = cartCtx;
 
-  if (items.length === 0) {
-    items = JSON.parse(localStorage.getItem("items"));
-  }
-
   const numberOfCartItems = items.reduce((cur, item) => {
     return cur + item.quantity;
   }, 0);

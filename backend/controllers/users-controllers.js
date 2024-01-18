@@ -33,7 +33,7 @@ exports.register = async (req, res, next) => {
 
       generateToken(res, user.id);
 
-      res.status(201).json({ userId: user.id, email: user.email });
+      res.status(201).json({ user });
     } else {
       const error = new HttpError("Email already registered!", 409);
       next(error);
@@ -63,9 +63,7 @@ exports.login = async (req, res, next) => {
 
     generateToken(res, user.id);
 
-    res.status(200).json({
-      userId: user.id
-    });
+    res.status(200).json({ user });
   } catch (err) {
     const error = new HttpError(
       "Could not login, please try again later!",

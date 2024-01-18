@@ -1,5 +1,10 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import CartContext from "./cart-context.jsx";
+
+import {
+  saveToLocalStorage,
+  getFullInfo
+} from "../../utils/localStorageUtils.js";
 
 const defaultCartState = {
   items: [],
@@ -34,9 +39,7 @@ const cartReducer = (state, action) => {
     }
 
     //save to Local Storage
-    const stringifiedItems = JSON.stringify(updatedItems);
-    localStorage.setItem("items", stringifiedItems);
-    localStorage.setItem("amount", updatedTotalAmount);
+    saveToLocalStorage(updatedItems);
 
     return {
       items: updatedItems,
@@ -69,9 +72,7 @@ const cartReducer = (state, action) => {
     }
 
     //save to local Storage
-    const stringifiedItems = JSON.stringify(updatedItems);
-    localStorage.setItem("items", stringifiedItems);
-    localStorage.setItem("amount", updatedTotalAmount);
+    saveToLocalStorage(updatedItems);
 
     return {
       items: updatedItems,
@@ -88,14 +89,6 @@ const cartReducer = (state, action) => {
 };
 
 const CartProvider = props => {
-  useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("items"));
-    if (items) {
-      defaultCartState.items = items;
-      defaultCartState.totalAmount = +localStorage.getItem("amount");
-    }
-  }, []);
-
   const [cartState, dispatchCartAction] = useReducer(
     cartReducer,
     defaultCartState
@@ -120,6 +113,28 @@ const CartProvider = props => {
     removeItem: removeItemFromCartHandler,
     clearCart: clearCartHandler
   };
+
+  const ref = useRef(true);
+
+  useEffect(() => {
+    let items = JSON.parse(localStorage.getItem("items"));
+
+    const getAndSetPriceAndCountInStock = async items => {
+      items = await getFullInfo(items);
+      items.map(item => {
+        addItemToCartHandler({ ...item });
+      });
+    };
+
+    if (items && items.length > 0) {
+      if (ref.current) {
+        getAndSetPriceAndCountInStock(items);
+        return () => {
+          ref.current = false;
+        };
+      }
+    }
+  }, []);
 
   return (
     <CartContext.Provider value={cartContext}>

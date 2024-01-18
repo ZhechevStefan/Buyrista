@@ -28,6 +28,26 @@ exports.getProductById = async productId => {
   return product[0];
 };
 
+exports.getPriceAndQuantity = async productsIdArray => {
+  let queryString;
+  if (productsIdArray.length === 1) {
+    queryString = `id='${productsIdArray[0]}'`;
+  } else {
+    queryString = `id='${productsIdArray.shift()}'`;
+    productsIdArray.map(id => {
+      queryString += ` OR id='${id}'`;
+    });
+  }
+
+  const [products, metadata] = await db.sequelize
+    .query(`SELECT id, price, "countInStock" FROM products
+    WHERE ${queryString}`);
+
+  // console.log(products);
+
+  return products;
+};
+
 exports.createProduct = async product => {
   const prod = await Product.create({
     name: product.name,

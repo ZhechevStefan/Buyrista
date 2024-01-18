@@ -44,6 +44,7 @@ const ProductCard = props => {
           <p className={styles.description}>Description: {props.description}</p>
         </div>
       </section>
+
       <form className={styles["order-info-form"]} onSubmit={submitHandler}>
         <table>
           <tbody>
@@ -78,6 +79,13 @@ const ProductCard = props => {
               <td colSpan={2} style={{ textAlign: "center" }}>
                 <Button type="submit" disabled={!props.countInStock}>
                   Add to Cart
+                </Button>
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={2} style={{ textAlign: "center" }}>
+                <Button type="submit" disabled={!props.countInStock}>
+                  Add to Favourites
                 </Button>
               </td>
             </tr>

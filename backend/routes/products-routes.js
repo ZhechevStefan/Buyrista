@@ -11,6 +11,8 @@ router.get("/", productsController.getAllProducts);
 
 router.get("/:productId", productsController.getProductById);
 
+router.get("/store/:productsIds", productsController.getPriceAndQuantityById);
+
 router.get("/reviews/:productId", reviewsController.getRevewsByProductId);
 
 router.post(

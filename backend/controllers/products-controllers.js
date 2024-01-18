@@ -43,3 +43,27 @@ exports.getProductById = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.getPriceAndQuantityById = async (req, res, next) => {
+  try {
+    const productsIdsArr = req.params.productsIds.split("_");
+
+    let products = await productsDbController.getPriceAndQuantity(
+      productsIdsArr
+    );
+
+    if (!products) {
+      const error = new HttpError(
+        "Could not find a product for the provided ID.",
+        404
+      );
+
+      return next(error);
+    }
+
+    res.json({ products });
+  } catch (err) {
+    const error = new HttpError(err.message, 500);
+    return next(error);
+  }
+};

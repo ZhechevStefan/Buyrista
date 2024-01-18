@@ -45,7 +45,7 @@ export default ProductPage;
 export const loadProduct = async ({ request, params }) => {
   const id = params.productId;
 
-  const response = await fetch("http://localhost:5000/products/" + id);
+  const response = await fetch(`http://localhost:5000/products/${id}`);
 
   if (!response.ok) {
     throw json(

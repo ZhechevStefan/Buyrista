@@ -1,7 +1,9 @@
+import { useContext } from "react";
 import { Form, useActionData, redirect, useNavigation } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
+import AuthProvider from "../context/authProvider.jsx";
 import Input from "../components/Input/Input.jsx";
 import Button from "../components/Button/Button.jsx";
 
@@ -89,8 +91,8 @@ export async function action({ request }) {
     return response;
   }
 
-  const resData = await response.json();
+  const { user } = await response.json();
+  AuthProvider.login(user);
 
-  //Cookie handle
   return redirect("/");
 }
