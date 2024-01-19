@@ -9,8 +9,8 @@ import ProductPage, {
   loadProduct,
   action as productActions
 } from "./pages/Product.jsx";
-import LoginPage, { action as loginAction } from "./pages/Login.jsx";
-import RegisterPage, { action as registerAction } from "./pages/Register.jsx";
+import LoginPage from "./pages/Login.jsx";
+import RegisterPage from "./pages/Register.jsx";
 import ErrorPage from "./pages/Error.jsx";
 import UsersPage, { loader as adminUsersLoader } from "./pages/Users.jsx";
 import AddProductPage, {
@@ -37,13 +37,11 @@ const router = createBrowserRouter([
       },
       {
         path: "users/login",
-        element: <LoginPage />,
-        action: loginAction
+        element: <LoginPage />
       },
       {
         path: "users/register",
-        element: <RegisterPage />,
-        action: registerAction
+        element: <RegisterPage />
       },
       {
         path: "admin/users",

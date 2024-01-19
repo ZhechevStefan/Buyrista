@@ -4,10 +4,12 @@ import { useLoaderData, json } from "react-router-dom";
 import ProductCard from "../components/ProductCard/ProductCard.jsx";
 import Reviews from "../components/Reviews/Reviews.jsx";
 import CartContext from "../context/cart-context.jsx";
+import AuthContext from "../context/auth-context.jsx";
 
 const ProductPage = () => {
   const { product } = useLoaderData();
   const cartCtx = useContext(CartContext);
+  const authCtx = useContext(AuthContext);
 
   const onAddToCartHandler = quantity => {
     cartCtx.addItem({

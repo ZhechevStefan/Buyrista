@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
+import AuthContext from "./auth-context.jsx";
 
-export const AuthProvider = () => {
+const AuthProvider = props => {
   const [userInfo, setUserInfo] = useState(null);
 
   const login = useCallback(profile => {
@@ -13,6 +14,12 @@ export const AuthProvider = () => {
     localStorage.removeItem("userInfo");
   }, []);
 
+  const authContext = {
+    userInfo,
+    login,
+    logout
+  };
+
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("userInfo"));
     if (storedData) {
@@ -20,5 +27,11 @@ export const AuthProvider = () => {
     }
   }, [login]);
 
-  return { userInfo, login, logout };
+  return (
+    <AuthContext.Provider value={authContext}>
+      {props.children}
+    </AuthContext.Provider>
+  );
 };
+
+export default AuthProvider;

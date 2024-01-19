@@ -34,18 +34,6 @@
   background: black;
 }
 
-/* .grow {
-  animation: grow 1.5s ease-in;
-}
-@keyframes grow {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
-} */
-
 /* .button--danger {
   background: #830000;
   border-color: #830000;

@@ -1,10 +1,7 @@
 import { useEffect, useReducer, useRef } from "react";
 import CartContext from "./cart-context.jsx";
 
-import {
-  saveToLocalStorage,
-  getFullInfo
-} from "../../utils/localStorageUtils.js";
+import { saveToLocalStorage, getFullInfo } from "../utils/localStorageUtils.js";
 
 const defaultCartState = {
   items: [],
