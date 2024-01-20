@@ -4,11 +4,14 @@ import * as Yup from "yup";
 
 import Input from "../components/Input/Input.jsx";
 import Button from "../components/Button/Button.jsx";
+import { useHttpClient } from "../hooks/http-hook.jsx";
+import styles from "./Form.module.css";
 
 const AddProductPage = props => {
-  const data = useActionData();
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
+  // const data = useActionData();
+  // const navigation = useNavigation();
+  // const isSubmitting = navigation.state === "submitting";
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const MAX_FILE_SIZE = 102400; //100KB
   const validFileExtensions = {
@@ -69,15 +72,13 @@ const AddProductPage = props => {
       validateOnMount={true}
     >
       {formik => (
-        <Form method="POST">
-          {data && data.errors && (
-            <ul>
-              {Object.values(data.errors).map(err => {
-                return <li key={err}>{err}</li>;
-              })}
-            </ul>
-          )}
-          {data && data.message && <p>{data.message}</p>}
+        <Form
+          method="POST"
+          className={`${styles.wrapper} ${styles["slide-in-right"]}`}
+        >
+          <div className={styles["title-wrapper"]}>
+            <h2>Add a Product</h2>
+          </div>
           <Input
             id="name"
             element="input"
@@ -101,7 +102,6 @@ const AddProductPage = props => {
           <Input
             id="description"
             label="Description"
-            placeholder="Description of the product"
             isInvalid={formik.touched.description && formik.errors.description}
             errors={formik.errors.description}
             {...formik.getFieldProps("description")}
@@ -127,12 +127,20 @@ const AddProductPage = props => {
               {...formik.getFieldProps("category")}
             />
           </div>
+          <Input
+            id="category"
+            element="select"
+            options={["Electronics", "Accessories", "Others"]}
+          />
+          {/* <div>
           <label htmlFor="category">Choose a category:</label>
           <select id="category" name="category">
             <option value="Electronics">Electronics</option>
             <option value="Accessories">Accessories</option>
             <option value="Others">Others</option>
           </select>
+          </div> */}
+
           <Input
             id="price"
             element="input"
@@ -158,9 +166,11 @@ const AddProductPage = props => {
           {/* <Button type="submit" disabled={!formik.isValid || isSubmitting}>
             {isSubmitting ? "Submitting..." : "Save"}
           </Button> */}
-          <Button type="submit">
-            {isSubmitting ? "Submitting..." : "Save"}
-          </Button>
+          <div className={styles["button-wrapper"]}>
+            <Button type="submit" disabled={!formik.isValid || isLoading}>
+              {isLoading ? "Submitting..." : "Save"}
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

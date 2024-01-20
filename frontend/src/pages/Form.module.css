@@ -1,0 +1,37 @@
+.wrapper {
+  background-color: #7c7c7b;
+  border: 2px solid yellow;
+  border-radius: 4px;
+  padding: 2rem 6rem;
+  padding-bottom: 4rem;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.title-wrapper {
+  text-align: center;
+}
+
+.button-wrapper {
+  text-align: center;
+  margin-top: 1.2rem;
+}
+
+.slide-in-right {
+  animation: slide-in-right 1s ease-in;
+}
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(2000px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-30px);
+  }
+  80% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

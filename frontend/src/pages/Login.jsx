@@ -7,6 +7,7 @@ import Button from "../components/Button/Button.jsx";
 import { useHttpClient } from "../hooks/http-hook.jsx";
 import AuthContext from "../context/auth-context.jsx";
 import { useNavigate } from "react-router-dom";
+import styles from "./Form.module.css";
 
 const LoginPage = () => {
   // const data = useActionData();
@@ -57,7 +58,13 @@ const LoginPage = () => {
         validateOnMount={true}
       >
         {formik => (
-          <Form method="POST">
+          <Form
+            method="POST"
+            className={`${styles.wrapper} ${styles["slide-in-right"]}`}
+          >
+            <div className={styles["title-wrapper"]}>
+              <h2>Login</h2>
+            </div>
             <Input
               id="email"
               element="input"
@@ -78,9 +85,11 @@ const LoginPage = () => {
               errors={formik.errors.password}
               {...formik.getFieldProps("password")}
             />
-            <Button type="submit" disabled={!formik.isValid || isLoading}>
-              {isLoading ? "Submitting..." : "Save"}
-            </Button>
+            <div className={styles["button-wrapper"]}>
+              <Button type="submit" disabled={!formik.isValid || isLoading}>
+                {isLoading ? "Submitting..." : "Save"}
+              </Button>
+            </div>
           </Form>
         )}
       </Formik>

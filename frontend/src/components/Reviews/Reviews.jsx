@@ -14,6 +14,7 @@ const Reviews = props => {
 
   useEffect(() => {
     const fetchReviews = async () => {
+      console.log("-----here---------");
       try {
         const responseData = await sendRequest(
           `http://localhost:5000/products/reviews/${productId}`
