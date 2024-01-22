@@ -2,7 +2,8 @@ import { useState } from "react";
 
 import styles from "./Preview.module.css";
 
-const PreviewFile = ({ file, width, height }) => {
+const PreviewFile = props => {
+  const file = props.file;
   const [preview, setPreview] = useState(null);
 
   const reader = new FileReader();
@@ -14,7 +15,9 @@ const PreviewFile = ({ file, width, height }) => {
   }
 
   reader.onload = () => {
-    setPreview(isFileImage(file) ? reader.result : "/default.svg");
+    setPreview(
+      isFileImage(file) ? reader.result : "Please, enter valid image!"
+    );
   };
 
   return (
@@ -23,8 +26,8 @@ const PreviewFile = ({ file, width, height }) => {
         src={preview}
         className="preview"
         alt="Preview"
-        width={width}
-        height={height}
+        width={props.width}
+        height={props.height}
       />
       <label>{file.name}</label>
     </div>

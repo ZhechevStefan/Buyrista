@@ -119,7 +119,7 @@ const RegisterPage = () => {
       /> */}
             <div className={styles["button-wrapper"]}>
               <Button type="submit" disabled={!formik.isValid || isLoading}>
-                {isLoading ? "Submitting..." : "Save"}
+                {isLoading ? "Submitting..." : "SIGN UP NOW"}
               </Button>
             </div>
           </Form>

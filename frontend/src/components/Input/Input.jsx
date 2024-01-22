@@ -19,17 +19,6 @@ const Input = props => {
       />
     );
   } else if (props.element === "select") {
-    console.log(props.options);
-    let options = props.options.map(option => {
-      return (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      );
-    });
-
-    // console.log(options);
-
     element = (
       <select
         id={props.id}
@@ -40,8 +29,14 @@ const Input = props => {
         onChange={props.onChange}
         onBlur={props.onBlur}
         value={props.value}
-        {...options}
-      />
+      >
+        <option value="">--Please choose an option--</option>
+        {props.options.map((option, index) => (
+          <option key={index} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
     );
   } else {
     element = (

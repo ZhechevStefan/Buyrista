@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 
 import styles from "./ProductCard.module.css";
 import Button from "../Button/Button.jsx";
+import Input from "../Input/Input.jsx";
 import StarRating from "../StarRating/StarRating.jsx";
 
 const ProductCard = props => {
@@ -59,20 +60,22 @@ const ProductCard = props => {
             <tr>
               <th scope="row">Quantity:</th>
               <td>
-                {props.countInStock ? (
-                  <input
-                    ref={quantityInputRef}
-                    id="quantity"
-                    name="quantity"
-                    inputMode="numeric"
-                    type="number"
-                    min={1}
-                    max={props.countInStock}
-                    defaultValue={1}
-                  ></input>
-                ) : (
-                  "Out of Stock"
-                )}
+                <div className={styles.container}>
+                  {props.countInStock ? (
+                    <input
+                      ref={quantityInputRef}
+                      id="quantity"
+                      name="quantity"
+                      inputMode="numeric"
+                      type="number"
+                      min={1}
+                      max={props.countInStock}
+                      defaultValue={1}
+                    ></input>
+                  ) : (
+                    "Out of Stock"
+                  )}
+                </div>
               </td>
             </tr>
             <tr>

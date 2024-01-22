@@ -3,7 +3,6 @@ import { useState } from "react";
 
 import styles from "./Header.module.css";
 import LoginMenu from "../LoginMenu/LoginMenu.jsx";
-import Backdrop from "../Backdrop/Backdrop.jsx";
 import HeaderCartButton from "./HeaderCartBtn.jsx";
 
 const Header = props => {
@@ -13,6 +12,7 @@ const Header = props => {
   const openLoginMode = () => setLoginMenuIsShown(true);
   const closeLoginMode = () =>
     (timeout = setTimeout(() => setLoginMenuIsShown(false), 1000));
+  const suddenClose = () => setLoginMenuIsShown(false);
 
   return (
     <header className={styles["main-wrapper"]}>
@@ -50,7 +50,7 @@ const Header = props => {
         <div id="login-menu-hook"></div>
         {loginMenuIsShown && (
           <LoginMenu
-            onClick={openLoginMode}
+            onClick={suddenClose}
             onMouseLeave={closeLoginMode}
             onMouseEnter={() => clearTimeout(timeout)}
           />

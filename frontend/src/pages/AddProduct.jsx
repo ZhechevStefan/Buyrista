@@ -6,35 +6,49 @@ import Input from "../components/Input/Input.jsx";
 import Button from "../components/Button/Button.jsx";
 import { useHttpClient } from "../hooks/http-hook.jsx";
 import styles from "./Form.module.css";
+import { useState } from "react";
+import PreviewFile from "../components/PreviewFile/PreviewFile.jsx";
 
 const AddProductPage = props => {
   // const data = useActionData();
   // const navigation = useNavigation();
   // const isSubmitting = navigation.state === "submitting";
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [imageLoaded, setImageLoaded] = useState(null);
 
   const MAX_FILE_SIZE = 102400; //100KB
-  const validFileExtensions = {
-    image: ["jpg", "jpeg", "png"]
+  const validFileExtensions = ["jpg", "jpeg", "png"];
+
+  const checkSizeValidity = file => {
+    if (file.size > MAX_FILE_SIZE) {
+      return false;
+    }
+
+    return true;
   };
 
-  function isValidFileType(fileName, fileType) {
-    return (
-      fileName &&
-      validFileExtensions[fileType].indexOf(fileName.split(".").pop()) > -1
-    );
-  }
+  const checkExtValidity = file => {
+    const fileExt = file.type.split("/")[1];
+    const legalExt = validFileExtensions.indexOf(fileExt);
 
-  // const getRating = rat => {
-  //   formik.setFieldTouched("starRating", true, false);
-  //   formik.setFieldValue("starRating", rat);
-  // };
+    if (legalExt < 0) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const getValue = (formik, file) => {
+    formik.setFieldTouched("image", true, false);
+    formik.setFieldValue("image", file);
+    setImageLoaded(file);
+  };
 
   return (
     <Formik
       initialValues={{
         name: "",
-        // image: "",
+        image: "",
         description: "",
         brand: "",
         category: "",
@@ -43,16 +57,16 @@ const AddProductPage = props => {
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().trim().required("All fields are required"),
-        // image: Yup.mixed()
-        //   .required("All fields are required")
-        //   .test("is-valid-type", "Not a valid image type", value =>
-        //     isValidFileType(value && value.name.toLowerCase(), "image")
-        //   )
-        //   .test(
-        //     "is-valid-size",
-        //     "Max allowed size is 100KB",
-        //     value => value && value.size <= MAX_FILE_SIZE
-        //   ),
+        image: Yup.mixed()
+          .required("All fields are required")
+          .test("is-valid-size", "Max allowed size is 100KB", value =>
+            checkSizeValidity(value)
+          )
+          .test(
+            "is-valid-ext",
+            "Only .jpg, .jpeg and .png are valid extensions.",
+            value => checkExtValidity(value)
+          ),
         description: Yup.string().trim().required("All fields are required"),
         brand: Yup.string().trim().required("All fields are required"),
         category: Yup.string()
@@ -92,13 +106,16 @@ const AddProductPage = props => {
           <Input
             id="image"
             element="input"
-            type="file"
             label="Image"
-            placeholder="Upload an image for the product"
-            // isInvalid={formik.touched.image && formik.errors.image}
-            // errors={formik.errors.image}
-            // {...formik.getFieldProps("image")}
+            onChange={event => getValue(formik, event.target.files[0])}
+            isInvalid={formik.touched.image && formik.errors.image}
+            errors={formik.errors.image}
           />
+          {imageLoaded ? (
+            <PreviewFile file={imageLoaded} width={"50px"} height={"auto"} />
+          ) : (
+            ""
+          )}
           <Input
             id="description"
             label="Description"
@@ -116,31 +133,15 @@ const AddProductPage = props => {
             errors={formik.errors.brand}
             {...formik.getFieldProps("brand")}
           />
-          <div style={{ display: "none" }}>
-            <Input
-              id="category"
-              element="input"
-              type="text"
-              label="category"
-              isInvalid={formik.touched.category && formik.errors.category}
-              errors={formik.errors.category}
-              {...formik.getFieldProps("category")}
-            />
-          </div>
           <Input
             id="category"
             element="select"
+            label="Category"
             options={["Electronics", "Accessories", "Others"]}
+            isInvalid={formik.touched.category && formik.errors.category}
+            errors={formik.errors.category}
+            {...formik.getFieldProps("category")}
           />
-          {/* <div>
-          <label htmlFor="category">Choose a category:</label>
-          <select id="category" name="category">
-            <option value="Electronics">Electronics</option>
-            <option value="Accessories">Accessories</option>
-            <option value="Others">Others</option>
-          </select>
-          </div> */}
-
           <Input
             id="price"
             element="input"
@@ -163,12 +164,9 @@ const AddProductPage = props => {
             errors={formik.errors.countInStock}
             {...formik.getFieldProps("countInStock")}
           />
-          {/* <Button type="submit" disabled={!formik.isValid || isSubmitting}>
-            {isSubmitting ? "Submitting..." : "Save"}
-          </Button> */}
           <div className={styles["button-wrapper"]}>
             <Button type="submit" disabled={!formik.isValid || isLoading}>
-              {isLoading ? "Submitting..." : "Save"}
+              {isLoading ? "Submitting..." : "ADD PRODUCT"}
             </Button>
           </div>
         </Form>
@@ -183,6 +181,7 @@ export async function action({ request }) {
   const data = await request.formData();
   const product = {
     name: data.get("name"),
+    image: data.get("image"),
     description: data.get("description"),
     brand: data.get("brand"),
     category: data.get("category"),

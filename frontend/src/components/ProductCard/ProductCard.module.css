@@ -91,9 +91,15 @@
 }
 
 .order-info-form td input {
-  width: 55%;
   height: 1.5rem;
   color: black;
+  border-radius: 4px;
+  box-shadow: inset rgb(171, 172, 173) 0px 20px 30px -10px;
+}
+
+.container {
+  overflow: hidden;
+  width: 50%;
 }
 
 .slide-in-right {

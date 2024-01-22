@@ -7,14 +7,13 @@ const LoginMenu = props => {
   return ReactDOM.createPortal(
     <div
       className={styles["login-menu"]}
-      onClick={props.onClick}
       onMouseLeave={props.onMouseLeave}
       onMouseEnter={props.onMouseEnter}
     >
       <div className={styles["message"]}>
         Log in to your account to use the advantages!
       </div>
-      <div className={styles["button-container"]}>
+      <div className={styles["button-container"]} onClick={props.onClick}>
         <Button to="/users/login">Login</Button>
         <Button to="/users/register">Register</Button>
       </div>

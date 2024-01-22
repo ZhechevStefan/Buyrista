@@ -87,7 +87,7 @@ const LoginPage = () => {
             />
             <div className={styles["button-wrapper"]}>
               <Button type="submit" disabled={!formik.isValid || isLoading}>
-                {isLoading ? "Submitting..." : "Save"}
+                {isLoading ? "Submitting..." : "LOG IN NOW"}
               </Button>
             </div>
           </Form>
