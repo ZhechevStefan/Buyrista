@@ -104,10 +104,11 @@ const WriteAReview = props => {
             type="button"
             disabled={isSubmitting}
             onClick={props.hideWriteAComment}
+            withMargins
           >
             Cancel
           </Button>
-          <Button disabled={!formik.isValid || isSubmitting}>
+          <Button disabled={!formik.isValid || isSubmitting} withMargins>
             {isSubmitting ? "Submitting..." : "Save"}
           </Button>
         </div>

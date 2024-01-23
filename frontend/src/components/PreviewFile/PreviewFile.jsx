@@ -22,14 +22,12 @@ const PreviewFile = props => {
 
   return (
     <div className={styles["preview-wrapper"]}>
-      <img
-        src={preview}
-        className="preview"
-        alt="Preview"
-        width={props.width}
-        height={props.height}
-      />
-      <label>{file.name}</label>
+      <div className={styles["image-wrapper"]}>
+        <img src={preview} className="preview" alt="Preview" />
+      </div>
+      <div className={styles["label-wrapper"]}>
+        <label>{file.name}</label>
+      </div>
     </div>
   );
 };

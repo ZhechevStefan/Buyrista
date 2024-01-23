@@ -10,9 +10,9 @@ const Button = props => {
         exact={props.exact}
         className={`${styles.button} ${styles.button}--${
           props.size || "default"
-        } ${props.inverse && styles["button--inverse"]} ${
-          props.danger && styles["button--danger"]
-        }`}
+        } ${props.withMargins && styles["button-margins"]} ${
+          props.inverse && styles["button--inverse"]
+        } ${props.danger && styles["button--danger"]}`}
       >
         {props.children}
       </Link>
@@ -26,9 +26,11 @@ const Button = props => {
       disabled={props.disabled}
       className={`${styles.button} ${styles.grow} ${styles.button}--${
         props.size || "default"
-      } ${props.inverse && styles["button--inverse"]} ${
-        props.neutral && styles["button--neutral"]
-      } ${props.danger && styles["button--danger"]}`}
+      } ${props.withMargins && styles["button-margins"]} ${
+        props.inverse && styles["button--inverse"]
+      } ${props.neutral && styles["button--neutral"]} ${
+        props.danger && styles["button--danger"]
+      }`}
     >
       {props.children}
     </button>

@@ -51,6 +51,7 @@ const Reviews = props => {
             type="button"
             onClick={showWriteAComment}
             disabled={!isHidden}
+            withMargins
           >
             + Write your review
           </Button>

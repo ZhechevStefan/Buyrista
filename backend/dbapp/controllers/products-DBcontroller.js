@@ -62,5 +62,5 @@ exports.createProduct = async product => {
     imageData: product.imageData
   });
 
-  return prod;
+  return { productId: prod.id };
 };

@@ -16,6 +16,13 @@
   margin-top: 1.2rem;
 }
 
+.upload-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+}
+
 .slide-in-right {
   animation: slide-in-right 1s ease-in;
 }

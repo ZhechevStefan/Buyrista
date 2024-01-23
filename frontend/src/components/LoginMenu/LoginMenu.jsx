@@ -14,8 +14,12 @@ const LoginMenu = props => {
         Log in to your account to use the advantages!
       </div>
       <div className={styles["button-container"]} onClick={props.onClick}>
-        <Button to="/users/login">Login</Button>
-        <Button to="/users/register">Register</Button>
+        <Button to="/users/login" withMargins>
+          Login
+        </Button>
+        <Button to="/users/register" withMargins>
+          Register
+        </Button>
       </div>
     </div>,
     // document.getElementById("modal-hook")

@@ -1,20 +1,20 @@
-import { Form, useActionData, redirect, useNavigation } from "react-router-dom";
+import { useRef, useState } from "react";
+import { useNavigation, Form, redirect } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 import Input from "../components/Input/Input.jsx";
+import RefInput from "../components/Input/RefInput.jsx";
 import Button from "../components/Button/Button.jsx";
-import { useHttpClient } from "../hooks/http-hook.jsx";
-import styles from "./Form.module.css";
-import { useState } from "react";
 import PreviewFile from "../components/PreviewFile/PreviewFile.jsx";
+import styles from "./Form.module.css";
+import EmptyBackground from "../components/PreviewFile/EmptyBackground.jsx";
 
 const AddProductPage = props => {
-  // const data = useActionData();
-  // const navigation = useNavigation();
-  // const isSubmitting = navigation.state === "submitting";
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [imageLoaded, setImageLoaded] = useState(null);
+  const filePickerRef = useRef();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
 
   const MAX_FILE_SIZE = 102400; //100KB
   const validFileExtensions = ["jpg", "jpeg", "png"];
@@ -38,10 +38,15 @@ const AddProductPage = props => {
     return true;
   };
 
-  const getValue = (formik, file) => {
+  const setValue = (formik, file) => {
     formik.setFieldTouched("image", true, false);
     formik.setFieldValue("image", file);
     setImageLoaded(file);
+  };
+
+  const pickImageHandler = () => {
+    console.log(filePickerRef.current);
+    filePickerRef.current.click();
   };
 
   return (
@@ -89,6 +94,7 @@ const AddProductPage = props => {
         <Form
           method="POST"
           className={`${styles.wrapper} ${styles["slide-in-right"]}`}
+          encType="multipart/form-data"
         >
           <div className={styles["title-wrapper"]}>
             <h2>Add a Product</h2>
@@ -103,19 +109,27 @@ const AddProductPage = props => {
             errors={formik.errors.name}
             {...formik.getFieldProps("name")}
           />
-          <Input
-            id="image"
-            element="input"
-            label="Image"
-            onChange={event => getValue(formik, event.target.files[0])}
-            isInvalid={formik.touched.image && formik.errors.image}
-            errors={formik.errors.image}
-          />
-          {imageLoaded ? (
-            <PreviewFile file={imageLoaded} width={"50px"} height={"auto"} />
-          ) : (
-            ""
-          )}
+          <div className={styles["upload-wrapper"]}>
+            {imageLoaded ? (
+              <PreviewFile file={imageLoaded} />
+            ) : (
+              <EmptyBackground url="../images/empty-background.jpg" />
+            )}
+            <Button type="button" onClick={pickImageHandler}>
+              PICK IMAGE
+            </Button>
+          </div>
+          <div style={{ display: "none" }}>
+            <RefInput
+              id="image"
+              element="input"
+              label="Image"
+              ref={filePickerRef}
+              onChange={event => setValue(formik, event.target.files[0])}
+              isInvalid={formik.touched.image && formik.errors.image}
+              errors={formik.errors.image}
+            />
+          </div>
           <Input
             id="description"
             label="Description"
@@ -165,8 +179,8 @@ const AddProductPage = props => {
             {...formik.getFieldProps("countInStock")}
           />
           <div className={styles["button-wrapper"]}>
-            <Button type="submit" disabled={!formik.isValid || isLoading}>
-              {isLoading ? "Submitting..." : "ADD PRODUCT"}
+            <Button type="submit" disabled={!formik.isValid || isSubmitting}>
+              {isSubmitting ? "Submitting..." : "ADD PRODUCT"}
             </Button>
           </div>
         </Form>
@@ -179,32 +193,18 @@ export default AddProductPage;
 
 export async function action({ request }) {
   const data = await request.formData();
-  const product = {
-    name: data.get("name"),
-    image: data.get("image"),
-    description: data.get("description"),
-    brand: data.get("brand"),
-    category: data.get("category"),
-    price: data.get("price"),
-    countInStock: data.get("countInStock")
-  };
 
-  console.log(product);
-  // const response = await fetch("http://localhost:5000/users/login", {
-  //   method: "POST",
-  //   credentials: "include",
-  //   headers: {
-  //     "Content-Type": "application/json"
-  //   },
-  //   body: JSON.stringify(authData)
-  // });
+  const response = await fetch("http://localhost:5000/admin/addproduct", {
+    method: "POST",
+    credentials: "include",
+    body: data
+  });
 
-  // if (response.status === 401 || response.status === 500) {
-  //   return response;
-  // }
+  if (response.status === 401 || response.status === 500) {
+    return response;
+  }
 
-  // const resData = await response.json();
+  const { productId } = await response.json();
 
-  // //Cookie handle
-  // return redirect("/");
+  return redirect(`/products/${productId}`);
 }
