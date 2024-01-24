@@ -80,14 +80,23 @@ const ProductCard = props => {
             </tr>
             <tr>
               <td colSpan={2} style={{ textAlign: "center" }}>
-                <Button type="submit" disabled={!props.countInStock}>
+                <Button
+                  type="submit"
+                  disabled={!props.countInStock}
+                  width="90%"
+                >
                   Add to Cart
                 </Button>
               </td>
             </tr>
             <tr>
               <td colSpan={2} style={{ textAlign: "center" }}>
-                <Button type="submit" disabled={!props.countInStock}>
+                <Button
+                  type="submit"
+                  disabled={!props.countInStock}
+                  width="90%"
+                  inverse
+                >
                   Add to Favourites
                 </Button>
               </td>

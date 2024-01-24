@@ -6,6 +6,7 @@
   background: black;
   color: white;
   cursor: pointer;
+  text-align: center;
   text-decoration: none;
   display: inline-block;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
@@ -26,13 +27,20 @@
   border-color: #ffea00;
 }
 
-.button--inverse {
+.button--transparent {
   background: transparent;
   color: white;
 }
 
+.button--inverse {
+  background: white;
+  color: black;
+}
+
 .button--inverse:hover,
-.button--inverse:active {
+.button--inverse:active,
+.button--transparent:hover,
+.button--transparent:active {
   color: white;
   background: black;
 }

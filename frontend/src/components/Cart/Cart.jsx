@@ -66,11 +66,11 @@ const Cart = props => {
 
   const modalActions = (
     <div className={styles.actions}>
-      <Button type="button" inverse onClick={props.onClose}>
+      <Button type="button" transparent onClick={props.onClose} withMargins>
         Close
       </Button>
       {hasItems && (
-        <Button type="button" onClick={orderHandler}>
+        <Button type="button" onClick={orderHandler} withMargins>
           Order
         </Button>
       )}

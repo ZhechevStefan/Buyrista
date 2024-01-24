@@ -8,6 +8,7 @@ const Button = props => {
       <Link
         to={props.to}
         exact={props.exact}
+        style={props.width ? { width: props.width } : { width: "auto" }}
         className={`${styles.button} ${styles.button}--${
           props.size || "default"
         } ${props.withMargins && styles["button-margins"]} ${
@@ -24,13 +25,12 @@ const Button = props => {
       type={props.type}
       onClick={props.onClick}
       disabled={props.disabled}
-      className={`${styles.button} ${styles.grow} ${styles.button}--${
-        props.size || "default"
-      } ${props.withMargins && styles["button-margins"]} ${
-        props.inverse && styles["button--inverse"]
-      } ${props.neutral && styles["button--neutral"]} ${
-        props.danger && styles["button--danger"]
-      }`}
+      style={props.width ? { width: props.width } : { width: "auto" }}
+      className={`${styles.button} ${styles.grow}  ${
+        props.withMargins && styles["button-margins"]
+      } ${props.inverse && styles["button--inverse"]} ${
+        props.transparent && styles["button--transparent"]
+      } ${props.danger && styles["button--danger"]}`}
     >
       {props.children}
     </button>

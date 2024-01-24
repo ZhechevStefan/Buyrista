@@ -14,10 +14,10 @@ const LoginMenu = props => {
         Log in to your account to use the advantages!
       </div>
       <div className={styles["button-container"]} onClick={props.onClick}>
-        <Button to="/users/login" withMargins>
+        <Button to="/users/login" width="110px" withMargins>
           Login
         </Button>
-        <Button to="/users/register" withMargins>
+        <Button to="/users/register" width="110px" withMargins>
           Register
         </Button>
       </div>

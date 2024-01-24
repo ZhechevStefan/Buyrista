@@ -1,11 +1,21 @@
+import { useMemo, useState } from "react";
 import { useLoaderData, json } from "react-router-dom";
 import Button from "../components/Button/Button.jsx";
 
 import styles from "./Users.module.css";
+import Pagination from "../components/Pagination/Pagination.jsx";
 
 const UsersPage = props => {
   const { users } = useLoaderData();
-  console.log(users);
+
+  let pageSize = 6;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return users.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, pageSize, users]);
 
   const table = (
     <table className={styles["users-table"]}>
@@ -19,7 +29,7 @@ const UsersPage = props => {
         </tr>
       </thead>
       <tbody>
-        {users.map(user => (
+        {currentTableData.map(user => (
           <tr key={user.id}>
             <td>{user.id}</td>
             <td>{user.name}</td>
@@ -38,6 +48,12 @@ const UsersPage = props => {
     <>
       <h2>Users:</h2>
       {table}
+      <Pagination
+        currentPage={currentPage}
+        totalCount={users.length}
+        pageSize={pageSize}
+        onPageChange={page => setCurrentPage(page)}
+      />
     </>
   );
 };
