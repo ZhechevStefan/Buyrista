@@ -3,16 +3,26 @@ const db = require("../models/index.js");
 const Review = db.reviews;
 const User = db.users;
 
-exports.getReviewsByProductId = async productId => {
-  return await Review.findAll({
-    where: {
-      productId
-    },
-    include: {
-      model: User,
-      attributes: ["name"]
-    }
-  });
+exports.getReviewsByProductId = async (productId, offset) => {
+  // return await Review.findAll({
+  //   where: {
+  //     productId
+  //   },
+  //   include: {
+  //     model: User,
+  //     attributes: ["id", "name"]
+  //   }
+  // });
+  const [reviews, metadata] = await db.sequelize.query(
+    `SELECT reviews.id, rating, title, comment, "userId", reviews."createdAt", users.name FROM reviews 
+    JOIN users ON users.id=reviews."userId"
+    WHERE reviews."productId"='${productId}' 
+    ORDER BY reviews."createdAt" DESC 
+    LIMIT 3 
+    OFFSET ${offset} `
+  );
+
+  return reviews;
 };
 
 exports.createReview = async review => {

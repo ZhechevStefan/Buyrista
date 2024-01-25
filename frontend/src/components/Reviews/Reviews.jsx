@@ -5,39 +5,39 @@ import Review from "./Review.jsx";
 import WriteAReview from "./WriteAReview.jsx";
 import { useHttpClient } from "../../hooks/http-hook.jsx";
 import styles from "./Reviews.module.css";
+import InfiniteScroll from "../InfiniteScroll/InfiniteScroll.jsx";
 
 const Reviews = props => {
   const productId = props.productId;
-  const [loadedReviews, setLoadedReviews] = useState([]);
+  // const [loadedReviews, setLoadedReviews] = useState([]);
   const [isHidden, setIsHidden] = useState(true);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  // const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      console.log("-----here---------");
-      try {
-        const responseData = await sendRequest(
-          `http://localhost:5000/products/reviews/${productId}`
-        );
-        const fetchedReviews = [];
-        responseData.reviews.map(review => fetchedReviews.push(review));
+  // useEffect(() => {
+  //   const fetchReviews = async () => {
+  //     try {
+  //       const responseData = await sendRequest(
+  //         `http://localhost:5000/products/reviews/${productId}`
+  //       );
+  //       const fetchedReviews = [];
+  //       responseData.reviews.map(review => fetchedReviews.push(review));
 
-        setLoadedReviews(fetchedReviews);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  //       setLoadedReviews(fetchedReviews);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
 
-    fetchReviews(productId);
-  }, [productId, sendRequest]);
+  //   fetchReviews(productId);
+  // }, [productId, sendRequest]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (error) {
-    return <div>An unexpected error occurred!</div>;
-  }
+  // if (error) {
+  //   return <div>An unexpected error occurred!</div>;
+  // }
 
   const showWriteAComment = () => setIsHidden(false);
   const hideWriteAComment = () => setIsHidden(true);
@@ -61,7 +61,7 @@ const Reviews = props => {
           isHidden={isHidden}
           hideWriteAComment={hideWriteAComment}
         />
-        {loadedReviews.length === 0 ? (
+        {/* {loadedReviews.length === 0 ? (
           <div className={styles["no-comments-message"]}>
             There are still no reviews for this product. You can be the first to
             write one!
@@ -79,7 +79,10 @@ const Reviews = props => {
               />
             );
           })
-        )}
+        )} */}
+        <InfiniteScroll
+          url={`http://localhost:5000/products/reviews/${productId}`}
+        />
       </section>
     </>
   );

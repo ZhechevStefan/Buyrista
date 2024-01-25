@@ -5,7 +5,7 @@ const Pagination = props => {
   const {
     onPageChange,
     totalCount,
-    siblingCount = 1,
+    siblingsCount = 1,
     currentPage,
     pageSize,
     className
@@ -14,13 +14,12 @@ const Pagination = props => {
   const paginationRange = usePagination({
     currentPage,
     totalCount,
-    siblingCount,
+    siblingsCount,
     pageSize
   });
 
   const DOTS = "...";
 
-  // If there are less than 2 times in pagination range we shall not render the component
   if (currentPage === 0 || paginationRange.length < 2) {
     return null;
   }
@@ -45,33 +44,31 @@ const Pagination = props => {
       >
         <div className={`${styles.arrow} ${styles.left}`} />
       </li>
-      {paginationRange.map(pageNumber => {
-        // If the pageItem is a DOT, render the DOTS unicode character
+      {paginationRange.map((pageNumber, index) => {
         if (pageNumber === DOTS) {
           return (
             <li
               className={`${styles["pagination-item"]} ${styles.dots}`}
-              key={pageNumber}
+              key={index}
             >
               &#8230;
             </li>
           );
         }
 
-        // Render our Page Pills
         return (
           <li
             className={`${styles["pagination-item"]} ${
               pageNumber === currentPage ? styles["selected"] : ""
             }`}
             onClick={() => onPageChange(pageNumber)}
-            key={pageNumber}
+            key={index}
           >
             {pageNumber}
           </li>
         );
       })}
-      {/*  Right Navigation arrow */}
+      {/* Right Navigation arrow  */}
       <li
         className={`${styles["pagination-item"]} ${
           currentPage === lastPage ? styles.disabled : ""

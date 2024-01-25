@@ -6,8 +6,13 @@ const HttpError = require("../error-model/http-error.js");
 exports.getRevewsByProductId = async (req, res, next) => {
   try {
     const productId = req.params.productId;
+    // the offset is equal to the page number * the number of reviews per page - number of reviews per page
+    const reviewOffset = req.query.page * 3 - 3;
 
-    let reviews = await reviewsDbController.getReviewsByProductId(productId);
+    let reviews = await reviewsDbController.getReviewsByProductId(
+      productId,
+      reviewOffset
+    );
 
     res.json({ reviews });
   } catch (err) {

@@ -111,7 +111,7 @@ const AddProductPage = props => {
           />
           <div className={styles["upload-wrapper"]}>
             {imageLoaded ? (
-              <PreviewFile file={imageLoaded} />
+              <PreviewFile file={imageLoaded} errors={formik.errors.image} />
             ) : (
               <EmptyBackground url="../images/empty-background.jpg" />
             )}
@@ -127,7 +127,7 @@ const AddProductPage = props => {
               ref={filePickerRef}
               onChange={event => setValue(formik, event.target.files[0])}
               isInvalid={formik.touched.image && formik.errors.image}
-              errors={formik.errors.image}
+              // errors={formik.errors.image}
             />
           </div>
           <Input

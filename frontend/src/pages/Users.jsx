@@ -8,7 +8,7 @@ import Pagination from "../components/Pagination/Pagination.jsx";
 const UsersPage = props => {
   const { users } = useLoaderData();
 
-  let pageSize = 6;
+  let pageSize = 8;
   const [currentPage, setCurrentPage] = useState(1);
 
   const currentTableData = useMemo(() => {

@@ -111,7 +111,7 @@ const CartProvider = props => {
     clearCart: clearCartHandler
   };
 
-  const ref = useRef(true);
+  const fetchStopper = useRef(true);
 
   useEffect(() => {
     let items = JSON.parse(localStorage.getItem("items"));
@@ -124,10 +124,10 @@ const CartProvider = props => {
     };
 
     if (items && items.length > 0) {
-      if (ref.current) {
+      if (fetchStopper.current) {
         getAndSetPriceAndCountInStock(items);
         return () => {
-          ref.current = false;
+          fetchStopper.current = false;
         };
       }
     }

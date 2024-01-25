@@ -4,6 +4,7 @@ import styles from "./Preview.module.css";
 
 const PreviewFile = props => {
   const file = props.file;
+  const errorText = props.errors;
   const [preview, setPreview] = useState(null);
 
   const reader = new FileReader();
@@ -25,8 +26,12 @@ const PreviewFile = props => {
       <div className={styles["image-wrapper"]}>
         <img src={preview} className="preview" alt="Preview" />
       </div>
-      <div className={styles["label-wrapper"]}>
-        <label>{file.name}</label>
+      <div
+        className={`${styles["label-wrapper"]} ${
+          errorText ? styles["invalid"] : ""
+        }`}
+      >
+        <label>{errorText ? errorText : file.name}</label>
       </div>
     </div>
   );

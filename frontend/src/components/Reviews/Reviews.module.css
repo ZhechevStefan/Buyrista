@@ -18,11 +18,6 @@
   display: flex;
 }
 
-.no-comments-message {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
 .slide-in-left {
   animation: slide-in-left 1s ease-in;
 }

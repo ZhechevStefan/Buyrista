@@ -10,7 +10,7 @@ const adminRoutes = require("./routes/admin-routes.js");
 
 const app = express();
 
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
