@@ -1,53 +1,73 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-import { useHttpClient } from "../../hooks/http-hook.jsx";
 import Review from "../Reviews/Review.jsx";
 import styles from "./InfiniteScroll.module.css";
 
 const InfiniteScroll = props => {
   const url = props.url;
-  const [items, setItems] = useState([]);
-  const [page, setPage] = useState(1);
+  const totalReviewCount = props.reviewCount;
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(2);
+  const [isLoading, setIsLoading] = useState(false);
+  const loaderRef = useRef(null);
+  const allReviewsAreLoaded = totalReviewCount == items.length;
 
   const fetchData = useCallback(async () => {
-    if (isLoading) {
+    if (isLoading || allReviewsAreLoaded) {
       return;
     }
+
+    setIsLoading(true);
+
     try {
-      const { reviews } = await sendRequest(`${url}?page=${page}`);
+      const response = await fetch(`${url}?page=${page}`);
+      const { reviews } = await response.json();
 
       setItems(prevItems => [...prevItems, ...reviews]);
-      setPage(prevPage => prevPage + 1);
     } catch (err) {
       console.log(err);
     }
-  }, [isLoading, page, sendRequest, url]);
 
-  const fetchStopper1 = useRef(true);
-
-  useEffect(() => {
-    if (fetchStopper1.current) {
-      fetchData();
-      return () => {
-        fetchStopper1.current = false;
-      };
-    }
-  }, []);
+    setPage(prevPage => prevPage + 1);
+    setIsLoading(false);
+  }, [isLoading, page, url, allReviewsAreLoaded]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, clientHeight, scrollHeight } =
-        document.documentElement;
-      if (scrollTop + clientHeight >= scrollHeight - 20) {
-        fetchData();
+    const fetchInitialData = async () => {
+      setIsLoading(true);
+
+      try {
+        const response = await fetch(`${url}?page=1`);
+        const { reviews } = await response.json();
+
+        setItems(prevItems => [...prevItems, ...reviews]);
+      } catch (err) {
+        console.log(err);
       }
+      setIsLoading(false);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    fetchInitialData();
+  }, [url]);
+
+  useEffect(() => {
+    const reference = loaderRef.current;
+    const observer = new IntersectionObserver(entries => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        fetchData();
+      }
+    });
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      if (reference) {
+        observer.unobserve(reference);
+      }
     };
   }, [fetchData]);
 
@@ -72,6 +92,7 @@ const InfiniteScroll = props => {
           );
         })
       )}
+      <div ref={loaderRef}>{isLoading && <p>Loading...</p>}</div>
     </>
   );
 };

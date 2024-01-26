@@ -37,7 +37,7 @@ const ProductPage = () => {
         imageType={product.imageType}
         onAddToCart={onAddToCartHandler}
       />
-      <Reviews productId={product.id} />
+      <Reviews productId={product.id} ratingCount={product.ratingCount} />
     </>
   );
 };

@@ -9,6 +9,7 @@ import InfiniteScroll from "../InfiniteScroll/InfiniteScroll.jsx";
 
 const Reviews = props => {
   const productId = props.productId;
+  const reviewCount = props.ratingCount;
   // const [loadedReviews, setLoadedReviews] = useState([]);
   const [isHidden, setIsHidden] = useState(true);
   // const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -82,6 +83,7 @@ const Reviews = props => {
         )} */}
         <InfiniteScroll
           url={`http://localhost:5000/products/reviews/${productId}`}
+          reviewCount={reviewCount}
         />
       </section>
     </>
