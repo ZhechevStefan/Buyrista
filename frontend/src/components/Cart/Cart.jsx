@@ -102,11 +102,13 @@ const Cart = props => {
   const didSubmitModal = <p>Successfull order!</p>;
 
   return (
-    <Modal onClose={props.onClose} header="Your cart:">
-      {!isSubmitting && !didSubmit && cartModalContent}
-      {isSubmitting && isSubmittingModal}
-      {!isSubmitting && didSubmit && didSubmitModal}
-    </Modal>
+    <>
+      <Modal onClose={props.onClose} header="Your cart:">
+        {!isSubmitting && !didSubmit && cartModalContent}
+        {isSubmitting && isSubmittingModal}
+        {!isSubmitting && didSubmit && didSubmitModal}
+      </Modal>
+    </>
   );
 };
 

@@ -19,7 +19,7 @@ exports.getReviewsByProductId = async (productId, offset) => {
     WHERE reviews."productId"='${productId}' 
     ORDER BY reviews."createdAt" DESC 
     LIMIT 3 
-    OFFSET ${offset} `
+    OFFSET ${offset}`
   );
 
   return reviews;

@@ -1,0 +1,39 @@
+.circle {
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  box-shadow: 4px -40px 60px 5px rgb(124, 125, 125) inset;
+  margin: 0.7rem 0;
+}
+
+.loader {
+  background: linear-gradient(
+    to right,
+    rgb(230, 230, 230) 30%,
+    transparent 70%
+  );
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader:before {
+  display: block;
+  content: "";
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #a1a1a0;
+}

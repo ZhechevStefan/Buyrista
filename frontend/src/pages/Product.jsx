@@ -5,6 +5,7 @@ import ProductCard from "../components/ProductCard/ProductCard.jsx";
 import Reviews from "../components/Reviews/Reviews.jsx";
 import CartContext from "../context/cart-context.jsx";
 import AuthContext from "../context/auth-context.jsx";
+import Loader from "../components/Loader/Loader.jsx";
 
 const ProductPage = () => {
   const { product } = useLoaderData();
@@ -25,6 +26,7 @@ const ProductPage = () => {
 
   return (
     <>
+      {!product && <Loader />}
       <ProductCard
         id={product.id}
         name={product.name}

@@ -10,35 +10,7 @@ import InfiniteScroll from "../InfiniteScroll/InfiniteScroll.jsx";
 const Reviews = props => {
   const productId = props.productId;
   const reviewCount = props.ratingCount;
-  // const [loadedReviews, setLoadedReviews] = useState([]);
   const [isHidden, setIsHidden] = useState(true);
-  // const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
-  // useEffect(() => {
-  //   const fetchReviews = async () => {
-  //     try {
-  //       const responseData = await sendRequest(
-  //         `http://localhost:5000/products/reviews/${productId}`
-  //       );
-  //       const fetchedReviews = [];
-  //       responseData.reviews.map(review => fetchedReviews.push(review));
-
-  //       setLoadedReviews(fetchedReviews);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-
-  //   fetchReviews(productId);
-  // }, [productId, sendRequest]);
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>An unexpected error occurred!</div>;
-  // }
 
   const showWriteAComment = () => setIsHidden(false);
   const hideWriteAComment = () => setIsHidden(true);
@@ -62,25 +34,6 @@ const Reviews = props => {
           isHidden={isHidden}
           hideWriteAComment={hideWriteAComment}
         />
-        {/* {loadedReviews.length === 0 ? (
-          <div className={styles["no-comments-message"]}>
-            There are still no reviews for this product. You can be the first to
-            write one!
-          </div>
-        ) : (
-          loadedReviews.map(review => {
-            return (
-              <Review
-                key={review.id}
-                rating={review.rating}
-                title={review.title}
-                comment={review.comment}
-                createdAt={review.createdAt}
-                author={review.user.name}
-              />
-            );
-          })
-        )} */}
         <InfiniteScroll
           url={`http://localhost:5000/products/reviews/${productId}`}
           reviewCount={reviewCount}

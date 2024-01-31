@@ -23,6 +23,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false
     }
+    // cart: {
+    //   type: DataTypes.ARRAY(DataTypes.UUID),
+    //   allowNull: true
+    // },
+    // favourites: {
+    //   type: DataTypes.ARRAY(DataTypes.UUID),
+    //   allowNull: true
+    // },
   });
 
   return User;

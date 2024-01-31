@@ -73,55 +73,55 @@ const reviewsArr = [
   //   productId: "849d781b-5c6f-4de0-aac2-bc25a580e78a",
   //   userId: "30cb91d9-1863-4084-aba0-0617b3924fba"
   // },
-  {
-    rating: "4",
-    title: "Test Title",
-    comment: "Test Comment",
-    productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
-    userId: "081fcab7-aeb9-481e-a5f5-4860adbf33c6"
-  },
-  {
-    rating: "4",
-    title: "Test Title",
-    comment: "Test Comment",
-    productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
-    userId: "09be74ef-dfd9-4ea9-914e-90566c8901fa"
-  },
-  {
-    rating: "4",
-    title: "Test Title",
-    comment: "Test Comment",
-    productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
-    userId: "09cc171d-3cdc-439e-884e-1e0d17ac5dbe"
-  },
-  {
-    rating: "4",
-    title: "Test Title",
-    comment: "Test Comment",
-    productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
-    userId: "16271e72-a997-412c-807d-05707b66d7eb"
-  },
-  {
-    rating: "4",
-    title: "Test Title",
-    comment: "Test Comment",
-    productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
-    userId: "1722ee33-5e60-4138-8ccd-a099d1fcaab9"
-  },
-  {
-    rating: "4",
-    title: "Test Title",
-    comment: "Test Comment",
-    productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
-    userId: "172efd41-f7d5-4d80-bf52-5ab5a975058c"
-  },
-  {
-    rating: "4",
-    title: "Test Title",
-    comment: "Test Comment",
-    productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
-    userId: "17c8b3bd-3a38-4da0-a72a-ffdb8b9aa76c"
-  },
+  // {
+  //   rating: "4",
+  //   title: "Test Title",
+  //   comment: "Test Comment",
+  //   productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
+  //   userId: "081fcab7-aeb9-481e-a5f5-4860adbf33c6"
+  // },
+  // {
+  //   rating: "4",
+  //   title: "Test Title",
+  //   comment: "Test Comment",
+  //   productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
+  //   userId: "09be74ef-dfd9-4ea9-914e-90566c8901fa"
+  // },
+  // {
+  //   rating: "4",
+  //   title: "Test Title",
+  //   comment: "Test Comment",
+  //   productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
+  //   userId: "09cc171d-3cdc-439e-884e-1e0d17ac5dbe"
+  // },
+  // {
+  //   rating: "4",
+  //   title: "Test Title",
+  //   comment: "Test Comment",
+  //   productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
+  //   userId: "16271e72-a997-412c-807d-05707b66d7eb"
+  // },
+  // {
+  //   rating: "4",
+  //   title: "Test Title",
+  //   comment: "Test Comment",
+  //   productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
+  //   userId: "1722ee33-5e60-4138-8ccd-a099d1fcaab9"
+  // },
+  // {
+  //   rating: "4",
+  //   title: "Test Title",
+  //   comment: "Test Comment",
+  //   productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
+  //   userId: "172efd41-f7d5-4d80-bf52-5ab5a975058c"
+  // },
+  // {
+  //   rating: "4",
+  //   title: "Test Title",
+  //   comment: "Test Comment",
+  //   productId: "3a889c34-6159-49e2-8cb9-98dad849427f",
+  //   userId: "17c8b3bd-3a38-4da0-a72a-ffdb8b9aa76c"
+  // },
   {
     rating: "4",
     title: "Test Title",

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 import Review from "../Reviews/Review.jsx";
 import styles from "./InfiniteScroll.module.css";
+import Loader from "../Loader/Loader.jsx";
 
 const InfiniteScroll = props => {
   const url = props.url;
@@ -60,8 +61,8 @@ const InfiniteScroll = props => {
       }
     });
 
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
+    if (reference) {
+      observer.observe(reference);
     }
 
     return () => {
@@ -92,7 +93,7 @@ const InfiniteScroll = props => {
           );
         })
       )}
-      <div ref={loaderRef}>{isLoading && <p>Loading...</p>}</div>
+      <div ref={loaderRef}>{isLoading && <Loader />}</div>
     </>
   );
 };

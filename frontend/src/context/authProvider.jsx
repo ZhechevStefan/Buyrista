@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import AuthContext from "./auth-context.jsx";
+import { toast } from "react-toastify";
 
 const AuthProvider = props => {
   const [userInfo, setUserInfo] = useState(null);
@@ -7,9 +8,12 @@ const AuthProvider = props => {
   const login = useCallback(profile => {
     setUserInfo(profile);
     localStorage.setItem("userInfo", JSON.stringify(profile));
+    toast.success(`Wellcome, ${profile.name}!`);
   }, []);
 
   const logout = useCallback(() => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+    toast.success(`See you soon, ${user.name}!`);
     setUserInfo(null);
     localStorage.removeItem("userInfo");
   }, []);
