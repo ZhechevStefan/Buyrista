@@ -1,4 +1,4 @@
-export const saveToLocalStorage = items => {
+export const saveCartToLocalStorage = items => {
   const localStoreItems = items.map(item => {
     return {
       id: item.id,
@@ -33,4 +33,9 @@ export const getFullInfo = async items => {
   });
 
   return items;
+};
+
+export const saveFavsToLocalStorage = favs => {
+  const stringifiedItems = JSON.stringify(favs);
+  localStorage.setItem("favs", stringifiedItems);
 };

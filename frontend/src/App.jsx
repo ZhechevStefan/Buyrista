@@ -6,6 +6,7 @@ import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import CartProvider from "./context/cartProvider.jsx";
 import AuthProvider from "./context/authProvider.jsx";
+import FavProvider from "./context/favProvider.jsx";
 import Cart from "./components/Cart/Cart.jsx";
 import Backdrop from "./components/Backdrop/Backdrop.jsx";
 import Notifications from "./components/Notifications/Notifications.jsx";
@@ -27,12 +28,14 @@ function App() {
       <CartProvider>
         {cartIsShown && <Cart onClose={hideCartHandler} />}
         {cartIsShown && <Backdrop onClick={hideCartHandler} dark />}
-        <Header onShowCart={showCartHandler} />
-        <Notifications />
-        <main>
-          <Outlet />
-        </main>
-        <Footer />
+        <FavProvider>
+          <Header onShowCart={showCartHandler} />
+          <Notifications />
+          <main>
+            <Outlet />
+          </main>
+          <Footer />
+        </FavProvider>
       </CartProvider>
     </AuthProvider>
   );

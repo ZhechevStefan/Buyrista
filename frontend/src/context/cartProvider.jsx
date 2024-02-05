@@ -1,7 +1,10 @@
 import { useEffect, useReducer, useRef } from "react";
 import CartContext from "./cart-context.jsx";
 
-import { saveToLocalStorage, getFullInfo } from "../utils/localStorageUtils.js";
+import {
+  saveCartToLocalStorage,
+  getFullInfo
+} from "../utils/localStorageUtils.js";
 
 const defaultCartState = {
   items: [],
@@ -36,7 +39,7 @@ const cartReducer = (state, action) => {
     }
 
     //save to Local Storage
-    saveToLocalStorage(updatedItems);
+    saveCartToLocalStorage(updatedItems);
 
     return {
       items: updatedItems,
@@ -69,7 +72,7 @@ const cartReducer = (state, action) => {
     }
 
     //save to local Storage
-    saveToLocalStorage(updatedItems);
+    saveCartToLocalStorage(updatedItems);
 
     return {
       items: updatedItems,
@@ -78,7 +81,9 @@ const cartReducer = (state, action) => {
   }
 
   if (action.type === "CLEAR") {
-    localStorage.clear();
+    localStorage.setItem("items", null);
+    state.items = [];
+    state.totalAmount = 0;
     return defaultCartState;
   }
 

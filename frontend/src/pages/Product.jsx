@@ -3,26 +3,12 @@ import { useLoaderData, json } from "react-router-dom";
 
 import ProductCard from "../components/ProductCard/ProductCard.jsx";
 import Reviews from "../components/Reviews/Reviews.jsx";
-import CartContext from "../context/cart-context.jsx";
 import AuthContext from "../context/auth-context.jsx";
 import Loader from "../components/Loader/Loader.jsx";
 
 const ProductPage = () => {
   const { product } = useLoaderData();
-  const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
-
-  const onAddToCartHandler = quantity => {
-    cartCtx.addItem({
-      id: product.id,
-      name: product.name,
-      quantity: quantity,
-      countInStock: product.countInStock - 1,
-      price: product.price,
-      image: product.imageData,
-      imageType: product.imageType
-    });
-  };
 
   return (
     <>
@@ -37,7 +23,6 @@ const ProductPage = () => {
         countInStock={product.countInStock}
         image={product.imageData}
         imageType={product.imageType}
-        onAddToCart={onAddToCartHandler}
       />
       <Reviews productId={product.id} ratingCount={product.ratingCount} />
     </>

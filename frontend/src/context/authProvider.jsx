@@ -8,14 +8,30 @@ const AuthProvider = props => {
   const login = useCallback(profile => {
     setUserInfo(profile);
     localStorage.setItem("userInfo", JSON.stringify(profile));
-    toast.success(`Wellcome, ${profile.name}!`);
+    // toast.success(`Wellcome, ${profile.name}!`);
   }, []);
 
   const logout = useCallback(() => {
-    const user = JSON.parse(localStorage.getItem("userInfo"));
-    toast.success(`See you soon, ${user.name}!`);
+    // const user = JSON.parse(localStorage.getItem("userInfo"));
+    // toast.success(`See you soon, ${user.name}!`);
     setUserInfo(null);
-    localStorage.removeItem("userInfo");
+    localStorage.clear();
+  }, []);
+
+  const isItLogged = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:5000/users/login/", {
+        credentials: "include"
+      });
+
+      if (!response.ok) {
+        return false;
+      }
+
+      return true;
+    } catch (err) {
+      return false;
+    }
   }, []);
 
   const authContext = {
@@ -25,11 +41,16 @@ const AuthProvider = props => {
   };
 
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("userInfo"));
-    if (storedData) {
-      login(storedData);
+    async function checkIfLogged() {
+      let storedData = localStorage.getItem("userInfo");
+      if (storedData) {
+        storedData = JSON.parse(localStorage.getItem("userInfo"));
+        const response = await isItLogged();
+        response ? login(storedData) : logout();
+      }
     }
-  }, [login]);
+    checkIfLogged();
+  }, [isItLogged, login, logout]);
 
   return (
     <AuthContext.Provider value={authContext}>

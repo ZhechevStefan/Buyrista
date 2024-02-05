@@ -22,10 +22,11 @@ db.users.hasMany(db.reviews);
 db.reviews.belongsTo(db.users);
 db.products.hasMany(db.reviews);
 db.reviews.belongsTo(db.products);
-
-// User.hasMany(Grant);
-// Grant.belongsTo(User);
-// Profile.hasMany(Grant);
-// Grant.belongsTo(Profile);
+const favourites = sequelize.define("favourites", {}, { timestamps: false });
+db.users.belongsToMany(db.products, { through: favourites });
+db.products.belongsToMany(db.users, { through: favourites });
+const usersCart = sequelize.define("usersCart", {}, { timestamps: false });
+db.users.belongsToMany(db.products, { through: usersCart });
+db.products.belongsToMany(db.users, { through: usersCart });
 
 module.exports = db;

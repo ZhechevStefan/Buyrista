@@ -1,29 +1,62 @@
-import { useRef, useState } from "react";
-
-import styles from "./ProductCard.module.css";
-import Button from "../Button/Button.jsx";
-import Input from "../Input/Input.jsx";
-import StarRating from "../StarRating/StarRating.jsx";
-import Notifications from "../Notifications/Notifications.jsx";
+import { useRef, useState, useContext } from "react";
 import { toast } from "react-toastify";
 
+import FavContext from "../../context/fav-context.jsx";
+import CartContext from "../../context/cart-context.jsx";
+import styles from "./ProductCard.module.css";
+import Button from "../Button/Button.jsx";
+import StarRating from "../StarRating/StarRating.jsx";
+import Notifications from "../Notifications/Notifications.jsx";
+
 const ProductCard = props => {
+  const cartCtx = useContext(CartContext);
   const [quantityIsValid, setQuantityIsValid] = useState(true);
   const quantityInputRef = useRef();
 
-  const submitHandler = event => {
+  const favCtx = useContext(FavContext);
+  const isItFav = favCtx.checkIfFav(props.id);
+
+  const addToCartHandler = event => {
     event.preventDefault();
-    toast.success("Product added to Cart!");
 
     const enteredQuantity = quantityInputRef.current.value;
-    const enteredQuantityNumber = +enteredQuantity;
+    const enteredQuantityNum = +enteredQuantity;
 
-    if (enteredQuantity.trim().length === 0 || enteredQuantityNumber < 1) {
+    if (enteredQuantity.trim().length === 0 || enteredQuantityNum < 1) {
       setQuantityIsValid(false);
       return;
     }
 
-    props.onAddToCart(enteredQuantityNumber);
+    setQuantityIsValid(true);
+    toast.success("Product added to Cart!");
+
+    cartCtx.addItem({
+      id: props.id,
+      name: props.name,
+      quantity: enteredQuantityNum,
+      countInStock: props.countInStock - 1,
+      price: props.price,
+      image: props.image,
+      imageType: props.imageType
+    });
+  };
+
+  const addOrRemFavHandler = event => {
+    event.preventDefault();
+    if (isItFav) {
+      favCtx.removeFav(props.id);
+      toast.success("Removed from Favourites!");
+    } else {
+      favCtx.addFav({
+        id: props.id,
+        name: props.name,
+        countInStock: props.countInStock,
+        price: props.price,
+        image: props.image,
+        imageType: props.imageType
+      });
+      toast.success("Added to Favourites!");
+    }
   };
 
   return (
@@ -53,7 +86,7 @@ const ProductCard = props => {
           </div>
         </section>
 
-        <form className={styles["order-info-form"]} onSubmit={submitHandler}>
+        <form className={styles["order-info-form"]}>
           <table>
             <tbody>
               <tr>
@@ -91,6 +124,7 @@ const ProductCard = props => {
                     type="submit"
                     disabled={!props.countInStock}
                     width="90%"
+                    onClick={addToCartHandler}
                   >
                     Add to Cart
                   </Button>
@@ -103,14 +137,21 @@ const ProductCard = props => {
                     disabled={!props.countInStock}
                     width="90%"
                     inverse
+                    onClick={addOrRemFavHandler}
                   >
-                    Add to Favourites
+                    {isItFav ? "Added to Favourites" : "Add to Favourites"}
                   </Button>
                 </td>
               </tr>
             </tbody>
           </table>
-          {!quantityIsValid && <p>Please enter a valid quantity.</p>}
+          {!quantityIsValid && (
+            <div style={{ textAlign: "center" }}>
+              <p style={{ color: "red", fontSize: "0.8rem" }}>
+                Please enter a valid quantity.
+              </p>
+            </div>
+          )}
         </form>
       </article>
       <Notifications />

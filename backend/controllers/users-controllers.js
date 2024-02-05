@@ -77,3 +77,7 @@ exports.logout = async (req, res, next) => {
   res.cookie("authcookie", "", { httpOnly: true, expires: new Date(0) });
   return res.status(200).json({ message: "Logout succesfull." });
 };
+
+exports.isLogged = async (req, res, next) => {
+  return res.status(200);
+};
