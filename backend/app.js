@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// db.sequelize.sync();
+db.sequelize.sync();
 
 app.use("/users", usersRoutes);
 app.use("/products", productsRoutes);

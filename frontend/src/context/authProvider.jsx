@@ -37,20 +37,9 @@ const AuthProvider = props => {
   const authContext = {
     userInfo,
     login,
-    logout
+    logout,
+    isItLogged
   };
-
-  useEffect(() => {
-    async function checkIfLogged() {
-      let storedData = localStorage.getItem("userInfo");
-      if (storedData) {
-        storedData = JSON.parse(localStorage.getItem("userInfo"));
-        const response = await isItLogged();
-        response ? login(storedData) : logout();
-      }
-    }
-    checkIfLogged();
-  }, [isItLogged, login, logout]);
 
   return (
     <AuthContext.Provider value={authContext}>
