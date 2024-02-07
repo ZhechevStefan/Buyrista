@@ -23,4 +23,8 @@ router.post("/logout", usersController.logout);
 
 router.get("/login", checkAuth, usersController.isLogged);
 
+router.post("/favourites/:userId", usersController.addFavs);
+
+router.post("/cart/:userId", usersController.addProdToCart);
+
 module.exports = router;

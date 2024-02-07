@@ -19,7 +19,6 @@ exports.getAllUsers = async (req, res, next) => {
 
 exports.createProduct = async (req, res, next) => {
   const errors = validationResult(req);
-  console.log(req.body);
 
   if (!errors.isEmpty()) {
     const error = new HttpError("Invalid field value.", 400);

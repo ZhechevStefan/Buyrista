@@ -81,3 +81,27 @@ exports.logout = async (req, res, next) => {
 exports.isLogged = async (req, res, next) => {
   return res.status(200);
 };
+
+exports.addFavs = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const { productsIds } = req.body;
+
+    const favs = await usersDbController.addFavsToDb(userId, productsIds);
+    return res.status(200);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.addProdToCart = async (req, res, next) => {
+  try {
+    const userId = req.params.productId;
+    const { productsIds } = req.body;
+
+    const favs = await usersDbController.addProdToDbCart(userId, productsIds);
+    return res.status(200);
+  } catch (err) {
+    return next(err);
+  }
+};
