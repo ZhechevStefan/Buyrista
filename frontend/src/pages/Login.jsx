@@ -1,13 +1,14 @@
 import { useContext } from "react";
 import { Formik, Form } from "formik";
-
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
+import AuthContext from "../context/auth-context.jsx";
+import CartContext from "../context/cart-context.jsx";
+import FavContext from "../context/fav-context.jsx";
 import Input from "../components/Input/Input.jsx";
 import Button from "../components/Button/Button.jsx";
 import { useHttpClient } from "../hooks/http-hook.jsx";
-import AuthContext from "../context/auth-context.jsx";
-import { useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
 
 const LoginPage = () => {
@@ -16,6 +17,9 @@ const LoginPage = () => {
   // const isSubmitting = navigation.state === "submitting";
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
+  const cart = useContext(CartContext);
+  const favs = useContext(FavContext);
+
   const navigate = useNavigate();
 
   const sendLogin = async values => {
@@ -31,6 +35,30 @@ const LoginPage = () => {
         }
       );
       auth.login(user);
+      user.carts.map(cartItem => {
+        const item = {
+          id: cartItem.productId,
+          name: cartItem.product.name,
+          quantity: cartItem.count,
+          countInStock: cartItem.product.countInStock - 1,
+          price: cartItem.product.price,
+          image: cartItem.product.imageData,
+          imageType: cartItem.product.imageType
+        };
+        cart.addItem(item);
+      });
+      user.favourites.map(favItem => {
+        const item = {
+          id: favItem.productId,
+          name: favItem.product.name,
+          countInStock: favItem.product.countInStock - 1,
+          price: favItem.product.price,
+          image: favItem.product.imageData,
+          imageType: favItem.product.imageType
+        };
+        favs.addFav(item);
+      });
+
       navigate("/");
     } catch (err) {
       console.log(err);

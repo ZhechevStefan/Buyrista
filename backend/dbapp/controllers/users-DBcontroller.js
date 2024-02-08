@@ -2,8 +2,9 @@ const HttpError = require("../../error-model/http-error.js");
 const db = require("../models/index.js");
 
 const User = db.users;
-const Favs = db.favourites;
-const Cart = dv.Cart;
+const Product = db.products;
+const Fav = db.favourites;
+const Cart = db.carts;
 
 exports.getAllUsers = async () => {
   return await User.findAll({
@@ -15,7 +16,25 @@ exports.getUserByEmail = async email => {
   return await User.findOne({
     where: {
       email
-    }
+    },
+    include: [
+      {
+        model: Fav,
+        attributes: { exclude: ["userId"] },
+        include: {
+          model: Product,
+          attributes: { exclude: ["id", "createdAt", "updatedAt"] }
+        }
+      },
+      {
+        model: Cart,
+        attributes: { exclude: ["userId"] },
+        include: {
+          model: Product,
+          attributes: { exclude: ["id", "createdAt", "updatedAt"] }
+        }
+      }
+    ]
   });
 };
 
@@ -32,7 +51,7 @@ exports.addFavsToDb = async (userId, productsIds) => {
   const favs = [];
   try {
     productsIds.map(async productId => {
-      await Favs.create({
+      await Fav.create({
         userId,
         productId
       });
@@ -45,19 +64,27 @@ exports.addFavsToDb = async (userId, productsIds) => {
   return favs;
 };
 
-exports.addProdToDbCart = async (userId, productsIds) => {
-  const cart = [];
+exports.addProdToDbCart = async (userId, productsIdsAndCount) => {
   try {
-    productsIds.map(async productId => {
+    const cart = [];
+
+    productsIdsAndCount.map(async product => {
+      const { productId, count } = product;
       await Cart.create({
         userId,
-        productId
+        productId,
+        count
       });
-      cart.push(productId);
+
+      cart.push({
+        productId,
+        count
+      });
+      console.log(cart);
     });
+
+    return cart;
   } catch (err) {
     throw err;
   }
-
-  return cart;
 };

@@ -29,7 +29,9 @@ exports.register = async (req, res, next) => {
         isAdmin: false
       };
 
-      let user = await usersDbController.createUser(createdUser);
+      user = await usersDbController.createUser(createdUser);
+
+      delete user.dataValues.password;
 
       generateToken(res, user.id);
 
@@ -61,6 +63,18 @@ exports.login = async (req, res, next) => {
       return next(error);
     }
 
+    user.dataValues.favourites.map(fav => {
+      fav.dataValues.product.imageData =
+        fav.dataValues.product.imageData.toString("base64");
+    });
+
+    user.dataValues.carts.map(item => {
+      item.dataValues.product.imageData =
+        item.dataValues.product.imageData.toString("base64");
+    });
+
+    delete user.dataValues.password;
+
     generateToken(res, user.id);
 
     res.status(200).json({ user });
@@ -69,7 +83,7 @@ exports.login = async (req, res, next) => {
       "Could not login, please try again later!",
       500
     );
-    return next(error);
+    return next(err);
   }
 };
 
@@ -88,7 +102,7 @@ exports.addFavs = async (req, res, next) => {
     const { productsIds } = req.body;
 
     const favs = await usersDbController.addFavsToDb(userId, productsIds);
-    return res.status(200);
+    return res.status(200).json(favs);
   } catch (err) {
     return next(err);
   }
@@ -96,11 +110,15 @@ exports.addFavs = async (req, res, next) => {
 
 exports.addProdToCart = async (req, res, next) => {
   try {
-    const userId = req.params.productId;
-    const { productsIds } = req.body;
+    const userId = req.params.userId;
+    const { productsIdsAndCount } = req.body;
 
-    const favs = await usersDbController.addProdToDbCart(userId, productsIds);
-    return res.status(200);
+    let cart = await usersDbController.addProdToDbCart(
+      userId,
+      productsIdsAndCount
+    );
+    console.log(`------${cart}-------`);
+    return res.status(200).json(cart);
   } catch (err) {
     return next(err);
   }

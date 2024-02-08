@@ -4,15 +4,6 @@ const Review = db.reviews;
 const User = db.users;
 
 exports.getReviewsByProductId = async (productId, offset) => {
-  // return await Review.findAll({
-  //   where: {
-  //     productId
-  //   },
-  //   include: {
-  //     model: User,
-  //     attributes: ["id", "name"]
-  //   }
-  // });
   const [reviews, metadata] = await db.sequelize.query(
     `SELECT reviews.id, rating, title, comment, "userId", reviews."createdAt", users.name FROM reviews 
     JOIN users ON users.id=reviews."userId"
