@@ -49,42 +49,35 @@ exports.createUser = async user => {
 
 exports.addFavsToDb = async (userId, productsIds) => {
   const favs = [];
-  try {
-    productsIds.map(async productId => {
-      await Fav.create({
-        userId,
-        productId
-      });
-      favs.push(productId);
+
+  productsIds.map(async productId => {
+    await Fav.create({
+      userId,
+      productId
     });
-  } catch (err) {
-    throw err;
-  }
+    favs.push(productId);
+  });
 
   return favs;
 };
 
 exports.addProdToDbCart = async (userId, productsIdsAndCount) => {
-  try {
-    const cart = [];
+  const cart = [];
 
-    productsIdsAndCount.map(async product => {
-      const { productId, count } = product;
-      await Cart.create({
-        userId,
-        productId,
-        count
-      });
-
-      cart.push({
-        productId,
-        count
-      });
-      console.log(cart);
+  productsIdsAndCount.map(async product => {
+    const { productId, count } = product;
+    await Cart.create({
+      userId,
+      productId,
+      count
     });
 
-    return cart;
-  } catch (err) {
-    throw err;
-  }
+    cart.push({
+      productId,
+      count
+    });
+    console.log(cart);
+  });
+
+  return cart;
 };

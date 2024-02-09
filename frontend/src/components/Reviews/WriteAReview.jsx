@@ -1,16 +1,34 @@
-import { useNavigation, Form } from "react-router-dom";
-import { useFormik } from "formik";
+import { useFormik, Form } from "formik";
 import * as Yup from "yup";
 
 import Input from "../Input/Input.jsx";
 import StarRating from "../StarRating/StarRating.jsx";
 import Button from "../Button/Button.jsx";
+import { useHttpClient } from "../../hooks/http-hook.jsx";
 import styles from "./WriteAReview.module.css";
 
 const WriteAReview = props => {
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
   const isHidden = props.isHidden;
+  const productId = props.productId;
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  const sendReview = async values => {
+    clearError();
+    try {
+      const { user } = await sendRequest(
+        `http://localhost:5000/reviews/${productId}`,
+        "POST",
+        "include",
+        JSON.stringify(values),
+        {
+          "Content-Type": "application/json"
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -42,6 +60,7 @@ const WriteAReview = props => {
       },
       [["title", "comment"]]
     ),
+    onSubmit: values => sendReview(values),
     validateOnMount: true
   });
 
@@ -49,8 +68,6 @@ const WriteAReview = props => {
     formik.setFieldTouched("starRating", true, false);
     formik.setFieldValue("starRating", rat);
   };
-
-  //
 
   return (
     <div
@@ -102,14 +119,18 @@ const WriteAReview = props => {
           </div>
           <Button
             type="button"
-            disabled={isSubmitting}
+            disabled={isLoading}
             onClick={props.hideWriteAComment}
             withMargins
           >
             Cancel
           </Button>
-          <Button disabled={!formik.isValid || isSubmitting} withMargins>
-            {isSubmitting ? "Submitting..." : "Save"}
+          <Button
+            type="submit"
+            disabled={!formik.isValid || isLoading}
+            withMargins
+          >
+            {isLoading ? "Submitting..." : "Send"}
           </Button>
         </div>
       </Form>

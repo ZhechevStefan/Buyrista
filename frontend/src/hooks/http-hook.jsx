@@ -44,7 +44,6 @@ export const useHttpClient = () => {
         setError(err.message);
         setIsLoading(false);
         toast.error(err.message);
-        throw err;
       }
     },
     []

@@ -4,48 +4,38 @@ const productsDbController = require("../dbapp/controllers/products-DBcontroller
 
 const { validationResult } = require("express-validator");
 
-exports.getAllUsers = async (req, res, next) => {
+exports.getAllUsers = async (req, res) => {
   let data;
 
-  try {
-    data = await usersDbController.getAllUsers();
-  } catch (err) {
-    const error = new HttpError(err.message, 500);
-    return next(error);
-  }
+  data = await usersDbController.getAllUsers();
 
   res.json({ users: data });
 };
 
-exports.createProduct = async (req, res, next) => {
+exports.createProduct = async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
     const error = new HttpError("Invalid field value.", 400);
-    return next(error);
+    throw error;
   }
 
-  try {
-    const productInfo = req.body;
-    const imageInfo = req.file;
-    // console.log(productInfo);
+  const productInfo = req.body;
+  const imageInfo = req.file;
+  // console.log(productInfo);
 
-    const product = {
-      name: productInfo.name,
-      description: productInfo.description,
-      brand: productInfo.brand,
-      category: productInfo.category,
-      price: productInfo.price,
-      countInStock: productInfo.countInStock,
-      imageType: imageInfo.mimetype,
-      imageName: imageInfo.originalname,
-      imageData: imageInfo.buffer
-    };
+  const product = {
+    name: productInfo.name,
+    description: productInfo.description,
+    brand: productInfo.brand,
+    category: productInfo.category,
+    price: productInfo.price,
+    countInStock: productInfo.countInStock,
+    imageType: imageInfo.mimetype,
+    imageName: imageInfo.originalname,
+    imageData: imageInfo.buffer
+  };
 
-    const { productId } = await productsDbController.createProduct(product);
-    res.status(201).json({ productId });
-  } catch (err) {
-    const error = new HttpError(err.message, 500);
-    return next(error);
-  }
+  const { productId } = await productsDbController.createProduct(product);
+  res.status(201).json({ productId });
 };

@@ -1,7 +1,7 @@
 const db = require("../models/index.js");
 
 const Review = db.reviews;
-const User = db.users;
+// const User = db.users;
 
 exports.getReviewsByProductId = async (productId, offset) => {
   const [reviews, metadata] = await db.sequelize.query(

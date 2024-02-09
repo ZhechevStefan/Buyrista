@@ -5,10 +5,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import HomePage, { loadProducts } from "./pages/Home.jsx";
-import ProductPage, {
-  loadProduct,
-  action as productActions
-} from "./pages/Product.jsx";
+import ProductPage, { loadProduct } from "./pages/Product.jsx";
 import LoginPage from "./pages/Login.jsx";
 import RegisterPage from "./pages/Register.jsx";
 import ErrorPage from "./pages/Error.jsx";
@@ -32,8 +29,7 @@ const router = createBrowserRouter([
       {
         path: "products/:productId",
         element: <ProductPage />,
-        loader: loadProduct,
-        action: productActions
+        loader: loadProduct
       },
       {
         path: "users/login",

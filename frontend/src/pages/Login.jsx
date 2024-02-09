@@ -12,9 +12,6 @@ import { useHttpClient } from "../hooks/http-hook.jsx";
 import styles from "./Form.module.css";
 
 const LoginPage = () => {
-  // const data = useActionData();
-  // const navigation = useNavigation();
-  // const isSubmitting = navigation.state === "submitting";
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
   const cart = useContext(CartContext);
@@ -24,45 +21,42 @@ const LoginPage = () => {
 
   const sendLogin = async values => {
     clearError();
-    try {
-      const { user } = await sendRequest(
-        "http://localhost:5000/users/login",
-        "POST",
-        "include",
-        JSON.stringify(values),
-        {
-          "Content-Type": "application/json"
-        }
-      );
-      auth.login(user);
-      user.carts.map(cartItem => {
-        const item = {
-          id: cartItem.productId,
-          name: cartItem.product.name,
-          quantity: cartItem.count,
-          countInStock: cartItem.product.countInStock - 1,
-          price: cartItem.product.price,
-          image: cartItem.product.imageData,
-          imageType: cartItem.product.imageType
-        };
-        cart.addItem(item);
-      });
-      user.favourites.map(favItem => {
-        const item = {
-          id: favItem.productId,
-          name: favItem.product.name,
-          countInStock: favItem.product.countInStock - 1,
-          price: favItem.product.price,
-          image: favItem.product.imageData,
-          imageType: favItem.product.imageType
-        };
-        favs.addFav(item);
-      });
 
-      navigate("/");
-    } catch (err) {
-      console.log(err);
-    }
+    const { user } = await sendRequest(
+      "http://localhost:5000/users/login",
+      "POST",
+      "include",
+      JSON.stringify(values),
+      {
+        "Content-Type": "application/json"
+      }
+    );
+    auth.login(user);
+    user.carts.map(cartItem => {
+      const item = {
+        id: cartItem.productId,
+        name: cartItem.product.name,
+        quantity: cartItem.count,
+        countInStock: cartItem.product.countInStock - 1,
+        price: cartItem.product.price,
+        image: cartItem.product.imageData,
+        imageType: cartItem.product.imageType
+      };
+      cart.addItem(item);
+    });
+    user.favourites.map(favItem => {
+      const item = {
+        id: favItem.productId,
+        name: favItem.product.name,
+        countInStock: favItem.product.countInStock - 1,
+        price: favItem.product.price,
+        image: favItem.product.imageData,
+        imageType: favItem.product.imageType
+      };
+      favs.addFav(item);
+    });
+
+    navigate("/");
   };
 
   return (
@@ -126,30 +120,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-// export async function action({ request }) {
-//   const data = await request.formData();
-//   const authData = {
-//     email: data.get("email"),
-//     password: data.get("password")
-//   };
-
-//   const response = await fetch("http://localhost:5000/users/login", {
-//     method: "POST",
-//     credentials: "include",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify(authData)
-//   });
-
-//   if (response.status === 401 || response.status === 500) {
-//     return response;
-//   }
-
-//   let { user } = await response.json();
-
-//   localStorage.setItem("userInfo", JSON.stringify(user));
-
-//   return redirect("/");
-// }

@@ -31,11 +31,12 @@ const Reviews = props => {
         </div>
 
         <WriteAReview
+          productId
           isHidden={isHidden}
           hideWriteAComment={hideWriteAComment}
         />
         <InfiniteScroll
-          url={`http://localhost:5000/products/reviews/${productId}`}
+          url={`http://localhost:5000/reviews/${productId}`}
           reviewCount={reviewCount}
         />
       </section>
