@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Formik, Form } from "formik";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import AuthContext from "../context/auth-context.jsx";
@@ -21,42 +22,45 @@ const LoginPage = () => {
 
   const sendLogin = async values => {
     clearError();
+    try {
+      const { user } = await sendRequest(
+        "http://localhost:5000/users/login",
+        "POST",
+        "include",
+        JSON.stringify(values),
+        {
+          "Content-Type": "application/json"
+        }
+      );
+      auth.login(user);
+      user.carts.map(cartItem => {
+        const item = {
+          id: cartItem.productId,
+          name: cartItem.product.name,
+          quantity: cartItem.count,
+          countInStock: cartItem.product.countInStock - 1,
+          price: cartItem.product.price,
+          image: cartItem.product.imageData,
+          imageType: cartItem.product.imageType
+        };
+        cart.addItem(item);
+      });
+      user.favourites.map(favItem => {
+        const item = {
+          id: favItem.productId,
+          name: favItem.product.name,
+          countInStock: favItem.product.countInStock - 1,
+          price: favItem.product.price,
+          image: favItem.product.imageData,
+          imageType: favItem.product.imageType
+        };
+        favs.addFav(item);
+      });
 
-    const { user } = await sendRequest(
-      "http://localhost:5000/users/login",
-      "POST",
-      "include",
-      JSON.stringify(values),
-      {
-        "Content-Type": "application/json"
-      }
-    );
-    auth.login(user);
-    user.carts.map(cartItem => {
-      const item = {
-        id: cartItem.productId,
-        name: cartItem.product.name,
-        quantity: cartItem.count,
-        countInStock: cartItem.product.countInStock - 1,
-        price: cartItem.product.price,
-        image: cartItem.product.imageData,
-        imageType: cartItem.product.imageType
-      };
-      cart.addItem(item);
-    });
-    user.favourites.map(favItem => {
-      const item = {
-        id: favItem.productId,
-        name: favItem.product.name,
-        countInStock: favItem.product.countInStock - 1,
-        price: favItem.product.price,
-        image: favItem.product.imageData,
-        imageType: favItem.product.imageType
-      };
-      favs.addFav(item);
-    });
-
-    navigate("/");
+      navigate("/");
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (

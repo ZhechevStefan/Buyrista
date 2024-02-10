@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import AuthContext from "../context/auth-context.jsx";
@@ -29,7 +30,7 @@ const RegisterPage = () => {
       auth.login(user);
       navigate("/");
     } catch (err) {
-      console.log(err);
+      toast.error(err.message);
     }
   };
 

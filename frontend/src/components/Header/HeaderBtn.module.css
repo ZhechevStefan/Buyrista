@@ -1,0 +1,11 @@
+.header-btn {
+  background-color: inherit;
+  font: inherit;
+  border: none;
+  height: 70%;
+  margin: 0 0.5rem;
+}
+
+.open {
+  color: yellow;
+}

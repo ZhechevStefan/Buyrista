@@ -2,6 +2,8 @@ import { useContext } from "react";
 import CartIcon from "../Cart/CartIcon.jsx";
 import CartContext from "../../context/cart-context.jsx";
 
+import styles from "./HeaderBtn.module.css";
+
 const HeaderCartButton = props => {
   const cartCtx = useContext(CartContext);
 
@@ -12,7 +14,7 @@ const HeaderCartButton = props => {
   }, 0);
 
   return (
-    <button onClick={props.onClick} className={props.className}>
+    <button onClick={props.onClick} className={`${styles["header-btn"]}`}>
       <CartIcon numberOfCartItems={numberOfCartItems} />
     </button>
   );

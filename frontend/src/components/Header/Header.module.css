@@ -30,14 +30,6 @@
   text-decoration: underline;
 }
 
-.header-btn {
-  background-color: inherit;
-  font: inherit;
-  border: none;
-  height: 70%;
-  margin: 0 0.5rem;
-}
-
 .favourites {
   font-size: 1.6rem;
   margin-right: 0.3rem;
@@ -53,10 +45,6 @@
 
 .logo {
   margin-left: 1.5rem;
-}
-
-.open {
-  color: yellow;
 }
 
 .main-wrapper nav button {
