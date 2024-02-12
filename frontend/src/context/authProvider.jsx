@@ -1,27 +1,23 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import AuthContext from "./auth-context.jsx";
-import { toast } from "react-toastify";
 
 const AuthProvider = props => {
   const [userInfo, setUserInfo] = useState(null);
-  // const [cookieIsValid, setCookieIsValid] = useState(null);
+  const [hasLoggedOut, setHasLoggedOut] = useState(null);
 
   const login = useCallback(profile => {
     setUserInfo(profile);
     localStorage.setItem("userInfo", JSON.stringify(profile));
-    // toast.success(`Wellcome, ${profile.name}!`);
   }, []);
 
   const logout = useCallback(() => {
-    // const user = JSON.parse(localStorage.getItem("userInfo"));
-    // toast.success(`See you soon, ${user.name}!`);
-    console.log("-----here-----");
     setUserInfo(null);
     localStorage.clear();
   }, []);
 
   const authContext = {
     userInfo,
+    hasLoggedOut,
     login,
     logout
   };
@@ -32,8 +28,6 @@ const AuthProvider = props => {
         const response = await fetch("http://localhost:5000/users/login/", {
           credentials: "include"
         });
-
-        console.log(response.ok);
 
         if (response.ok) {
           return true;
@@ -49,17 +43,20 @@ const AuthProvider = props => {
         const isCookieValid = await checkCookie();
 
         if (isCookieValid) {
-          let user = JSON.parse(localStorage.getItem("userInfo"));
+          let user = JSON.parse(storedData);
           setUserInfo(user);
-          // login(user);
+          setHasLoggedOut(false);
         } else {
           logout();
+          setHasLoggedOut(true);
         }
+      } else {
+        setHasLoggedOut(false);
       }
     }
 
     setProfile();
-  }, [login, logout]);
+  }, [logout]);
 
   return (
     <AuthContext.Provider value={authContext}>

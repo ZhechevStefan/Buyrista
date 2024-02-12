@@ -22,11 +22,23 @@ const LoginPage = () => {
 
   const sendLogin = async values => {
     clearError();
+    const productsIdsAndCount = [];
+    cart.items.map(item => {
+      const current = { productId: item.id, count: item.quantity };
+      productsIdsAndCount.push(current);
+    });
+    values.productsIdsAndCount = productsIdsAndCount;
+
+    const productsIds = [];
+    favs.favs.map(fav => productsIds.push(fav.id));
+    values.productsIds = productsIds;
+
     try {
+      console.log(values);
       const { user } = await sendRequest(
         "http://localhost:5000/users/login",
         "POST",
-        "include",
+        "omit",
         JSON.stringify(values),
         {
           "Content-Type": "application/json"

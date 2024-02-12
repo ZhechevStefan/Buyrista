@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
+import CartContext from "../../context/cart-context.jsx";
 import styles from "./CartIcon.module.css";
 
 const CartIcon = props => {
   const [iconIsHighlighted, setIconIsHighlighted] = useState(false);
+  // const cartCtx = useContext(CartContext);
 
   useEffect(() => {
     if (props.numberOfCartItems === 0) {
@@ -18,6 +20,10 @@ const CartIcon = props => {
       clearTimeout(timer);
     };
   }, [props.numberOfCartItems]);
+
+  // if (numberOfCartItems > 0) {
+  //   setIconIsHighlighted(true);
+  // }
 
   return (
     <span className={`${styles.icon} ${iconIsHighlighted ? styles.bump : ""}`}>

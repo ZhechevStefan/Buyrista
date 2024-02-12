@@ -1,10 +1,11 @@
-import { useEffect, useReducer, useRef } from "react";
+import { useContext, useEffect, useReducer, useRef } from "react";
 import CartContext from "./cart-context.jsx";
 
 import {
   saveCartToLocalStorage,
   getFullInfo
 } from "../utils/localStorageUtils.js";
+import AuthContext from "./auth-context.jsx";
 
 const defaultCartState = {
   items: [],
@@ -96,6 +97,8 @@ const CartProvider = props => {
     defaultCartState
   );
 
+  const authCtx = useContext(AuthContext);
+
   const addItemToCartHandler = item => {
     dispatchCartAction({ type: "ADD", item: item });
   };
@@ -116,27 +119,38 @@ const CartProvider = props => {
     clearCart: clearCartHandler
   };
 
-  const fetchStopper = useRef(true);
+  // const fetchStopper = useRef(true);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   let items = JSON.parse(localStorage.getItem("items"));
+
+  const getAndSetPriceAndCountInStock = async items => {
+    items = await getFullInfo(items);
+    items.map(item => {
+      addItemToCartHandler({ ...item });
+    });
+  };
+
+  //   if (items && items.length > 0) {
+  //     if (fetchStopper.current) {
+  //       getAndSetPriceAndCountInStock(items);
+  //       return () => {
+  //         fetchStopper.current = false;
+  //       };
+  //     }
+  //   }
+  // }, []);
+
+  const isInitial = useRef(true);
+
+  if (authCtx.hasLoggedOut === false && isInitial.current) {
+    isInitial.current = false;
     let items = JSON.parse(localStorage.getItem("items"));
 
-    const getAndSetPriceAndCountInStock = async items => {
-      items = await getFullInfo(items);
-      items.map(item => {
-        addItemToCartHandler({ ...item });
-      });
-    };
-
     if (items && items.length > 0) {
-      if (fetchStopper.current) {
-        getAndSetPriceAndCountInStock(items);
-        return () => {
-          fetchStopper.current = false;
-        };
-      }
+      getAndSetPriceAndCountInStock(items);
     }
-  }, []);
+  }
 
   return (
     <CartContext.Provider value={cartContext}>

@@ -20,6 +20,8 @@ const Header = props => {
     ? `${authCtx.userInfo.name}▾`
     : "웃 My account▾";
 
+  let { items } = cartCtx;
+
   let timeout;
   const openLoginMode = () => setLoginMenuIsShown(true);
   const closeLoginMode = () =>
@@ -63,7 +65,7 @@ const Header = props => {
           clear={clearTimer}
         />
         <HeaderButton name={"⭐ Favourites"} />
-        <HeaderCartButton onClick={props.onShowCart} />
+        <HeaderCartButton onClick={props.onShowCart} items={items} />
         <div id="login-menu-hook"></div>
         {loginMenuIsShown && (
           <LoginMenu

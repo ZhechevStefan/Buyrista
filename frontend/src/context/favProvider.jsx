@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useRef, useState, useContext } from "react";
 
 import FavContext from "./fav-context.jsx";
 import {
   saveFavsToLocalStorage,
   getFullInfo
 } from "../utils/localStorageUtils.js";
+import AuthContext from "./auth-context.jsx";
 
 const FavProvider = props => {
   const [favs, setFavs] = useState([]);
+  const authCtx = useContext(AuthContext);
 
   const addFav = item => {
     const existingFavIndex = favs.find(fav => fav.id === item.id);
@@ -58,21 +60,32 @@ const FavProvider = props => {
     checkIfFav
   };
 
-  useEffect(() => {
-    let favs = JSON.parse(localStorage.getItem("favs"));
+  // useEffect(() => {
+  //   let favs = JSON.parse(localStorage.getItem("favs"));
 
-    const getAndSetPriceAndCountInStock = async favsArr => {
-      favs = await getFullInfo(favsArr);
+  const getAndSetPriceAndCountInStock = async favsArr => {
+    let favs = await getFullInfo(favsArr);
 
-      favs.map(fav => {
-        addFav({ ...fav });
-      });
-    };
+    favs.map(fav => {
+      addFav({ ...fav });
+    });
+  };
 
-    if (favs && favs.length > 0) {
-      getAndSetPriceAndCountInStock(favs);
+  //   if (favs && favs.length > 0) {
+  //     getAndSetPriceAndCountInStock(favs);
+  //   }
+  // }, []);
+
+  const isInitial = useRef(true);
+
+  if (authCtx.hasLoggedOut === false && isInitial.current) {
+    isInitial.current = false;
+    let items = JSON.parse(localStorage.getItem("items"));
+
+    if (items && items.length > 0) {
+      getAndSetPriceAndCountInStock(items);
     }
-  }, []);
+  }
 
   return (
     <FavContext.Provider value={favContext}>

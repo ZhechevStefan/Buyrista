@@ -42,7 +42,7 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, productsIds, productsIdsAndCount } = req.body;
   let user = await usersDbController.getUserByEmail(email);
 
   if (!user) {
@@ -56,6 +56,9 @@ exports.login = async (req, res) => {
     const error = new HttpError("Invalid credentials!", 401);
     throw error;
   }
+
+  usersDbController.addProdToDbCart(user.id, productsIdsAndCount);
+  usersDbController.addFavsToDb(user.id, productsIds);
 
   user.dataValues.favourites.map(fav => {
     fav.dataValues.product.imageData =

@@ -5,11 +5,7 @@ import CartContext from "../../context/cart-context.jsx";
 import styles from "./HeaderBtn.module.css";
 
 const HeaderCartButton = props => {
-  const cartCtx = useContext(CartContext);
-
-  let { items } = cartCtx;
-
-  const numberOfCartItems = items.reduce((cur, item) => {
+  const numberOfCartItems = props.items.reduce((cur, item) => {
     return cur + item.quantity;
   }, 0);
 
