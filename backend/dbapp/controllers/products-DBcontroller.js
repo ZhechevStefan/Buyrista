@@ -20,8 +20,6 @@ exports.getProductById = async productId => {
     WHERE products.id='${productId}'
     GROUP BY products.id;`);
 
-  console.log(product[0]);
-
   if (!product[0].rating) {
     product[0].rating = Math.round(Number(product[0].rating) * 10) / 10;
     product[0].ratingCount = Number(product[0].ratingCount);

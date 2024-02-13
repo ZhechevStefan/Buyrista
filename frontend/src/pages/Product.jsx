@@ -9,6 +9,8 @@ import Loader from "../components/Loader/Loader.jsx";
 const ProductPage = () => {
   const { product } = useLoaderData();
   const authCtx = useContext(AuthContext);
+  const userId = authCtx.userInfo ? authCtx.userInfo.id : null;
+  const currUserReview = product.currUserReview ? product.currUserReview : null;
 
   return (
     <>
@@ -23,8 +25,14 @@ const ProductPage = () => {
         countInStock={product.countInStock}
         image={product.imageData}
         imageType={product.imageType}
+        userId={userId}
       />
-      <Reviews productId={product.id} ratingCount={product.ratingCount} />
+      <Reviews
+        productId={product.id}
+        ratingCount={product.ratingCount}
+        userId={userId}
+        currUserReview={currUserReview}
+      />
     </>
   );
 };
@@ -33,12 +41,19 @@ export default ProductPage;
 
 export const loadProduct = async ({ request, params }) => {
   const id = params.productId;
+  const userId = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo")).id
+    : null;
+  console.log(userId);
 
-  const response = await fetch(`http://localhost:5000/products/${id}`);
+  const address = userId
+    ? `http://localhost:5000/products/${id}?user=${userId}`
+    : `http://localhost:5000/products/${id}`;
+  const response = await fetch(address);
 
   if (!response.ok) {
     throw json(
-      { message: "Could not fetch details for selected event." },
+      { message: "Could not fetch details for selected product." },
       {
         status: 500
       }

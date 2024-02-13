@@ -1,4 +1,5 @@
 import { Formik, Form } from "formik";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import Input from "../Input/Input.jsx";
@@ -10,14 +11,19 @@ import styles from "./WriteAReview.module.css";
 const WriteAReview = props => {
   const isHidden = props.isHidden;
   const productId = props.productId;
+  const currUserReview = props.currUserReview;
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const sendReview = async values => {
     clearError();
     try {
-      const { review } = await sendRequest(
-        `http://localhost:5000/reviews/${productId}`,
+      const address =
+        "http://localhost:5000/reviews/" + currUserReview
+          ? `${productId}?edit=true`
+          : `${productId}`;
+      const response = await sendRequest(
+        address,
         "POST",
         "include",
         JSON.stringify(values),
@@ -26,25 +32,33 @@ const WriteAReview = props => {
         }
       );
     } catch (err) {
-      console.log(err);
+      toast.error(err.message);
     }
   };
 
   const getRating = (rat, formik) => {
-    formik.setFieldTouched("starRating", true, false);
-    formik.setFieldValue("starRating", rat);
+    formik.setFieldTouched("rating", true, false);
+    formik.setFieldValue("rating", rat);
   };
+
+  const initialValues = currUserReview
+    ? {
+        rating: currUserReview.rating,
+        title: currUserReview.title,
+        comment: currUserReview.comment
+      }
+    : {
+        rating: "",
+        title: "",
+        comment: ""
+      };
 
   return (
     <Formik
-      initialValues={{
-        starRating: "",
-        title: "",
-        comment: ""
-      }}
+      initialValues={initialValues}
       validationSchema={Yup.object().shape(
         {
-          starRating: Yup.number().required("Rating is required"),
+          rating: Yup.number().required("Rating is required"),
           comment: Yup.string()
             .trim()
             .when("title", {
@@ -81,6 +95,7 @@ const WriteAReview = props => {
               <StarRating
                 readOnly={false}
                 allowFraction={false}
+                initialValue={initialValues.rating}
                 getRating={rat => getRating(rat, formik)}
               />
             </div>
@@ -88,13 +103,13 @@ const WriteAReview = props => {
             <div style={{ display: "none" }}>
               <input name="formId" defaultValue={"reviewForm"} />
               <Input
-                id="starRating"
+                id="rating"
                 element="input"
                 type="number"
                 label="starRating"
                 isInvalid={formik.touched.title && formik.errors.title}
                 errors={formik.errors.title}
-                {...formik.getFieldProps("starRating")}
+                {...formik.getFieldProps("rating")}
               />
             </div>
             <Input
@@ -103,6 +118,7 @@ const WriteAReview = props => {
               rows="1"
               isInvalid={formik.touched.title && formik.errors.title}
               errors={formik.errors.title}
+              value={initialValues.title}
               {...formik.getFieldProps("title")}
             />
             <Input
@@ -110,6 +126,7 @@ const WriteAReview = props => {
               label="Comment"
               isInvalid={formik.touched.comment && formik.errors.comment}
               errors={formik.errors.comment}
+              value={initialValues.comment}
               {...formik.getFieldProps("comment")}
             />
             <div className={styles.buttons}>

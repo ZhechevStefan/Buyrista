@@ -20,7 +20,7 @@ router.post(
 
 router.post("/login", catchAsync(usersController.login));
 
-router.post("/logout", catchAsync(usersController.logout));
+router.post("/logout", checkAuth, catchAsync(usersController.logout));
 
 router.get("/login", checkAuth, catchAsync(usersController.isLogged));
 

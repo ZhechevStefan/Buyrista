@@ -38,7 +38,7 @@ const LoginPage = () => {
       const { user } = await sendRequest(
         "http://localhost:5000/users/login",
         "POST",
-        "omit",
+        "include",
         JSON.stringify(values),
         {
           "Content-Type": "application/json"

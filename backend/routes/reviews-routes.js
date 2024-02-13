@@ -14,6 +14,7 @@ router.post(
   "/:productId",
   checkAuth,
   (req, res, next) => {
+    console.log(req.body);
     if (!!req.body.comment !== !!req.body.title) {
       const error = new HttpError(
         "Either both title and comment, or neither.",

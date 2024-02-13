@@ -81,3 +81,12 @@ exports.addProdToDbCart = async (userId, productsIdsAndCount) => {
 
   return cart;
 };
+
+exports.increaseCartQty = async (userId, productsIdsAndCount) => {
+  productsIdsAndCount.map(async product => {
+    await Cart.increment(
+      { count: product.count },
+      { where: { userId, productId: product.id } }
+    );
+  });
+};

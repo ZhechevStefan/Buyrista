@@ -42,7 +42,7 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password, productsIds, productsIdsAndCount } = req.body;
+  let { email, password, productsIds, productsIdsAndCount } = req.body;
   let user = await usersDbController.getUserByEmail(email);
 
   if (!user) {
@@ -57,8 +57,21 @@ exports.login = async (req, res) => {
     throw error;
   }
 
-  usersDbController.addProdToDbCart(user.id, productsIdsAndCount);
+  let usersSavedFavs = [];
+  user.favourites.map(fav => usersSavedFavs.push(fav.productsId));
+  productsIds = productsIds.filter(id => !usersSavedFavs.includes(id));
   usersDbController.addFavsToDb(user.id, productsIds);
+
+  let usersSavedCart = [];
+  user.carts.map(item => usersSavedCart.push(item.productId));
+  let saved = productsIdsAndCount.filter(item =>
+    usersSavedCart.includes(item.productId)
+  );
+  let notSaved = productsIdsAndCount.filter(
+    item => !usersSavedCart.includes(item.productId)
+  );
+  usersDbController.addProdToDbCart(user.id, notSaved);
+  usersDbController.increaseCartQty(user.id, saved);
 
   user.dataValues.favourites.map(fav => {
     fav.dataValues.product.imageData =

@@ -1,5 +1,6 @@
 const HttpError = require("../error-model/http-error.js");
 const productsDbController = require("../dbapp/controllers/products-DBcontroller.js");
+const reviewsDbController = require("../dbapp/controllers/reviews-DBcontroller.js");
 
 exports.getAllProducts = async (req, res) => {
   let data;
@@ -16,6 +17,7 @@ exports.getAllProducts = async (req, res) => {
 
 exports.getProductById = async (req, res) => {
   const productId = req.params.productId;
+  const userId = req.query.user;
 
   let product = await productsDbController.getProductById(productId);
 
@@ -26,6 +28,14 @@ exports.getProductById = async (req, res) => {
     );
 
     throw error;
+  }
+
+  if (userId) {
+    let currUserReview = await reviewsDbController.getReviewByUserId(
+      userId,
+      productId
+    );
+    product.currUserReview = currUserReview;
   }
 
   const productImage = product.imageData.toString("base64");

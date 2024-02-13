@@ -24,16 +24,24 @@ exports.postReview = async (req, res) => {
     throw error;
   }
 
+  const edit = req.query.edit;
   const productId = req.params.productId;
   const reviewInfo = req.body;
+  const userId = req.userData.userId;
 
-  const review = {
+  let review = {
     rating: reviewInfo.rating,
     title: reviewInfo.title,
     comment: reviewInfo.comment,
-    userId: req.userData.userId,
-    productId
+    userId: userId,
+    productId: productId
   };
+
+  if (edit) {
+    review = await reviewsDbController.updateReview(review);
+  } else {
+    review = await reviewsDbController.createReview(review);
+  }
 
   res.status(201).json({ review });
 };
