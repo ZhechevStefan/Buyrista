@@ -11,8 +11,10 @@ const Reviews = props => {
   const productId = props.productId;
   const reviewCount = props.ratingCount;
   const userId = props.userId;
+  const userName = props.userName;
   const currUserReview = props.currUserReview;
   const [isHidden, setIsHidden] = useState(true);
+  const [newReview, setNewReview] = useState(null);
 
   const showWriteAComment = () => setIsHidden(false);
   const hideWriteAComment = () => setIsHidden(true);
@@ -45,10 +47,15 @@ const Reviews = props => {
           isHidden={isHidden}
           hideWriteAComment={hideWriteAComment}
           currUserReview={currUserReview}
+          setNewReview={setNewReview}
+          userName={userName}
         />
         <InfiniteScroll
           url={`http://localhost:5000/reviews/${productId}`}
           reviewCount={reviewCount}
+          newReview={newReview}
+          setNewReview={setNewReview}
+          hideWriteAComment={hideWriteAComment}
         />
       </section>
     </>

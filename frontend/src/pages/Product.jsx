@@ -10,6 +10,7 @@ const ProductPage = () => {
   const { product } = useLoaderData();
   const authCtx = useContext(AuthContext);
   const userId = authCtx.userInfo ? authCtx.userInfo.id : null;
+  const userName = authCtx.userInfo ? authCtx.userInfo.name : null;
   const currUserReview = product.currUserReview ? product.currUserReview : null;
 
   return (
@@ -31,6 +32,7 @@ const ProductPage = () => {
         productId={product.id}
         ratingCount={product.ratingCount}
         userId={userId}
+        userName={userName}
         currUserReview={currUserReview}
       />
     </>
@@ -44,7 +46,6 @@ export const loadProduct = async ({ request, params }) => {
   const userId = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo")).id
     : null;
-  console.log(userId);
 
   const address = userId
     ? `http://localhost:5000/products/${id}?user=${userId}`

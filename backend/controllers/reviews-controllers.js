@@ -39,6 +39,7 @@ exports.postReview = async (req, res) => {
 
   if (edit) {
     review = await reviewsDbController.updateReview(review);
+    review = review[1][0].dataValues;
   } else {
     review = await reviewsDbController.createReview(review);
   }

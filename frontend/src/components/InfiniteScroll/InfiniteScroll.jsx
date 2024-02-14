@@ -7,12 +7,15 @@ import Loader from "../Loader/Loader.jsx";
 const InfiniteScroll = props => {
   const url = props.url;
   const totalReviewCount = props.reviewCount;
+  const newReview = props.newReview;
+  console.log(newReview);
+  const setNewReview = props.setNewReview;
 
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
   const loaderRef = useRef(null);
-  const allReviewsAreLoaded = totalReviewCount == items.length;
+  const allReviewsAreLoaded = totalReviewCount <= items.length;
 
   const fetchData = useCallback(async () => {
     if (isLoading || allReviewsAreLoaded) {
@@ -71,6 +74,20 @@ const InfiniteScroll = props => {
       }
     };
   }, [fetchData]);
+
+  useEffect(() => {
+    if (newReview) {
+      setItems(prevItems => {
+        const filtered = prevItems.filter(
+          item => item.id !== newReview.review.id
+        );
+        const newItems = [...filtered];
+        newItems.unshift(newReview.review);
+        return newItems;
+      });
+      setNewReview(null);
+    }
+  }, [newReview, setNewReview]);
 
   return (
     <>

@@ -12,17 +12,17 @@ const WriteAReview = props => {
   const isHidden = props.isHidden;
   const productId = props.productId;
   const currUserReview = props.currUserReview;
-
+  const userName = props.userName;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const sendReview = async values => {
     clearError();
     try {
-      const address =
-        "http://localhost:5000/reviews/" + currUserReview
-          ? `${productId}?edit=true`
-          : `${productId}`;
-      const response = await sendRequest(
+      const address = currUserReview
+        ? `http://localhost:5000/reviews/${productId}?edit=true`
+        : `http://localhost:5000/reviews/${productId}`;
+
+      const review = await sendRequest(
         address,
         "POST",
         "include",
@@ -31,6 +31,8 @@ const WriteAReview = props => {
           "Content-Type": "application/json"
         }
       );
+      review.review.name = userName;
+      props.setNewReview(review);
     } catch (err) {
       toast.error(err.message);
     }
@@ -80,7 +82,10 @@ const WriteAReview = props => {
         },
         [["title", "comment"]]
       )}
-      onSubmit={values => sendReview(values)}
+      onSubmit={values => {
+        sendReview(values);
+        props.hideWriteAComment();
+      }}
       validateOnMount={true}
     >
       {formik => (

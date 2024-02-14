@@ -37,7 +37,8 @@ exports.updateReview = async review => {
       where: {
         userId: review.userId,
         productId: review.productId
-      }
+      },
+      returning: true
     }
   );
 };
