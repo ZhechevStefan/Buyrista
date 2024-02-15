@@ -10,6 +10,10 @@ import FavContext from "../context/fav-context.jsx";
 import Input from "../components/Input/Input.jsx";
 import Button from "../components/Button/Button.jsx";
 import { useHttpClient } from "../hooks/http-hook.jsx";
+import {
+  prepareCartToSend,
+  prepareFavsToSend
+} from "../utils/cartAndFavsUtils.js";
 import styles from "./Form.module.css";
 
 const LoginPage = () => {
@@ -22,16 +26,8 @@ const LoginPage = () => {
 
   const sendLogin = async values => {
     clearError();
-    const productsIdsAndCount = [];
-    cart.items.map(item => {
-      const current = { productId: item.id, count: item.quantity };
-      productsIdsAndCount.push(current);
-    });
-    values.productsIdsAndCount = productsIdsAndCount;
-
-    const productsIds = [];
-    favs.favs.map(fav => productsIds.push(fav.id));
-    values.productsIds = productsIds;
+    values.productsIdsAndCount = prepareCartToSend(cart.items);
+    values.productsIds = prepareFavsToSend(favs.items);
 
     try {
       console.log(values);

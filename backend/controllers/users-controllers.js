@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs");
 
 const HttpError = require("../error-model/http-error.js");
 const usersDbController = require("../dbapp/controllers/users-DBcontroller.js");
+const cartAndFavsController = require("../controllers/cart-favs-controllers.js");
+const cartAndFavsDBController = require("../dbapp/controllers/cart-favs-DBcontroller.js");
 const generateToken = require("../utils/generateToken.js");
 
 exports.register = async (req, res) => {
@@ -13,7 +15,15 @@ exports.register = async (req, res) => {
     throw error;
   }
 
-  const { firstName, lastName, email, password } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    productsIds,
+    productsIdsAndCount
+  } = req.body;
+
   let user = await usersDbController.getUserByEmail(email);
 
   if (user) {
@@ -33,6 +43,9 @@ exports.register = async (req, res) => {
   };
 
   user = await usersDbController.createUser(createdUser);
+
+  cartAndFavsDBController.addFavsToDb(productsIds);
+  cartAndFavsDBController.addProdToDbCart(productsIdsAndCount);
 
   delete user.dataValues.password;
 
@@ -57,21 +70,33 @@ exports.login = async (req, res) => {
     throw error;
   }
 
-  let usersSavedFavs = [];
-  user.favourites.map(fav => usersSavedFavs.push(fav.productsId));
-  productsIds = productsIds.filter(id => !usersSavedFavs.includes(id));
-  usersDbController.addFavsToDb(user.id, productsIds);
+  cartAndFavsController.addFavsAfterLogin(
+    user.id,
+    user.favourites,
+    productsIds
+  );
 
-  let usersSavedCart = [];
-  user.carts.map(item => usersSavedCart.push(item.productId));
-  let saved = productsIdsAndCount.filter(item =>
-    usersSavedCart.includes(item.productId)
+  cartAndFavsController.addCartAfterLogin(
+    user.id,
+    user.carts,
+    productsIdsAndCount
   );
-  let notSaved = productsIdsAndCount.filter(
-    item => !usersSavedCart.includes(item.productId)
-  );
-  usersDbController.addProdToDbCart(user.id, notSaved);
-  usersDbController.increaseCartQty(user.id, saved);
+
+  // let usersSavedFavs = [];
+  // user.favourites.map(fav => usersSavedFavs.push(fav.productsId));
+  // productsIds = productsIds.filter(id => !usersSavedFavs.includes(id));
+  // cartAndFavsController.addFavsToDb(user.id, productsIds);
+
+  // let usersSavedCart = [];
+  // user.carts.map(item => usersSavedCart.push(item.productId));
+  // let saved = productsIdsAndCount.filter(item =>
+  //   usersSavedCart.includes(item.productId)
+  // );
+  // let notSaved = productsIdsAndCount.filter(
+  //   item => !usersSavedCart.includes(item.productId)
+  // );
+  // usersDbController.addProdToDbCart(user.id, notSaved);
+  // usersDbController.increaseDBCartQty(user.id, saved);
 
   user.dataValues.favourites.map(fav => {
     fav.dataValues.product.imageData =
@@ -97,24 +122,4 @@ exports.logout = async (req, res) => {
 
 exports.isLogged = async (req, res) => {
   return res.status(200).json("ok");
-};
-
-exports.addFavs = async (req, res) => {
-  const userId = req.params.userId;
-  const { productsIds } = req.body;
-
-  const favs = await usersDbController.addFavsToDb(userId, productsIds);
-  return res.status(200).json(favs);
-};
-
-exports.addProdToCart = async (req, res) => {
-  const userId = req.params.userId;
-  const { productsIdsAndCount } = req.body;
-
-  let cart = await usersDbController.addProdToDbCart(
-    userId,
-    productsIdsAndCount
-  );
-  console.log(`------${cart}-------`);
-  return res.status(200).json(cart);
 };

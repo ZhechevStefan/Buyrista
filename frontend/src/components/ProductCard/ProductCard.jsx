@@ -1,15 +1,17 @@
 import { useRef, useState, useContext } from "react";
 import { toast } from "react-toastify";
 
-import FavContext from "../../context/fav-context.jsx";
+import AuthContext from "../../context/auth-context.jsx";
 import CartContext from "../../context/cart-context.jsx";
-import styles from "./ProductCard.module.css";
+import FavContext from "../../context/fav-context.jsx";
 import Button from "../Button/Button.jsx";
 import StarRating from "../StarRating/StarRating.jsx";
 import Notifications from "../Notifications/Notifications.jsx";
+import styles from "./ProductCard.module.css";
 
 const ProductCard = props => {
   const cartCtx = useContext(CartContext);
+  const authCtx = useContext(AuthContext);
   const [quantityIsValid, setQuantityIsValid] = useState(true);
   const quantityInputRef = useRef();
 
@@ -28,9 +30,8 @@ const ProductCard = props => {
     }
 
     setQuantityIsValid(true);
-    toast.success("Product added to Cart!");
 
-    cartCtx.addItem({
+    const item = {
       id: props.id,
       name: props.name,
       quantity: enteredQuantityNum,
@@ -38,7 +39,18 @@ const ProductCard = props => {
       price: props.price,
       image: props.image,
       imageType: props.imageType
-    });
+    };
+
+    cartCtx.addItem(item);
+    toast.success("Product added to Cart!");
+
+    if (authCtx.userInfo) {
+      fetch("http://localhost:5000/users/cart", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(item)
+      });
+    }
   };
 
   const addOrRemFavHandler = event => {
@@ -46,16 +58,30 @@ const ProductCard = props => {
     if (isItFav) {
       favCtx.removeFav(props.id);
       toast.success("Removed from Favourites!");
+
+      fetch(`http://localhost:5000/users/favourites/${props.id}`, {
+        method: "DELETE",
+        credentials: "include"
+      });
     } else {
-      favCtx.addFav({
+      const item = {
         id: props.id,
         name: props.name,
         countInStock: props.countInStock,
         price: props.price,
         image: props.image,
         imageType: props.imageType
-      });
+      };
+      favCtx.addFav(item);
       toast.success("Added to Favourites!");
+
+      if (authCtx.userInfo) {
+        fetch("http://localhost:5000/users/favourites/", {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify(item)
+        });
+      }
     }
   };
 

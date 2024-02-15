@@ -1,4 +1,4 @@
-import { useContext, useEffect, useReducer, useRef } from "react";
+import { useContext, useReducer, useRef } from "react";
 import CartContext from "./cart-context.jsx";
 
 import {

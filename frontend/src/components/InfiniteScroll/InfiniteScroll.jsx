@@ -8,7 +8,6 @@ const InfiniteScroll = props => {
   const url = props.url;
   const totalReviewCount = props.reviewCount;
   const newReview = props.newReview;
-  console.log(newReview);
   const setNewReview = props.setNewReview;
 
   const [items, setItems] = useState([]);

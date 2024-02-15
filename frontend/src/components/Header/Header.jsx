@@ -1,5 +1,6 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import styles from "./Header.module.css";
 import LoginMenu from "../LoginMenu/LoginMenu.jsx";
@@ -8,19 +9,30 @@ import AuthContext from "../../context/auth-context.jsx";
 import CartContext from "../../context/cart-context.jsx";
 import FavContext from "../../context/fav-context.jsx";
 import HeaderButton from "./HeaderBtn.jsx";
+import Cart from "../Cart/Cart.jsx";
+import Backdrop from "../Backdrop/Backdrop.jsx";
 
-const Header = props => {
+const Header = () => {
   const [loginMenuIsShown, setLoginMenuIsShown] = useState(false);
+  const [cartIsShown, setCartIsShown] = useState(false);
 
   const authCtx = useContext(AuthContext);
   const cartCtx = useContext(CartContext);
   const favCtx = useContext(FavContext);
+  let { items } = cartCtx;
 
   let loginMenuBtnName = authCtx.userInfo
     ? `${authCtx.userInfo.name}▾`
     : "웃 My account▾";
 
-  let { items } = cartCtx;
+  const showCartHandler = () => {
+    toast.dismiss();
+    setCartIsShown(true);
+  };
+
+  const hideCartHandler = () => {
+    setCartIsShown(false);
+  };
 
   let timeout;
   const openLoginMode = () => setLoginMenuIsShown(true);
@@ -65,7 +77,7 @@ const Header = props => {
           clear={clearTimer}
         />
         <HeaderButton name={"⭐ Favourites"} />
-        <HeaderCartButton onClick={props.onShowCart} items={items} />
+        <HeaderCartButton onClick={showCartHandler} items={items} />
         <div id="login-menu-hook"></div>
         {loginMenuIsShown && (
           <LoginMenu
@@ -74,6 +86,8 @@ const Header = props => {
             onMouseEnter={() => clearTimeout(timeout)}
           />
         )}
+        {cartIsShown && <Cart onClose={hideCartHandler} />}
+        {cartIsShown && <Backdrop onClick={hideCartHandler} dark />}
         {/* {loginMenuIsShown && <Backdrop onClick={closeLoginMode} dark />} */}
       </nav>
     </header>

@@ -2,6 +2,7 @@ const express = require("express");
 const { body } = require("express-validator");
 
 const usersController = require("../controllers/users-controllers.js");
+const cartAndFavsController = require("../controllers/cart-favs-controllers.js");
 const checkAuth = require("../middleware/check-auth.js");
 const catchAsync = require("../middleware/catch-async.js");
 
@@ -24,8 +25,22 @@ router.post("/logout", checkAuth, catchAsync(usersController.logout));
 
 router.get("/login", checkAuth, catchAsync(usersController.isLogged));
 
-router.post("/favourites/:userId", catchAsync(usersController.addFavs));
+router.post(
+  "/favourites",
+  checkAuth,
+  catchAsync(cartAndFavsController.addFavs)
+);
 
-router.post("/cart/:userId", catchAsync(usersController.addProdToCart));
+router.delete(
+  "/favourites/:productId",
+  checkAuth,
+  catchAsync(cartAndFavsController.deleteFav)
+);
+
+router.post(
+  "/cart",
+  checkAuth,
+  catchAsync(cartAndFavsController.addProdToCart)
+);
 
 module.exports = router;

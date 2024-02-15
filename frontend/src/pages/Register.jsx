@@ -5,17 +5,27 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import AuthContext from "../context/auth-context.jsx";
+import CartContext from "../context/cart-context.jsx";
+import FavContext from "../context/fav-context.jsx";
 import Button from "../components/Button/Button.jsx";
 import Input from "../components/Input/Input.jsx";
 import { useHttpClient } from "../hooks/http-hook.jsx";
+import {
+  prepareCartToSend,
+  prepareFavsToSend
+} from "../utils/cartAndFavsUtils.js";
 import styles from "./Form.module.css";
 
 const RegisterPage = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
+  const cart = useContext(CartContext);
+  const favs = useContext(FavContext);
   const navigate = useNavigate();
 
   const sendRegister = async values => {
+    values.productsIdsAndCount = prepareCartToSend(cart.items);
+    values.productsIds = prepareFavsToSend(favs.items);
     clearError();
     try {
       const { user } = await sendRequest(
