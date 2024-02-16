@@ -44,8 +44,13 @@ exports.register = async (req, res) => {
 
   user = await usersDbController.createUser(createdUser);
 
-  cartAndFavsDBController.addFavsToDb(productsIds);
-  cartAndFavsDBController.addProdToDbCart(productsIdsAndCount);
+  if (productsIds && productsIds.length > 0) {
+    cartAndFavsDBController.addFavsToDb(productsIds);
+  }
+
+  if (productsIdsAndCount && productsIdsAndCount.length > 0) {
+    cartAndFavsDBController.addProdToDbCart(productsIdsAndCount);
+  }
 
   delete user.dataValues.password;
 
@@ -70,17 +75,21 @@ exports.login = async (req, res) => {
     throw error;
   }
 
-  cartAndFavsController.addFavsAfterLogin(
-    user.id,
-    user.favourites,
-    productsIds
-  );
+  if (productsIds && productsIds.length > 0) {
+    cartAndFavsController.addFavsAfterLogin(
+      user.id,
+      user.favourites,
+      productsIds
+    );
+  }
 
-  cartAndFavsController.addCartAfterLogin(
-    user.id,
-    user.carts,
-    productsIdsAndCount
-  );
+  if (productsIdsAndCount && productsIdsAndCount.length > 0) {
+    cartAndFavsController.addCartAfterLogin(
+      user.id,
+      user.carts,
+      productsIdsAndCount
+    );
+  }
 
   // let usersSavedFavs = [];
   // user.favourites.map(fav => usersSavedFavs.push(fav.productsId));

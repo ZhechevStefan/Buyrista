@@ -26,11 +26,15 @@ const LoginPage = () => {
 
   const sendLogin = async values => {
     clearError();
-    values.productsIdsAndCount = prepareCartToSend(cart.items);
-    values.productsIds = prepareFavsToSend(favs.items);
-
     try {
-      console.log(values);
+      if (cart.items) {
+        values.productsIdsAndCount = prepareCartToSend(cart.items);
+      }
+
+      if (favs.items) {
+        values.productsIds = prepareFavsToSend(favs.items);
+      }
+
       const { user } = await sendRequest(
         "http://localhost:5000/users/login",
         "POST",

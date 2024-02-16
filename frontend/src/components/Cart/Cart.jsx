@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import Modal from "../Modal/Modal.jsx";
 import CartItem from "./CartItem.jsx";
 import styles from "./Cart.module.css";
+import AuthContext from "../../context/auth-context.jsx";
 import CartContext from "../../context/cart-context.jsx";
 import Button from "../Button/Button.jsx";
 // import Checkout from "./Checkout.jsx";
@@ -12,17 +13,48 @@ const Cart = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [didSubmit, setDidSubmit] = useState(false);
   const cartCtx = useContext(CartContext);
+  const authCtx = useContext(AuthContext);
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
 
   const hasItems = cartCtx.items.length > 0;
 
   const cartItemRemoveHandler = id => {
+    const qtyInCart = cartCtx.checkQty(id);
     cartCtx.removeItem(id);
+
+    if (authCtx.userInfo && qtyInCart > 1) {
+      const productsIdsAndCount = [{ id, count: -1 }];
+      fetch("http://localhost:5000/users/cart", {
+        method: "PATCH",
+        credentials: "include",
+        body: JSON.stringify({ productsIdsAndCount }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+    } else if (authCtx.userInfo && qtyInCart === 1) {
+      fetch(`http://localhost:5000/users/cart/${id}`, {
+        method: "DELETE",
+        credentials: "include"
+      });
+    }
   };
 
   const cartItemAddHandler = item => {
     cartCtx.addItem({ ...item, quantity: 1 });
+    const productsIdsAndCount = [{ id: item.id, count: 1 }];
+
+    if (authCtx.userInfo) {
+      fetch("http://localhost:5000/users/cart", {
+        method: "PATCH",
+        credentials: "include",
+        body: JSON.stringify({ productsIdsAndCount }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+    }
   };
 
   const orderHandler = () => {

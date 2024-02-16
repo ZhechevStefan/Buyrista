@@ -45,11 +45,28 @@ const ProductCard = props => {
     toast.success("Product added to Cart!");
 
     if (authCtx.userInfo) {
-      fetch("http://localhost:5000/users/cart", {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify(item)
-      });
+      const itIsInCart = cartCtx.checkIfInCart(props.id);
+      const productsIdsAndCount = [{ id: item.id, count: item.quantity }];
+
+      if (itIsInCart) {
+        fetch("http://localhost:5000/users/cart", {
+          method: "PATCH",
+          credentials: "include",
+          body: JSON.stringify({ productsIdsAndCount }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+      } else {
+        fetch("http://localhost:5000/users/cart", {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify({ productsIdsAndCount }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+      }
     }
   };
 
@@ -59,10 +76,12 @@ const ProductCard = props => {
       favCtx.removeFav(props.id);
       toast.success("Removed from Favourites!");
 
-      fetch(`http://localhost:5000/users/favourites/${props.id}`, {
-        method: "DELETE",
-        credentials: "include"
-      });
+      if (authCtx.userInfo) {
+        fetch(`http://localhost:5000/users/favourites/${props.id}`, {
+          method: "DELETE",
+          credentials: "include"
+        });
+      }
     } else {
       const item = {
         id: props.id,
@@ -76,10 +95,14 @@ const ProductCard = props => {
       toast.success("Added to Favourites!");
 
       if (authCtx.userInfo) {
+        const productsIds = [{ id: item.id, count: item.quantity }];
         fetch("http://localhost:5000/users/favourites/", {
           method: "POST",
           credentials: "include",
-          body: JSON.stringify(item)
+          body: JSON.stringify({ productsIds }),
+          headers: {
+            "Content-Type": "application/json"
+          }
         });
       }
     }

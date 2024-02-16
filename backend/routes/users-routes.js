@@ -43,4 +43,16 @@ router.post(
   catchAsync(cartAndFavsController.addProdToCart)
 );
 
+router.patch(
+  "/cart",
+  checkAuth,
+  catchAsync(cartAndFavsController.changeQtyInCart)
+);
+
+router.delete(
+  "/cart/:productId",
+  checkAuth,
+  catchAsync(cartAndFavsController.deleteProdFromCart)
+);
+
 module.exports = router;

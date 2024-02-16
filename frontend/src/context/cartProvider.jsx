@@ -111,12 +111,23 @@ const CartProvider = props => {
     dispatchCartAction({ type: "CLEAR" });
   };
 
+  const checkIfInCartHandler = productId => {
+    return !!cartState.items.find(product => product.id === productId);
+  };
+
+  const checkQtyHandler = productId => {
+    const product = cartState.items.find(product => product.id === productId);
+    return product.quantity;
+  };
+
   const cartContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
-    clearCart: clearCartHandler
+    clearCart: clearCartHandler,
+    checkIfInCart: checkIfInCartHandler,
+    checkQty: checkQtyHandler
   };
 
   // const fetchStopper = useRef(true);

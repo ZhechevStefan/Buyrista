@@ -2,18 +2,18 @@ import { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import styles from "./Header.module.css";
-import LoginMenu from "../LoginMenu/LoginMenu.jsx";
-import HeaderCartButton from "./HeaderCartBtn.jsx";
 import AuthContext from "../../context/auth-context.jsx";
 import CartContext from "../../context/cart-context.jsx";
 import FavContext from "../../context/fav-context.jsx";
-import HeaderButton from "./HeaderBtn.jsx";
-import Cart from "../Cart/Cart.jsx";
 import Backdrop from "../Backdrop/Backdrop.jsx";
+import Cart from "../Cart/Cart.jsx";
+import HeaderCartButton from "./HeaderCartBtn.jsx";
+import HeaderButton from "./HeaderBtn.jsx";
+import LoginMenu from "../LoginMenu/LoginMenu.jsx";
+import styles from "./Header.module.css";
 
 const Header = () => {
-  const [loginMenuIsShown, setLoginMenuIsShown] = useState(false);
+  const [authMenuIsShown, setAuthMenuIsShown] = useState(false);
   const [cartIsShown, setCartIsShown] = useState(false);
 
   const authCtx = useContext(AuthContext);
@@ -21,7 +21,7 @@ const Header = () => {
   const favCtx = useContext(FavContext);
   let { items } = cartCtx;
 
-  let loginMenuBtnName = authCtx.userInfo
+  let authMenuBtnName = authCtx.userInfo
     ? `${authCtx.userInfo.name}▾`
     : "웃 My account▾";
 
@@ -35,11 +35,23 @@ const Header = () => {
   };
 
   let timeout;
-  const openLoginMode = () => setLoginMenuIsShown(true);
+  const openLoginMode = () => setAuthMenuIsShown(true);
   const closeLoginMode = () =>
-    (timeout = setTimeout(() => setLoginMenuIsShown(false), 1000));
-  const suddenClose = () => setLoginMenuIsShown(false);
+    (timeout = setTimeout(() => setAuthMenuIsShown(false), 1000));
+  const suddenClose = () => setAuthMenuIsShown(false);
   const clearTimer = timeout => clearTimeout(timeout);
+  const logout = async () => {
+    authCtx.logout();
+    await fetch("http://localhost:5000/users/logout", {
+      method: "POST",
+      credentials: "include",
+      body: null,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    toast.success("See you soon!");
+  };
 
   return (
     <header className={styles["main-wrapper"]}>
@@ -70,8 +82,8 @@ const Header = () => {
           {authCtx.userInfo ? `${authCtx.userInfo.name}▾` : "웃 My account▾"}
         </button> */}
         <HeaderButton
-          name={loginMenuBtnName}
-          isShown={loginMenuIsShown}
+          name={authMenuBtnName}
+          isShown={authMenuIsShown}
           close={closeLoginMode}
           open={openLoginMode}
           clear={clearTimer}
@@ -79,11 +91,13 @@ const Header = () => {
         <HeaderButton name={"⭐ Favourites"} />
         <HeaderCartButton onClick={showCartHandler} items={items} />
         <div id="login-menu-hook"></div>
-        {loginMenuIsShown && (
+        {authMenuIsShown && (
           <LoginMenu
             onClick={suddenClose}
             onMouseLeave={closeLoginMode}
             onMouseEnter={() => clearTimeout(timeout)}
+            isLogged={!!authCtx.userInfo}
+            onLogout={logout}
           />
         )}
         {cartIsShown && <Cart onClose={hideCartHandler} />}

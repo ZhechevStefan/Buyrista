@@ -19,12 +19,26 @@ exports.addProdToCart = async (req, res) => {
   const userId = req.userData.userId;
   const { productsIdsAndCount } = req.body;
 
-  let cart = await cartAndFavsDBController.addProdToDbCart(
-    userId,
-    productsIdsAndCount
-  );
-  console.log(`------${cart}-------`);
-  return res.status(200).json(cart);
+  await cartAndFavsDBController.addProdToDbCart(userId, productsIdsAndCount);
+
+  return res.status(200).json("ok");
+};
+
+exports.changeQtyInCart = async (req, res) => {
+  const userId = req.userData.userId;
+  const { productsIdsAndCount } = req.body;
+  console.log(productsIdsAndCount);
+
+  await cartAndFavsDBController.changeDBCartQty(userId, productsIdsAndCount);
+
+  return res.status(200).json("ok");
+};
+
+exports.deleteProdFromCart = async (req, res) => {
+  const userId = req.userData.userId;
+  const productId = req.params.productId;
+
+  await cartAndFavsDBController.deleteProdFromDbCart(userId, productId);
 };
 
 exports.addFavsAfterLogin = async (userId, oldFavs, reqFavsIds) => {
@@ -42,5 +56,5 @@ exports.addCartAfterLogin = async (userId, oldCart, reqCartIds) => {
     item => !usersSavedCart.includes(item.productId)
   );
   cartAndFavsDBController.addProdToDbCart(userId, notSaved);
-  cartAndFavsDBController.increaseDBCartQty(userId, saved);
+  cartAndFavsDBController.changeDBCartQty(userId, saved);
 };
