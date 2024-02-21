@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Button from "../Button/Button.jsx";
+import InfiniteScroll from "../InfiniteScroll/InfiniteScroll.jsx";
+import LoginModal from "../Modal/LoginModal.jsx";
 import WriteAReview from "./WriteAReview.jsx";
 import styles from "./Reviews.module.css";
-import InfiniteScroll from "../InfiniteScroll/InfiniteScroll.jsx";
 
 const Reviews = props => {
   const navigate = useNavigate();
@@ -13,15 +14,19 @@ const Reviews = props => {
   const userId = props.userId;
   const userName = props.userName;
   const currUserReview = props.currUserReview;
-  const [isHidden, setIsHidden] = useState(true);
+  const [writeARevewIsHidden, setWriteARevewIsHidden] = useState(true);
+  // const [loginIsHidden, setLoginIsHidden] = useState(true);
   const [newReview, setNewReview] = useState(null);
 
-  const showWriteAComment = () => setIsHidden(false);
-  const hideWriteAComment = () => setIsHidden(true);
+  const showWriteAComment = () => setWriteARevewIsHidden(false);
+  const hideWriteAComment = () => setWriteARevewIsHidden(true);
 
   const goToLogin = () => {
     navigate("../../users/login");
   };
+
+  // const showLogin = () => setLoginIsHidden(false);
+  // const hideLogin = () => setLoginIsHidden(true);
 
   return (
     <>
@@ -31,7 +36,7 @@ const Reviews = props => {
           <Button
             type="button"
             onClick={userId ? showWriteAComment : goToLogin}
-            disabled={!isHidden}
+            disabled={!writeARevewIsHidden}
             withMargins
           >
             {userId
@@ -41,10 +46,11 @@ const Reviews = props => {
               : "Log in to write reviews"}
           </Button>
         </div>
+        {/* {!loginIsHidden && <LoginModal onCancel={hideLogin} />} */}
 
         <WriteAReview
           productId={productId}
-          isHidden={isHidden}
+          isHidden={writeARevewIsHidden}
           hideWriteAComment={hideWriteAComment}
           currUserReview={currUserReview}
           setNewReview={setNewReview}

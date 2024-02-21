@@ -69,7 +69,8 @@ const LoginPage = () => {
         favs.addFav(item);
       });
 
-      navigate("/");
+      toast.success(`Wellcome, ${user.name}!`);
+      navigate(-1, { replace: true });
     } catch (err) {
       toast.error(err.message);
     }

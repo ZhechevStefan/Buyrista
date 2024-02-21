@@ -91,22 +91,6 @@ exports.login = async (req, res) => {
     );
   }
 
-  // let usersSavedFavs = [];
-  // user.favourites.map(fav => usersSavedFavs.push(fav.productsId));
-  // productsIds = productsIds.filter(id => !usersSavedFavs.includes(id));
-  // cartAndFavsController.addFavsToDb(user.id, productsIds);
-
-  // let usersSavedCart = [];
-  // user.carts.map(item => usersSavedCart.push(item.productId));
-  // let saved = productsIdsAndCount.filter(item =>
-  //   usersSavedCart.includes(item.productId)
-  // );
-  // let notSaved = productsIdsAndCount.filter(
-  //   item => !usersSavedCart.includes(item.productId)
-  // );
-  // usersDbController.addProdToDbCart(user.id, notSaved);
-  // usersDbController.increaseDBCartQty(user.id, saved);
-
   user.dataValues.favourites.map(fav => {
     fav.dataValues.product.imageData =
       fav.dataValues.product.imageData.toString("base64");
@@ -132,3 +116,5 @@ exports.logout = async (req, res) => {
 exports.isLogged = async (req, res) => {
   return res.status(200).json("ok");
 };
+
+exports.addOrder = async (req, res) => {};

@@ -33,6 +33,7 @@ const Pagination = props => {
   };
 
   let lastPage = paginationRange[paginationRange.length - 1];
+
   return (
     <ul className={`${styles["pagination-container"]} ${className} `}>
       {/* Left navigation arrow */}

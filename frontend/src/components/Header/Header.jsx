@@ -41,7 +41,6 @@ const Header = () => {
   const suddenClose = () => setAuthMenuIsShown(false);
   const clearTimer = timeout => clearTimeout(timeout);
   const logout = async () => {
-    authCtx.logout();
     await fetch("http://localhost:5000/users/logout", {
       method: "POST",
       credentials: "include",
@@ -51,6 +50,9 @@ const Header = () => {
       }
     });
     toast.success("See you soon!");
+    authCtx.logout();
+    cartCtx.clearCart();
+    favCtx.clearFavs();
   };
 
   return (
@@ -70,17 +72,6 @@ const Header = () => {
             Orders
           </NavLink>
         </div>
-        {/* <button
-          className={`${styles["header-btn"]} ${
-            loginMenuIsShown ? styles.open : ""
-          }`}
-          onMouseEnter={
-            loginMenuIsShown ? () => clearTimeout(timeout) : openLoginMode
-          }
-          onMouseLeave={closeLoginMode}
-        >
-          {authCtx.userInfo ? `${authCtx.userInfo.name}▾` : "웃 My account▾"}
-        </button> */}
         <HeaderButton
           name={authMenuBtnName}
           isShown={authMenuIsShown}
@@ -90,7 +81,6 @@ const Header = () => {
         />
         <HeaderButton name={"⭐ Favourites"} />
         <HeaderCartButton onClick={showCartHandler} items={items} />
-        <div id="login-menu-hook"></div>
         {authMenuIsShown && (
           <LoginMenu
             onClick={suddenClose}

@@ -25,6 +25,8 @@ router.post("/logout", checkAuth, catchAsync(usersController.logout));
 
 router.get("/login", checkAuth, catchAsync(usersController.isLogged));
 
+router.post("/orders", checkAuth, catchAsync(usersController.addOrder));
+
 router.post(
   "/favourites",
   checkAuth,

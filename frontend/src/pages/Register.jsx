@@ -38,7 +38,7 @@ const RegisterPage = () => {
         }
       );
       auth.login(user);
-      navigate("/");
+      navigate(-1, { replace: true });
     } catch (err) {
       toast.error(err.message);
     }

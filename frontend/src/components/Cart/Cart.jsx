@@ -6,10 +6,8 @@ import styles from "./Cart.module.css";
 import AuthContext from "../../context/auth-context.jsx";
 import CartContext from "../../context/cart-context.jsx";
 import Button from "../Button/Button.jsx";
-// import Checkout from "./Checkout.jsx";
 
 const Cart = props => {
-  // const [isCheckout, setIsCheckout] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [didSubmit, setDidSubmit] = useState(false);
   const cartCtx = useContext(CartContext);
@@ -59,25 +57,7 @@ const Cart = props => {
 
   const orderHandler = () => {
     console.log("isCheckedOut");
-    // setIsCheckout(true);
   };
-
-  // const submitOrderHandler = async userData => {
-  //   setIsSubmitting(true);
-  //   await fetch(
-  //     "https://react-http-29e9b-default-rtdb.europe-west1.firebasedatabase.app/orders.json",
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         user: userData,
-  //         orderedItems: cartCtx.items
-  //       })
-  //     }
-  //   );
-  //   setIsSubmitting(false);
-  //   setDidSubmit(true);
-  //   cartCtx.clearCart();
-  // };
 
   const cartItems = (
     <ul className={styles["cart-items"]}>
@@ -123,9 +103,6 @@ const Cart = props => {
         <span>Total Amount:</span>
         <span>{hasItems ? totalAmount : "$0.00"}</span>
       </div>
-      {/* {isCheckout && (
-        <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />
-      )} */}
       {modalActions}
     </>
   );
