@@ -13,7 +13,7 @@ import UsersPage, { loader as adminUsersLoader } from "./pages/Users.jsx";
 import AddProductPage, {
   action as addProductAction
 } from "./pages/AddProduct.jsx";
-import OrdersPage from "./pages/Checkout.jsx";
+import OrdersPage from "./pages/Orders.jsx";
 
 const router = createBrowserRouter([
   {

@@ -79,6 +79,7 @@ const RegisterPage = () => {
             </div>
             <Input
               id="firstName"
+              name="firstName"
               element="input"
               type="text"
               label="First name"
@@ -89,6 +90,7 @@ const RegisterPage = () => {
             />
             <Input
               id="lastName"
+              name="lastName"
               element="input"
               type="text"
               label="Last name"
@@ -99,6 +101,7 @@ const RegisterPage = () => {
             />
             <Input
               id="email"
+              name="email"
               element="input"
               type="text"
               label="Email"
@@ -109,6 +112,7 @@ const RegisterPage = () => {
             />
             <Input
               id="password"
+              name="password"
               element="input"
               type="password"
               label="Password"
@@ -119,6 +123,7 @@ const RegisterPage = () => {
             />
             {/* <Input
         id="confirm-password"
+        name="confirm-password"
         element="input"
         type="passowrd"
         label="Confirm Password"

@@ -9,7 +9,7 @@ const Input = props => {
     element = (
       <input
         id={props.id}
-        name={props.id}
+        name={props.name}
         type={props.type}
         label={props.label}
         placeholder={props.placeholder}
@@ -38,7 +38,19 @@ const Input = props => {
         ))}
       </select>
     );
-  } else {
+  }
+  // else if (props.element === "radio") {
+  //   <input
+  //     id={props.id}
+  //     name={props.id}
+  //     type={props.element}
+  //     label={props.label}
+  //     onChange={props.onChange}
+  //     onBlur={props.onBlur}
+  //     value={props.value}
+  //   />;
+  // }
+  else {
     element = (
       <textarea
         id={props.id}

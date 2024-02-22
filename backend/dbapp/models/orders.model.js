@@ -21,8 +21,12 @@ module.exports = (sequelize, DataTypes) => {
     isPaid: {
       type: DataTypes.BOOLEAN,
       allowNull: false
+    },
+    isComplete: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   });
 
-  return Reviews;
+  return Orders;
 };

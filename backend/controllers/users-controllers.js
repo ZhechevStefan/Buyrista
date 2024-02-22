@@ -116,5 +116,3 @@ exports.logout = async (req, res) => {
 exports.isLogged = async (req, res) => {
   return res.status(200).json("ok");
 };
-
-exports.addOrder = async (req, res) => {};

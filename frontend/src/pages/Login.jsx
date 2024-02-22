@@ -106,6 +106,7 @@ const LoginPage = () => {
             </div>
             <Input
               id="email"
+              name="email"
               element="input"
               type="text"
               label="Email"
@@ -116,6 +117,7 @@ const LoginPage = () => {
             />
             <Input
               id="password"
+              name="password"
               element="input"
               type="password"
               label="Password"

@@ -109,6 +109,7 @@ const WriteAReview = props => {
               <input name="formId" defaultValue={"reviewForm"} />
               <Input
                 id="rating"
+                name="rating"
                 element="input"
                 type="number"
                 label="starRating"

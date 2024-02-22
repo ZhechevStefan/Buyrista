@@ -101,6 +101,7 @@ const AddProductPage = props => {
           </div>
           <Input
             id="name"
+            name="name"
             element="input"
             type="text"
             label="Name"
@@ -139,6 +140,7 @@ const AddProductPage = props => {
           />
           <Input
             id="brand"
+            name="brand"
             element="input"
             type="text"
             label="Brand"
@@ -158,6 +160,7 @@ const AddProductPage = props => {
           />
           <Input
             id="price"
+            name="price"
             element="input"
             type="number"
             label="Price"
@@ -168,6 +171,7 @@ const AddProductPage = props => {
           />
           <Input
             id="countInStock"
+            name="countInStock"
             element="input"
             type="number"
             label="Count In Stock"

@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 
-import Modal from "../Modal/Modal.jsx";
-import CartItem from "./CartItem.jsx";
-import styles from "./Cart.module.css";
 import AuthContext from "../../context/auth-context.jsx";
 import CartContext from "../../context/cart-context.jsx";
 import Button from "../Button/Button.jsx";
+import CartItem from "./CartItem.jsx";
+import Modal from "../Modal/Modal.jsx";
+import styles from "./Cart.module.css";
 
 const Cart = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);

@@ -22,6 +22,7 @@ db.orderedProducts = require("./orderedProducts.model.js")(
   sequelize,
   Sequelize
 );
+db.deliveryInfo = require("./deliveryInfos.model.js")(sequelize, Sequelize);
 
 db.users.belongsToMany(db.products, { through: db.reviews });
 db.products.belongsToMany(db.users, { through: db.reviews });
@@ -44,8 +45,8 @@ db.carts.belongsTo(db.users);
 db.products.hasMany(db.carts);
 db.carts.belongsTo(db.products);
 
-db.users.hasMany(db.orders);
 db.orders.belongsTo(db.users);
+db.users.hasMany(db.orders);
 
 db.orders.belongsToMany(db.products, { through: db.orderedProducts });
 db.products.belongsToMany(db.orders, { through: db.orderedProducts });
@@ -53,5 +54,10 @@ db.products.hasMany(db.orderedProducts);
 db.orderedProducts.belongsTo(db.products);
 db.orders.hasMany(db.orderedProducts);
 db.orderedProducts.belongsTo(db.orders);
+
+db.users.hasMany(db.deliveryInfo);
+db.deliveryInfo.belongsTo(db.users);
+db.orders.hasOne(db.deliveryInfo);
+db.deliveryInfo.belongsTo(db.orders);
 
 module.exports = db;
