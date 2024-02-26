@@ -8,9 +8,9 @@ const Input = props => {
   if (props.element === "input") {
     element = (
       <input
+        type={props.type}
         id={props.id}
         name={props.name}
-        type={props.type}
         label={props.label}
         placeholder={props.placeholder}
         onChange={props.onChange}
@@ -65,7 +65,7 @@ const Input = props => {
   }
 
   return (
-    <div className={`${styles.container}`}>
+    <div className={`${styles.container}  ${props.givenClass}`}>
       <label htmlFor={props.id}>{props.label}</label>
       {element}
       {isInvalid ? (

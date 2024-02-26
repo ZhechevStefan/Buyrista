@@ -2,7 +2,6 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 
-import "./index.css";
 import App from "./App.jsx";
 import HomePage, { loadProducts } from "./pages/Home.jsx";
 import ProductPage, { loadProduct } from "./pages/Product.jsx";
@@ -14,6 +13,8 @@ import AddProductPage, {
   action as addProductAction
 } from "./pages/AddProduct.jsx";
 import OrdersPage from "./pages/Orders.jsx";
+import CheckoutPage from "./pages/Checkout.jsx";
+import "./index.css";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "users/register",
         element: <RegisterPage />
+      },
+      {
+        path: "users/checkout",
+        element: <CheckoutPage />
       },
       {
         path: "admin/users",

@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import AuthContext from "../../context/auth-context.jsx";
 import CartContext from "../../context/cart-context.jsx";
@@ -8,10 +9,9 @@ import Modal from "../Modal/Modal.jsx";
 import styles from "./Cart.module.css";
 
 const Cart = props => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [didSubmit, setDidSubmit] = useState(false);
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
 
@@ -56,7 +56,8 @@ const Cart = props => {
   };
 
   const orderHandler = () => {
-    console.log("isCheckedOut");
+    props.onClose();
+    navigate("users/checkout");
   };
 
   const cartItems = (
@@ -107,16 +108,10 @@ const Cart = props => {
     </>
   );
 
-  const isSubmittingModal = <p>Sending order data...</p>;
-
-  const didSubmitModal = <p>Successfull order!</p>;
-
   return (
     <>
       <Modal onClose={props.onClose} header="Your cart:">
-        {!isSubmitting && !didSubmit && cartModalContent}
-        {isSubmitting && isSubmittingModal}
-        {!isSubmitting && didSubmit && didSubmitModal}
+        {cartModalContent}
       </Modal>
     </>
   );
