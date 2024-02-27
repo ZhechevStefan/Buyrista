@@ -45,8 +45,8 @@ db.carts.belongsTo(db.users);
 db.products.hasMany(db.carts);
 db.carts.belongsTo(db.products);
 
-db.orders.belongsTo(db.users);
 db.users.hasMany(db.orders);
+db.orders.belongsTo(db.users);
 
 db.orders.belongsToMany(db.products, { through: db.orderedProducts });
 db.products.belongsToMany(db.orders, { through: db.orderedProducts });
