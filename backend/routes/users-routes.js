@@ -25,7 +25,22 @@ router.post("/logout", checkAuth, catchAsync(usersController.logout));
 
 router.get("/login", checkAuth, catchAsync(usersController.isLogged));
 
-router.post("/orders", checkAuth, catchAsync(usersController.addOrder));
+router.post(
+  "/orders",
+  checkAuth,
+  [
+    body("contactName").not().isEmpty(),
+    body("address").not().isEmpty(),
+    body("city").not().isEmpty(),
+    body("country").not().isEmpty(),
+    body("postalCode").not().isEmpty(),
+    body("phoneNumber").not().isEmpty(),
+    body("totalPrice").custom(val => val > 0),
+    body("paymentMethod").isIn(["Cash On Delivery", "Card Payment"]),
+    body("totalPrice").custom(arr => arr.length > 0)
+  ],
+  catchAsync(usersController.addOrder)
+);
 
 router.post(
   "/favourites",

@@ -116,3 +116,32 @@ exports.logout = async (req, res) => {
 exports.isLogged = async (req, res) => {
   return res.status(200).json("ok");
 };
+
+exports.addOrder = async (req, res) => {
+  const userId = req.userData.userId;
+  const allOrderData = req.body;
+
+  const forOrdersDb = {
+    total: +allOrderData.totalPrice,
+    isPaid: allOrderData.paymentMethod === "Card Payment" ? true : false,
+    userId: userId
+  };
+
+  const order = await usersDbController.addOrder(forOrdersDb, userId);
+  const orderId = order.id;
+
+  const forDeliveryDb = {
+    country: allOrderData.country,
+    city: allOrderData.city,
+    postalCode: allOrderData.postalCode,
+    address: allOrderData.address,
+    phone: allOrderData.phoneNumber,
+    contactName: allOrderData.contactName,
+    billingAddress: allOrderData.billingAddress
+      ? allOrderData.billingAddress
+      : "",
+    billingName: allOrderData.billingName ? allOrderData.billingName : "",
+    userId: userId,
+    orderId: orderId
+  };
+};

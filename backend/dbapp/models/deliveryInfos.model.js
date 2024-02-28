@@ -31,7 +31,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     billingAddress: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
+    },
+    billingName: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   });
 

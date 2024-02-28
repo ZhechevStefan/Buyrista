@@ -144,6 +144,7 @@ const WriteAReview = props => {
                 type="button"
                 disabled={isLoading}
                 onClick={props.hideWriteAComment}
+                width="6.2rem"
                 withMargins
               >
                 Cancel
@@ -151,6 +152,7 @@ const WriteAReview = props => {
               <Button
                 type="submit"
                 disabled={!formik.isValid || isLoading}
+                width="6.2rem"
                 withMargins
               >
                 {isLoading ? "Submitting..." : "Send"}

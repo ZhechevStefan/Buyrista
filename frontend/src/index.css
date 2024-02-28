@@ -1,6 +1,9 @@
-*:not(.star-svg, .star-svg > *) {
+* {
   box-sizing: border-box;
   font-family: sans-serif;
+}
+
+*:not(.star-svg, .star-svg > *, button) {
   color: white;
 }
 

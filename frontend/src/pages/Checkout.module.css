@@ -12,6 +12,14 @@
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
+.billing {
+  margin-bottom: 0;
+}
+
+h3 + p {
+  font-size: 0.8rem;
+}
+
 .inner-wrapper {
   display: flex;
   width: 100%;

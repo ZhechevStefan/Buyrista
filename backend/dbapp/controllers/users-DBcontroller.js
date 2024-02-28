@@ -5,6 +5,8 @@ const User = db.users;
 const Product = db.products;
 const Fav = db.favourites;
 const Cart = db.carts;
+const Order = db.orders;
+const DeliveryInfo = db.deliveryInfo;
 
 exports.getAllUsers = async () => {
   return await User.findAll({
@@ -44,5 +46,29 @@ exports.createUser = async user => {
     email: user.email,
     password: user.password,
     isAdmin: user.isAdmin
+  });
+};
+
+exports.addOrder = async order => {
+  return await Order.create({
+    total: order.total,
+    isPaid: order.isPaid,
+    userId: order.userId,
+    isComplete: false
+  });
+};
+
+exports.addDeliveryInfo = async deliveryInfo => {
+  return await DeliveryInfo.create({
+    country: deliveryInfo.country,
+    city: deliveryInfo.city,
+    postalCode: deliveryInfo.postalCode,
+    address: deliveryInfo.address,
+    phone: deliveryInfo.phoneNumber,
+    contactName: deliveryInfo.contactName,
+    billingAddress: deliveryInfo.billingAddress,
+    billingName: deliveryInfo.billingName,
+    userId: deliveryInfo.userId,
+    orderId: deliveryInfo.orderId
   });
 };

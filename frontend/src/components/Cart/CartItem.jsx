@@ -1,3 +1,4 @@
+import Button from "../Button/Button.jsx";
 import styles from "./CartItem.module.css";
 
 const CartItem = props => {
@@ -18,14 +19,20 @@ const CartItem = props => {
         <h3 className={styles["product-name"]}>{props.name}</h3>
       </div>
       <div className={styles.summary}>
-        <span className={styles.price}>{props.price}</span>
+        <span className={styles.price}>${props.price}</span>
         <span className={styles.quantity}>x {props.quantity}</span>
       </div>
       <div className={styles.actions}>
-        <button onClick={props.onRemove}>−</button>
+        {/* <button onClick={props.onRemove}>−</button>
         <button onClick={props.onAdd} disabled={!countInStock}>
           +
-        </button>
+        </button> */}
+        <Button onClick={props.onRemove} width="2.5rem">
+          -
+        </Button>
+        <Button onClick={props.onAdd} width="2.5rem" disabled={!countInStock}>
+          +
+        </Button>
       </div>
     </li>
   );
