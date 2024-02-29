@@ -161,7 +161,7 @@ const CheckoutPage = props => {
 
               <section className={styles["info-wrapper"]}>
                 <h3 className={styles.billing}>Billing Information</h3>
-                <p>
+                <p style={{ fontSize: "0.8rem" }}>
                   If you want to use the same info, you can leave these fields
                   empty.
                 </p>

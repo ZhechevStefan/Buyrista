@@ -144,4 +144,20 @@ exports.addOrder = async (req, res) => {
     userId: userId,
     orderId: orderId
   };
+
+  await usersDbController.addDeliveryInfo(forDeliveryDb);
+
+  const forOrderedProductsDb = [];
+  allOrderData.products.map(product =>
+    forOrderedProductsDb.push({
+      productId: product.id,
+      price: product.price,
+      quantity: product.quantity,
+      orderId
+    })
+  );
+
+  await usersDbController.addOrderedProducts(forOrderedProductsDb);
+
+  return res.status(200).json("ok");
 };

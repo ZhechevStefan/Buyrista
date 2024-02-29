@@ -1,13 +1,20 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import CartContext from "../context/cart-context.jsx";
-import SummaryCard from "../components/SummaryCard/SummaryCard.jsx";
-import styles from "./Summary.module.css";
 import Button from "../components/Button/Button.jsx";
+import SummaryCard from "../components/SummaryCard/SummaryCard.jsx";
+import { useHttpClient } from "../hooks/http-hook.jsx";
+import Loader from "../components/Loader/Loader.jsx";
+import styles from "./Summary.module.css";
 
 const SummaryPage = props => {
   const cartCtx = useContext(CartContext);
   const checkoutValues = props.checkoutValues;
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const navigate = useNavigate();
+
   const totalPrice =
     cartCtx.totalAmount +
     (checkoutValues.paymentMethod === "Card Payment" ? 0 : 2) +
@@ -22,7 +29,7 @@ const SummaryPage = props => {
       "You are making the payment in the moment you receive your order.";
   }
 
-  const sendOrder = () => {
+  const sendOrder = async () => {
     checkoutValues.totalPrice = totalPrice.toFixed(2);
     let products = [];
     cartCtx.items.map(item => {
@@ -30,7 +37,23 @@ const SummaryPage = props => {
       products.push(current);
     });
     checkoutValues.products = products;
-    console.log(checkoutValues);
+
+    try {
+      await sendRequest(
+        "http://localhost:5000/users/orders",
+        "POST",
+        "include",
+        JSON.stringify(checkoutValues),
+        {
+          "Content-Type": "application/json"
+        }
+      );
+
+      cartCtx.clearCart();
+      navigate("/");
+    } catch (err) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -95,16 +118,22 @@ const SummaryPage = props => {
           </div>
         </div>
       </div>
-      <Button
-        width={"30%"}
-        transparent
-        onClick={() => props.setIsSummary(false)}
-      >
-        Edit
-      </Button>
-      <Button width={"30%"} type="button" onClick={sendOrder}>
-        Send Order
-      </Button>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <Button
+            width={"30%"}
+            transparent
+            onClick={() => props.setIsSummary(false)}
+          >
+            Edit
+          </Button>
+          <Button width={"30%"} type="button" onClick={sendOrder}>
+            Send Order
+          </Button>
+        </>
+      )}
     </div>
   );
 };

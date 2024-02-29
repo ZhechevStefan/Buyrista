@@ -6,6 +6,11 @@ import styles from "./Home.module.css";
 const HomePage = props => {
   const { products } = useLoaderData();
 
+  const image1 = <img src="images/airpods.jpg" alt="airpods" />;
+  const image2 = <img src="images/alexa.jpg" alt="alexa" />;
+  const image3 = <img src="images/playstation.jpg" alt="playstation" />;
+  const items = [image1, image2, image3];
+
   if (products) {
     return (
       <>
