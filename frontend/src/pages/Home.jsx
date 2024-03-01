@@ -1,4 +1,5 @@
 import { Link, json, useLoaderData } from "react-router-dom";
+import WellcomeCarousel from "../components/Carousel/WellcomeCarousel.jsx";
 
 import Card from "../components/Card/Card.jsx";
 import styles from "./Home.module.css";
@@ -14,6 +15,9 @@ const HomePage = props => {
   if (products) {
     return (
       <>
+        <div className={styles["carousel-container"]}>
+          <WellcomeCarousel />
+        </div>
         <h1 className={styles.title}>Latest Products</h1>
         <div className={styles.wrapper}>
           {products.map(product => (

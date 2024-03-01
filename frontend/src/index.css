@@ -30,6 +30,7 @@ main {
   justify-content: center;
   align-items: center;
   min-height: 80vh;
+  max-width: 100vw;
 }
 
 footer {
@@ -66,4 +67,50 @@ h1 {
 .active {
   color: yellow;
   /* text-decoration: underline; */
+}
+
+.slider-container {
+  max-width: 100vw;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slick-prev {
+  left: 20px;
+  z-index: 1;
+}
+
+.slick-next {
+  right: 60px;
+}
+
+.slick-next:before {
+  font-size: 40px;
+}
+
+.slick-prev:before {
+  font-size: 40px;
+}
+
+.slick-dots {
+  bottom: -10px;
+}
+
+.slick-dots li button:before {
+  font-size: 1rem;
+}
+
+.img-body img {
+  /* display: flex;
+  object-fit: cover;
+  width: 100%;
+  height: 100%; */
+  width: 100%;
+  object-fit: cover;
+  max-height: 30rem;
+}
+
+.img-body {
+  width: 100%;
+  display: inline-block;
 }
