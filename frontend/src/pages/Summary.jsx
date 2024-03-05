@@ -129,6 +129,7 @@ const SummaryPage = props => {
           >
             Edit
           </Button>
+
           <Button width={"30%"} type="button" onClick={sendOrder}>
             Send Order
           </Button>

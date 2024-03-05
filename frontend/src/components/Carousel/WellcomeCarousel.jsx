@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const WellcomeCarousel = props => {
+  const items = props.items;
   const settings = {
     dots: true,
     infinite: true,
@@ -14,10 +15,10 @@ const WellcomeCarousel = props => {
     cssEase: "linear"
   };
 
-  const image1 = <img src="images/Iphone15-wellcome.png" alt="iPhone15" />;
-  const image2 = <img src="images/alexa.jpg" alt="alexa" />;
-  const image3 = <img src="images/playstation.jpg" alt="playstation" />;
-  const items = [image1, image2, image3];
+  // const image1 = <img src="images/Iphone15-wellcome.png" alt="iPhone15" />;
+  // const image2 = <img src="images/alexa.jpg" alt="alexa" />;
+  // const image3 = <img src="images/playstation.jpg" alt="playstation" />;
+  // const items = [image1, image2, image3];
 
   return (
     <Slider {...settings}>

@@ -1,14 +1,15 @@
-import { Link, json, useLoaderData } from "react-router-dom";
-import WellcomeCarousel from "../components/Carousel/WellcomeCarousel.jsx";
+import { json, useLoaderData } from "react-router-dom";
 
 import Card from "../components/Card/Card.jsx";
+import ProductsCarousel from "../components/Carousel/ProductsCarousel.jsx";
+import WellcomeCarousel from "../components/Carousel/WellcomeCarousel.jsx";
 import styles from "./Home.module.css";
 
 const HomePage = props => {
   const { products } = useLoaderData();
 
-  const image1 = <img src="images/airpods.jpg" alt="airpods" />;
-  const image2 = <img src="images/alexa.jpg" alt="alexa" />;
+  const image1 = <img src="images/Iphone15-wellcome.png" alt="iphone" />;
+  const image2 = <img src="images/airpods.jpg" alt="airpods" />;
   const image3 = <img src="images/playstation.jpg" alt="playstation" />;
   const items = [image1, image2, image3];
 
@@ -16,23 +17,11 @@ const HomePage = props => {
     return (
       <>
         <div className={styles["carousel-container"]}>
-          <WellcomeCarousel />
+          <WellcomeCarousel items={items} />
         </div>
         <h1 className={styles.title}>Latest Products</h1>
-        <div className={styles.wrapper}>
-          {products.map(product => (
-            <Link key={product.id} to={`/products/${product.id}`}>
-              <Card
-                id={product.id}
-                name={product.name}
-                rating={product.rating}
-                numReviews={product.ratingCount}
-                price={product.price}
-                imageType={product.imageType}
-                imageData={product.imageData}
-              />
-            </Link>
-          ))}
+        <div className={styles["products-container"]}>
+          <ProductsCarousel products={products} />
         </div>
       </>
     );

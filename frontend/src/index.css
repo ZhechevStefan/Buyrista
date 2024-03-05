@@ -3,7 +3,7 @@
   font-family: sans-serif;
 }
 
-*:not(.star-svg, .star-svg > *, button) {
+*:not(.star-svg, .star-svg > *, button, input) {
   color: white;
 }
 
@@ -19,16 +19,17 @@ body {
     "header"
     "main"
     "footer";
+  justify-content: center;
 }
 
 main {
   grid-area: main;
   display: flex;
   flex-direction: column;
-  width: 95%;
-  margin: 1rem auto;
   justify-content: center;
   align-items: center;
+  width: 95%;
+  margin: 1rem auto;
   min-height: 80vh;
   max-width: 100vw;
 }
@@ -40,6 +41,7 @@ footer {
   justify-content: center;
   align-items: center;
   border-top: 2px solid #ffea00;
+  width: 100vw;
 }
 
 ul {
@@ -86,14 +88,36 @@ h1 {
 
 .slick-next:before {
   font-size: 40px;
+  color: #a1a1a0;
 }
 
 .slick-prev:before {
   font-size: 40px;
+  color: #a1a1a0;
+}
+
+.product-carousel .slick-prev {
+  left: -50px;
+}
+
+.product-carousel .slick-next {
+  right: -30px;
+}
+
+.product-carousel .slick-prev::before {
+  color: white;
+}
+
+.product-carousel .slick-next::before {
+  color: white;
 }
 
 .slick-dots {
-  bottom: -10px;
+  bottom: 15px;
+}
+
+.product-carousel .slick-dots {
+  bottom: -30px;
 }
 
 .slick-dots li button:before {
