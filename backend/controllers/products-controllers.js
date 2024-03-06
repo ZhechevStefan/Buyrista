@@ -3,16 +3,24 @@ const productsDbController = require("../dbapp/controllers/products-DBcontroller
 const reviewsDbController = require("../dbapp/controllers/reviews-DBcontroller.js");
 
 exports.getAllProducts = async (req, res) => {
-  let data;
+  const pageSize = 6;
+  const pageNumber = Number(req.query.pageNumber) || 1;
 
-  data = await productsDbController.getAllProducts();
+  const keyword = req.query.keyword ? keyword : "";
+
+  const count = await productsDbController.getProductsCount(keyword);
+  // the offset is equal to the page number * the pageSize - the pageSize
+  const productsOffset = pageNumber * pageSize - pageSize;
+  const pageCount = Math.ceil(count / pageSize);
+
+  let data = await productsDbController.getAllProducts(productsOffset, keyword);
   data = data.map(product => {
     const productImage = product.imageData.toString("base64");
     product.imageData = productImage;
     return product;
   });
 
-  res.json({ products: data });
+  res.json({ products: data, pageNumber, pageCount });
 };
 
 exports.getProductById = async (req, res) => {

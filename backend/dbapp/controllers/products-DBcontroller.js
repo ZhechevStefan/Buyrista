@@ -1,13 +1,36 @@
 const db = require("../models/index.js");
+const { Op } = require("sequelize");
 
 const Product = db.products;
 
-exports.getAllProducts = async () => {
-  const [products, metadata] = await db.sequelize
-    .query(`SELECT products.id, name, "imageType", "imageName", "imageData", price, 
+exports.getProductsCount = async keyword => {
+  let count = null;
+  if (keyword) {
+    count = await Product.findAndCountAll({
+      where: {
+        name: {
+          [Op.iRegexp]: keyword
+        }
+      }
+    });
+  } else {
+    count = await Product.findAndCountAll();
+  }
+
+  return count;
+};
+
+exports.getAllProducts = async (offset, keyword) => {
+  let products = null;
+  if (!keyword) {
+    const [products, metadata] = await db.sequelize.query(`
+    SELECT products.id, name, "imageType", "imageName", "imageData", price,
     "countInStock", AVG(rating) AS rating, COUNT(rating) AS "ratingCount" FROM products
-  LEFT JOIN reviews ON products.id=reviews."productId"
-  GROUP BY products.id;`);
+     LEFT JOIN reviews ON products.id=reviews."productId"
+     GROUP BY products.id
+     LIMIT 3
+     OFFSET ${offset}`);
+  }
 
   return products;
 };
@@ -29,7 +52,7 @@ exports.getProductById = async productId => {
 };
 
 exports.getPriceAndQuantity = async productsIdArray => {
-  let queryString;
+  let queryString = null;
   if (productsIdArray.length === 1) {
     queryString = `id='${productsIdArray[0]}'`;
   } else {

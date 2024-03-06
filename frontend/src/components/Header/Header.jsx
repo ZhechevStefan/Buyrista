@@ -9,9 +9,9 @@ import Backdrop from "../Backdrop/Backdrop.jsx";
 import Cart from "../Cart/Cart.jsx";
 import HeaderCartButton from "./HeaderCartBtn.jsx";
 import HeaderButton from "./HeaderBtn.jsx";
-import Input from "../Input/Input.jsx";
 import LoginMenu from "../LoginMenu/LoginMenu.jsx";
 import styles from "./Header.module.css";
+import SearchInput from "../Input/searchInput.jsx";
 
 const Header = () => {
   const [authMenuIsShown, setAuthMenuIsShown] = useState(false);
@@ -61,9 +61,7 @@ const Header = () => {
       <Link to="/" className={styles.logo}>
         Buyrista
       </Link>
-      <div className={styles.search}>
-        <input />
-      </div>
+      <SearchInput />
       <nav className={styles.menus}>
         <div className={styles.adminpanel}>
           <NavLink to="admin/users" className={`${styles["admin-link"]}`}>

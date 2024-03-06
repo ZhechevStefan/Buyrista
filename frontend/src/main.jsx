@@ -3,17 +3,18 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 
 import App from "./App.jsx";
-import HomePage, { loadProducts } from "./pages/Home.jsx";
-import ProductPage, { loadProduct } from "./pages/Product.jsx";
-import LoginPage from "./pages/Login.jsx";
-import RegisterPage from "./pages/Register.jsx";
-import ErrorPage from "./pages/Error.jsx";
-import UsersPage, { loader as adminUsersLoader } from "./pages/Users.jsx";
 import AddProductPage, {
   action as addProductAction
 } from "./pages/AddProduct.jsx";
-import OrdersPage from "./pages/Orders.jsx";
 import CheckoutPage from "./pages/Checkout.jsx";
+import ErrorPage from "./pages/Error.jsx";
+import HomePage, { loadProducts } from "./pages/Home.jsx";
+import LoginPage from "./pages/Login.jsx";
+import OrdersPage from "./pages/Orders.jsx";
+import ProductPage, { loadProduct } from "./pages/Product.jsx";
+import RegisterPage from "./pages/Register.jsx";
+import SearchPage from "./pages/SearchPage.jsx";
+import UsersPage, { loader as adminUsersLoader } from "./pages/Users.jsx";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -25,6 +26,11 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+        loader: loadProducts
+      },
+      {
+        path: "search/:pageNumber",
+        element: <SearchPage />,
         loader: loadProducts
       },
       {
