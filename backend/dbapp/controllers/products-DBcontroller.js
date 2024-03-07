@@ -2,11 +2,12 @@ const db = require("../models/index.js");
 const { Op } = require("sequelize");
 
 const Product = db.products;
+const Review = db.reviews;
 
 exports.getProductsCount = async keyword => {
   let count = null;
   if (keyword) {
-    count = await Product.findAndCountAll({
+    count = await Product.count({
       where: {
         name: {
           [Op.iRegexp]: keyword
@@ -14,22 +15,52 @@ exports.getProductsCount = async keyword => {
       }
     });
   } else {
-    count = await Product.findAndCountAll();
+    count = await Product.count();
   }
 
   return count;
 };
 
-exports.getAllProducts = async (offset, keyword) => {
+exports.getAllProducts = async (limit, offset, keyword) => {
   let products = null;
+
+  // if (!keyword) {
+  //   products = await Product.findAll({
+  //     attributes: { exclude: ["description", "updatedAt"] },
+  //     include: [
+  //       {
+  //         model: Review,
+  //         attributes: [
+  //           [db.Sequelize.fn("avg", db.Sequelize.col("rating")), "rating"]
+  //           // [db.Sequelize.fn("count"), db.Sequelize.col("rating"), "ratingCount"]
+  //         ]
+  //       }
+  //     ],
+  //     group: ["products.id"],
+  //     limit: limit,
+  //     offset: offset
+  //   });
+  // }
+
   if (!keyword) {
-    const [products, metadata] = await db.sequelize.query(`
+    const [productsArr, metadata] = await db.sequelize.query(`
     SELECT products.id, name, "imageType", "imageName", "imageData", price,
     "countInStock", AVG(rating) AS rating, COUNT(rating) AS "ratingCount" FROM products
      LEFT JOIN reviews ON products.id=reviews."productId"
      GROUP BY products.id
-     LIMIT 3
+     LIMIT ${limit}
      OFFSET ${offset}`);
+    products = productsArr;
+  } else {
+    const [productsArr, metadata] = await db.sequelize.query(`
+    SELECT products.id, name, "imageType", "imageName", "imageData", price,
+    "countInStock", AVG(rating) AS rating, COUNT(rating) AS "ratingCount" FROM products
+     LEFT JOIN reviews ON products.id=reviews."productId"
+     WHERE products.name ~* '${keyword}'
+     GROUP BY products.id
+     LIMIT ${limit}
+     OFFSET ${offset}`);
+    products = productsArr;
   }
 
   return products;

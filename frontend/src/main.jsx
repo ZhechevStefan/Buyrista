@@ -13,7 +13,7 @@ import LoginPage from "./pages/Login.jsx";
 import OrdersPage from "./pages/Orders.jsx";
 import ProductPage, { loadProduct } from "./pages/Product.jsx";
 import RegisterPage from "./pages/Register.jsx";
-import SearchPage from "./pages/SearchPage.jsx";
+import SearchPage, { loadSearchedProducts } from "./pages/SearchPage.jsx";
 import UsersPage, { loader as adminUsersLoader } from "./pages/Users.jsx";
 import "./index.css";
 
@@ -29,9 +29,9 @@ const router = createBrowserRouter([
         loader: loadProducts
       },
       {
-        path: "search/:pageNumber",
+        path: "search",
         element: <SearchPage />,
-        loader: loadProducts
+        loader: loadSearchedProducts
       },
       {
         path: "products/:productId",

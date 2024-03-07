@@ -183,7 +183,6 @@ const ProductCard = props => {
                 <td colSpan={2} style={{ textAlign: "center" }}>
                   <Button
                     type="submit"
-                    disabled={!props.countInStock}
                     width="90%"
                     inverse
                     onClick={addOrRemFavHandler}

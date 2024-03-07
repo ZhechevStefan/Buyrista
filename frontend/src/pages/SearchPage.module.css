@@ -1,0 +1,6 @@
+.products-container {
+  width: 96%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
