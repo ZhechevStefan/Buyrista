@@ -1,6 +1,22 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import styles from "./SearchInput.module.css";
 
 const SearchInput = props => {
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
+
+  const updateValue = event => {
+    setKeyword(event.target.value.toLowerCase());
+  };
+
+  const sendSearchQuery = event => {
+    if (event.key === "Enter") {
+      navigate(`/search/?keyword=${keyword}`);
+    }
+  };
+
   return (
     <div className={styles.searchbox}>
       <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -10,6 +26,8 @@ const SearchInput = props => {
         aria-label="Search for a product"
         type="search"
         placeholder="What are you searchng for?"
+        onChange={updateValue}
+        onKeyDown={sendSearchQuery}
       />
     </div>
   );

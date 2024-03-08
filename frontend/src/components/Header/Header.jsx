@@ -12,6 +12,7 @@ import HeaderButton from "./HeaderBtn.jsx";
 import LoginMenu from "../LoginMenu/LoginMenu.jsx";
 import styles from "./Header.module.css";
 import SearchInput from "../Input/searchInput.jsx";
+import SearchInputAutocomplete from "../Input/SearchInputAutocomplete.jsx";
 
 const Header = () => {
   const [authMenuIsShown, setAuthMenuIsShown] = useState(false);
@@ -61,7 +62,7 @@ const Header = () => {
       <Link to="/" className={styles.logo}>
         Buyrista
       </Link>
-      <SearchInput />
+      <SearchInputAutocomplete />
       <nav className={styles.menus}>
         <div className={styles.adminpanel}>
           <NavLink to="admin/users" className={`${styles["admin-link"]}`}>
