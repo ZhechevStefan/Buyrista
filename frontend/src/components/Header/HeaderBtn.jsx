@@ -4,8 +4,6 @@ const HeaderButton = props => {
   return (
     <button
       className={`${styles["header-btn"]} ${props.isShown ? styles.open : ""}`}
-      onMouseEnter={props.isShown ? () => props.clear : props.open}
-      onMouseLeave={props.close}
     >
       {props.name}
     </button>

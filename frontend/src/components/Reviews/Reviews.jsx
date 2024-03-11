@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Button from "../Button/Button.jsx";
 import InfiniteScroll from "../InfiniteScroll/InfiniteScroll.jsx";
@@ -9,6 +9,7 @@ import styles from "./Reviews.module.css";
 
 const Reviews = props => {
   const navigate = useNavigate();
+  const location = useLocation();
   const productId = props.productId;
   const reviewCount = props.ratingCount;
   const userId = props.userId;
@@ -21,8 +22,8 @@ const Reviews = props => {
   const showWriteAComment = () => setWriteARevewIsHidden(false);
   const hideWriteAComment = () => setWriteARevewIsHidden(true);
 
-  const goToLogin = () => {
-    navigate("../../users/login");
+  const sendUserToLogin = () => {
+    navigate("/login", { state: { from: location } });
   };
 
   // const showLogin = () => setLoginIsHidden(false);
@@ -35,7 +36,7 @@ const Reviews = props => {
           <div className={styles["section-title"]}>User Reviews</div>
           <Button
             type="button"
-            onClick={userId ? showWriteAComment : goToLogin}
+            onClick={userId ? showWriteAComment : sendUserToLogin}
             disabled={!writeARevewIsHidden}
             withMargins
           >

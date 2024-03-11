@@ -10,18 +10,20 @@ import Cart from "../Cart/Cart.jsx";
 import HeaderCartButton from "./HeaderCartBtn.jsx";
 import HeaderButton from "./HeaderBtn.jsx";
 import LoginMenu from "../LoginMenu/LoginMenu.jsx";
-import styles from "./Header.module.css";
-import SearchInput from "../Input/searchInput.jsx";
 import SearchInputAutocomplete from "../Input/SearchInputAutocomplete.jsx";
+import styles from "./Header.module.css";
+import FavsDropdown from "../FavsDropdown/FavsDropdows.jsx";
 
 const Header = () => {
   const [authMenuIsShown, setAuthMenuIsShown] = useState(false);
+  const [favsAreShown, setFavsAreShown] = useState(false);
   const [cartIsShown, setCartIsShown] = useState(false);
 
   const authCtx = useContext(AuthContext);
   const cartCtx = useContext(CartContext);
   const favCtx = useContext(FavContext);
   let { items } = cartCtx;
+  let { favs } = favCtx;
 
   let authMenuBtnName = authCtx.userInfo
     ? `${authCtx.userInfo.name}▾`
@@ -37,11 +39,18 @@ const Header = () => {
   };
 
   let timeout;
-  const openLoginMode = () => setAuthMenuIsShown(true);
-  const closeLoginMode = () =>
-    (timeout = setTimeout(() => setAuthMenuIsShown(false), 1000));
-  const suddenClose = () => setAuthMenuIsShown(false);
+  const openLoginMenu = () => setAuthMenuIsShown(true);
+  const closeLoginMenu = () =>
+    (timeout = setTimeout(() => setAuthMenuIsShown(false), 800));
+  const suddenCloseLoginMenu = () => setAuthMenuIsShown(false);
   const clearTimer = timeout => clearTimeout(timeout);
+
+  let timeout2;
+  const openFavsMenu = () => setFavsAreShown(true);
+  const closeFavsMenu = () =>
+    (timeout2 = setTimeout(() => setFavsAreShown(false), 800));
+  const suddenCloseFavsMenu = () => setFavsAreShown(false);
+
   const logout = async () => {
     await fetch("http://localhost:5000/users/logout", {
       method: "POST",
@@ -75,24 +84,29 @@ const Header = () => {
             Orders
           </NavLink>
         </div>
-        <HeaderButton
-          name={authMenuBtnName}
-          isShown={authMenuIsShown}
-          close={closeLoginMode}
-          open={openLoginMode}
-          clear={clearTimer}
-        />
-        <HeaderButton name={"⭐ Favourites"} />
+        <div
+          onClick={suddenCloseLoginMenu}
+          onMouseLeave={closeLoginMenu}
+          onMouseEnter={
+            authMenuIsShown ? () => clearTimer(timeout) : openLoginMenu
+          }
+        >
+          <HeaderButton name={authMenuBtnName} isShown={authMenuIsShown} />
+          {authMenuIsShown && (
+            <LoginMenu isLogged={!!authCtx.userInfo} onLogout={logout} />
+          )}
+        </div>
+        <div
+          onClick={suddenCloseFavsMenu}
+          onMouseLeave={closeFavsMenu}
+          onMouseEnter={
+            favsAreShown ? () => clearTimer(timeout2) : openFavsMenu
+          }
+        >
+          <HeaderButton name={"⭐ Favourites▾"} />
+          {favsAreShown && <FavsDropdown favs={favs} />}
+        </div>
         <HeaderCartButton onClick={showCartHandler} items={items} />
-        {authMenuIsShown && (
-          <LoginMenu
-            onClick={suddenClose}
-            onMouseLeave={closeLoginMode}
-            onMouseEnter={() => clearTimeout(timeout)}
-            isLogged={!!authCtx.userInfo}
-            onLogout={logout}
-          />
-        )}
         {cartIsShown && <Cart onClose={hideCartHandler} />}
         {cartIsShown && <Backdrop onClick={hideCartHandler} dark />}
         {/* {loginMenuIsShown && <Backdrop onClick={closeLoginMode} dark />} */}

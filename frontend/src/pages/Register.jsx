@@ -38,7 +38,11 @@ const RegisterPage = () => {
         }
       );
       auth.login(user);
-      navigate(-1, { replace: true });
+      if (location.state?.redirected) {
+        navigate(-1, { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
     } catch (err) {
       toast.error(err.message);
     }

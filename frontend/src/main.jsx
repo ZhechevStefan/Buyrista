@@ -11,6 +11,7 @@ import ErrorPage from "./pages/Error.jsx";
 import HomePage, { loadProducts } from "./pages/Home.jsx";
 import LoginPage from "./pages/Login.jsx";
 import OrdersPage from "./pages/Orders.jsx";
+import ProtectedRoute from "./components/ProtectRoute/ProtectRoute.jsx";
 import ProductPage, { loadProduct } from "./pages/Product.jsx";
 import RegisterPage from "./pages/Register.jsx";
 import SearchPage, { loadSearchedProducts } from "./pages/SearchPage.jsx";
@@ -39,16 +40,20 @@ const router = createBrowserRouter([
         loader: loadProduct
       },
       {
-        path: "users/login",
+        path: "login",
         element: <LoginPage />
       },
       {
-        path: "users/register",
+        path: "register",
         element: <RegisterPage />
       },
       {
-        path: "users/checkout",
-        element: <CheckoutPage />
+        path: "checkout",
+        element: (
+          <ProtectedRoute>
+            <CheckoutPage />
+          </ProtectedRoute>
+        )
       },
       {
         path: "admin/users",

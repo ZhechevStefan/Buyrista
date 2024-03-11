@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
@@ -9,18 +9,21 @@ import Notifications from "./components/Notifications/Notifications.jsx";
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <FavProvider>
-          <Notifications />
-          <Header />
-          <main>
-            <Outlet />
-          </main>
-          <Footer />
-        </FavProvider>
-      </CartProvider>
-    </AuthProvider>
+    <>
+      <AuthProvider>
+        <CartProvider>
+          <FavProvider>
+            <Notifications />
+            <Header />
+            <main>
+              <Outlet />
+            </main>
+            <Footer />
+          </FavProvider>
+        </CartProvider>
+      </AuthProvider>
+      <ScrollRestoration />
+    </>
   );
 }
 

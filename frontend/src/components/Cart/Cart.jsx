@@ -57,7 +57,7 @@ const Cart = props => {
 
   const orderHandler = () => {
     props.onClose();
-    navigate("users/checkout");
+    navigate("/checkout");
   };
 
   const cartItems = (

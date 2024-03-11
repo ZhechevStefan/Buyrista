@@ -38,6 +38,7 @@
 
 .modal__footer {
   padding: 1rem 0.5rem;
+  width: 100%;
 }
 
 /* @media (min-width: 768px) {

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Formik, Form } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
@@ -23,6 +23,7 @@ const LoginPage = () => {
   const favs = useContext(FavContext);
 
   const navigate = useNavigate();
+  let location = useLocation();
 
   const sendLogin = async values => {
     clearError();
@@ -70,7 +71,11 @@ const LoginPage = () => {
       });
 
       toast.success(`Wellcome, ${user.name}!`);
-      navigate(-1, { replace: true });
+      if (location.state?.from) {
+        navigate(location.state.from, { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
     } catch (err) {
       toast.error(err.message);
     }

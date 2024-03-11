@@ -12,7 +12,6 @@ import SummaryPage from "./Summary.jsx";
 const CheckoutPage = props => {
   const [checkoutValues, setCheckoutValues] = useState(null);
   const [isSummary, setIsSummary] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(null);
 
   const authCtx = useContext(AuthContext);
   const cartCtx = useContext(CartContext);
@@ -33,6 +32,10 @@ const CheckoutPage = props => {
     setCheckoutValues(values);
     setIsSummary(true);
   };
+
+  if (cartCtx.items.length === 0) {
+    return <h2>Sorry, you have not selected any products to order.</h2>;
+  }
 
   if (!isSummary) {
     return (

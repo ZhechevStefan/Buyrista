@@ -1,5 +1,3 @@
-import ReactDOM from "react-dom";
-
 import Button from "../Button/Button.jsx";
 import styles from "./LoginMenu.module.css";
 
@@ -7,11 +5,8 @@ const LoginMenu = props => {
   // return ReactDOM.createPortal(
   const isLogged = props.isLogged;
   return (
-    <div
-      className={styles["login-menu"]}
-      onMouseLeave={props.onMouseLeave}
-      onMouseEnter={props.onMouseEnter}
-    >
+    <div className={styles["login-menu"]}>
+      {/* <div className={styles.triangle}></div> */}
       {isLogged ? (
         <div className={styles["message"]}>Hello!</div>
       ) : (
@@ -26,10 +21,10 @@ const LoginMenu = props => {
           </Button>
         ) : (
           <>
-            <Button to="/users/login" width="110px" withMargins>
+            <Button to="/login" width="110px" withMargins>
               Login
             </Button>
-            <Button to="/users/register" width="110px" withMargins>
+            <Button to="/register" width="110px" withMargins>
               Register
             </Button>
           </>

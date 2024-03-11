@@ -1,0 +1,17 @@
+.login-menu {
+  height: 6rem;
+  width: 19rem;
+  position: absolute;
+  top: 0rem;
+  right: 11rem;
+  background-color: #636363;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  border: 2px solid #ffea00;
+  border-radius: 10px;
+  z-index: 10;
+  transform: translateY(3.6rem);
+  /* animation: show-modal 0.3s; */
+}
