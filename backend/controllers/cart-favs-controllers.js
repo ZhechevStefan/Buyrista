@@ -44,17 +44,26 @@ exports.deleteProdFromCart = async (req, res) => {
 exports.addFavsAfterLogin = async (userId, oldFavs, reqFavsIds) => {
   let usersSavedFavs = [];
   oldFavs.map(fav => usersSavedFavs.push(fav.productsId));
-  reqFavsIds = reqFavsIds.filter(id => !usersSavedFavs.includes(id));
-  cartAndFavsDBController.addFavsToDb(userId, reqFavsIds);
+  reqFavsIds = reqFavsIds.filter(id => usersSavedFavs.includes(id));
+
+  if (reqFavsIds.length > 0) {
+    cartAndFavsDBController.addFavsToDb(userId, reqFavsIds);
+  }
 };
 
 exports.addCartAfterLogin = async (userId, oldCart, reqCartIds) => {
-  let usersSavedCart = [];
-  oldCart.map(item => usersSavedCart.push(item.productId));
-  let saved = oldCart.filter(item => usersSavedCart.includes(item.productId));
-  let notSaved = reqCartIds.filter(
-    item => !usersSavedCart.includes(item.productId)
+  let usersSavedCartIds = [];
+  oldCart.map(item => usersSavedCartIds.push(item.productId));
+  let saved = reqCartIds.filter(
+    item => !usersSavedCartIds.includes(item.productId)
   );
-  cartAndFavsDBController.addProdToDbCart(userId, notSaved);
-  cartAndFavsDBController.changeDBCartQty(userId, saved);
+  let notSaved = reqCartIds.filter(item =>
+    usersSavedCartIds.includes(item.productId)
+  );
+  if (notSaved.length > 0) {
+    cartAndFavsDBController.addProdToDbCart(userId, notSaved);
+  }
+  if (saved.length > 0) {
+    cartAndFavsDBController.changeDBCartQty(userId, saved);
+  }
 };

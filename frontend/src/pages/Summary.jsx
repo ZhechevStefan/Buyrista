@@ -50,6 +50,7 @@ const SummaryPage = props => {
       );
 
       cartCtx.clearCart();
+      toast.success("Order successful! Thank you for your purchase!");
       navigate("/");
     } catch (err) {
       toast.error(error.message);

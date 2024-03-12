@@ -39,17 +39,30 @@ const Header = () => {
   };
 
   let timeout;
-  const openLoginMenu = () => setAuthMenuIsShown(true);
-  const closeLoginMenu = () =>
-    (timeout = setTimeout(() => setAuthMenuIsShown(false), 800));
-  const suddenCloseLoginMenu = () => setAuthMenuIsShown(false);
   const clearTimer = timeout => clearTimeout(timeout);
 
+  const openLoginMenu = () => {
+    setAuthMenuIsShown(true);
+    suddenCloseFavsMenu();
+  };
+  const closeLoginMenu = () =>
+    (timeout = setTimeout(() => setAuthMenuIsShown(false), 800));
+  const suddenCloseLoginMenu = () => {
+    clearTimer(timeout);
+    setAuthMenuIsShown(false);
+  };
+
   let timeout2;
-  const openFavsMenu = () => setFavsAreShown(true);
+  const openFavsMenu = () => {
+    suddenCloseLoginMenu();
+    setFavsAreShown(true);
+  };
   const closeFavsMenu = () =>
     (timeout2 = setTimeout(() => setFavsAreShown(false), 800));
-  const suddenCloseFavsMenu = () => setFavsAreShown(false);
+  const suddenCloseFavsMenu = () => {
+    clearTimer(timeout2);
+    setFavsAreShown(false);
+  };
 
   const logout = async () => {
     await fetch("http://localhost:5000/users/logout", {

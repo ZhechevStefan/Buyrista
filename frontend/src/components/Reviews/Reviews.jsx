@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import Button from "../Button/Button.jsx";
 import InfiniteScroll from "../InfiniteScroll/InfiniteScroll.jsx";
-import LoginModal from "../Modal/LoginModal.jsx";
 import WriteAReview from "./WriteAReview.jsx";
 import styles from "./Reviews.module.css";
 
@@ -16,18 +15,15 @@ const Reviews = props => {
   const userName = props.userName;
   const currUserReview = props.currUserReview;
   const [writeARevewIsHidden, setWriteARevewIsHidden] = useState(true);
-  // const [loginIsHidden, setLoginIsHidden] = useState(true);
   const [newReview, setNewReview] = useState(null);
 
   const showWriteAComment = () => setWriteARevewIsHidden(false);
   const hideWriteAComment = () => setWriteARevewIsHidden(true);
 
   const sendUserToLogin = () => {
+    console.log(location);
     navigate("/login", { state: { from: location } });
   };
-
-  // const showLogin = () => setLoginIsHidden(false);
-  // const hideLogin = () => setLoginIsHidden(true);
 
   return (
     <>

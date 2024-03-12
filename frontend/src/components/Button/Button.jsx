@@ -8,6 +8,7 @@ const Button = props => {
       <Link
         to={props.to}
         exact={props.exact}
+        state={props.state}
         style={props.width ? { width: props.width } : { width: "auto" }}
         className={`${styles.button} ${styles.button}--${
           props.size || "default"

@@ -64,3 +64,11 @@ exports.deleteProdFromDbCart = async (userId, productId) => {
     }
   });
 };
+
+exports.deleteAllProductsFromDbCart = async userId => {
+  await Cart.destroy({
+    where: {
+      userId
+    }
+  });
+};

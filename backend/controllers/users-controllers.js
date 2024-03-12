@@ -158,6 +158,7 @@ exports.addOrder = async (req, res) => {
   );
 
   await usersDbController.addOrderedProducts(forOrderedProductsDb);
+  await cartAndFavsDBController.deleteAllProductsFromDbCart(userId);
 
   return res.status(200).json("ok");
 };

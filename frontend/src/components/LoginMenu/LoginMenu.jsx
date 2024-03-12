@@ -1,9 +1,13 @@
+import { useLocation } from "react-router-dom";
+
 import Button from "../Button/Button.jsx";
 import styles from "./LoginMenu.module.css";
 
 const LoginMenu = props => {
   // return ReactDOM.createPortal(
   const isLogged = props.isLogged;
+  const location = useLocation();
+
   return (
     <div className={styles["login-menu"]}>
       {/* <div className={styles.triangle}></div> */}
@@ -21,10 +25,20 @@ const LoginMenu = props => {
           </Button>
         ) : (
           <>
-            <Button to="/login" width="110px" withMargins>
+            <Button
+              to="/login"
+              state={{ from: location }}
+              width="110px"
+              withMargins
+            >
               Login
             </Button>
-            <Button to="/register" width="110px" withMargins>
+            <Button
+              to="/register"
+              state={{ from: location }}
+              width="110px"
+              withMargins
+            >
               Register
             </Button>
           </>
