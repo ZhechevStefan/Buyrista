@@ -2,8 +2,6 @@ import Button from "../Button/Button.jsx";
 import styles from "./CartItem.module.css";
 
 const CartItem = props => {
-  // const price = `$${props.price.toFixed(2)}`;
-
   const countInStock = props.countInStock;
 
   return (
@@ -23,10 +21,6 @@ const CartItem = props => {
         <span className={styles.quantity}>x {props.quantity}</span>
       </div>
       <div className={styles.actions}>
-        {/* <button onClick={props.onRemove}>−</button>
-        <button onClick={props.onAdd} disabled={!countInStock}>
-          +
-        </button> */}
         <Button onClick={props.onRemove} width="2.5rem">
           -
         </Button>
