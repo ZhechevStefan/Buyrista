@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 import Backdrop from "../Backdrop/Backdrop.jsx";
 import Cart from "../Cart/Cart.jsx";
-import HeaderCartButton from "./HeaderCartBtn.jsx";
+import HeaderIconButton from "./HeaderIconBtn.jsx";
 import HeaderButton from "./HeaderBtn.jsx";
 import LoginMenu from "../LoginMenu/LoginMenu.jsx";
 import FavsDropdown from "../FavsDropdown/FavsDropdows.jsx";
@@ -86,10 +86,22 @@ const Dropdowns = props => {
         onMouseLeave={closeCurrentDropdown}
         onMouseEnter={openFavsMenu}
       >
-        <HeaderButton name={"⭐ Favourites▾"} />
+        <HeaderIconButton
+          favs={favs}
+          img="/src/assets/icons/favs-icon.png"
+          alt="favourites"
+          name="Favourites▾"
+        />
         {dropdownState.favsMenuIsShown && <FavsDropdown favs={favs} />}
       </div>
-      <HeaderCartButton onClick={showCartHandler} items={items} />
+      <HeaderIconButton
+        onClick={showCartHandler}
+        items={items}
+        img="/src/assets/icons/shopping-cart.png"
+        alt="shopping cart"
+        name="My Cart▾"
+      />
+      {/* <HeaderCartButton onClick={showCartHandler} items={items} /> */}
       {cartIsShown && <Cart onClose={hideCartHandler} />}
       {cartIsShown && <Backdrop onClick={hideCartHandler} dark />}
       {/* {loginMenuIsShown && <Backdrop onClick={closeLoginMode} dark />} */}

@@ -54,12 +54,12 @@ exports.addFavsAfterLogin = async (userId, oldFavs, reqFavsIds) => {
 exports.addCartAfterLogin = async (userId, oldCart, reqCartIds) => {
   let usersSavedCartIds = [];
   oldCart.map(item => usersSavedCartIds.push(item.productId));
-  let saved = reqCartIds.filter(
-    item => !usersSavedCartIds.includes(item.productId)
+
+  let saved = reqCartIds.filter(item => usersSavedCartIds.includes(item.id));
+  let notSaved = reqCartIds.filter(
+    item => !usersSavedCartIds.includes(item.id)
   );
-  let notSaved = reqCartIds.filter(item =>
-    usersSavedCartIds.includes(item.productId)
-  );
+
   if (notSaved.length > 0) {
     cartAndFavsDBController.addProdToDbCart(userId, notSaved);
   }
