@@ -103,7 +103,7 @@ exports.login = async (req, res) => {
 
   delete user.dataValues.password;
 
-  generateToken(res, user.id);
+  generateToken(res, user.id, user.isAdmin);
 
   res.status(200).json({ user });
 };

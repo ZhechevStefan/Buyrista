@@ -34,7 +34,7 @@ const UsersPage = props => {
             <td>{user.id}</td>
             <td>{user.name}</td>
             <td>{user.email}</td>
-            <td>{user.isAdmin}</td>
+            <td>{user.isAdmin ? "✅" : "✖"}</td>
             <td>
               <Button>?</Button>
             </td>
@@ -61,7 +61,9 @@ const UsersPage = props => {
 export default UsersPage;
 
 export const loader = async () => {
-  const response = await fetch("http://localhost:5000/admin/users");
+  const response = await fetch("http://localhost:5000/admin/users", {
+    credentials: "include"
+  });
 
   if (!response.ok) {
     throw json(

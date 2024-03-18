@@ -6,20 +6,39 @@ import Cart from "../Cart/Cart.jsx";
 import HeaderIconButton from "./HeaderIconBtn.jsx";
 import HeaderButton from "./HeaderBtn.jsx";
 import LoginMenu from "../LoginMenu/LoginMenu.jsx";
-import FavsDropdown from "../FavsDropdown/FavsDropdows.jsx";
+import FavsCartDropdown from "../FavsCartDropdown/FavsCartDropdown.jsx";
 
 const defaultState = {
   authMenuIsShown: false,
   favsMenuIsShown: false,
+  cartMenuIsShown: false,
   timeout: null
 };
 
 const DropDownReducer = (state, action) => {
   if (action.type === "auth") {
-    return { authMenuIsShown: true, favsMenuIsShown: false, timeout: null };
+    return {
+      authMenuIsShown: true,
+      favsMenuIsShown: false,
+      cartMenuIsShown: false,
+      timeout: null
+    };
   }
   if (action.type === "favs") {
-    return { authMenuIsShown: false, favsMenuIsShown: true, timeout: null };
+    return {
+      authMenuIsShown: false,
+      favsMenuIsShown: true,
+      cartMenuIsShown: false,
+      timeout: null
+    };
+  }
+  if (action.type === "cart") {
+    return {
+      authMenuIsShown: false,
+      favsMenuIsShown: false,
+      cartMenuIsShown: true,
+      timeout: null
+    };
   }
   if (action.type === "close") {
     return defaultState;
@@ -57,6 +76,11 @@ const Dropdowns = props => {
     dispatchDropdownAction({ type: "favs" });
   };
 
+  const openCartDropdown = () => {
+    clearTimeout(timeout);
+    dispatchDropdownAction({ type: "cart" });
+  };
+
   const closeCurrentDropdown = () => {
     timeout = setTimeout(() => dispatchDropdownAction({ type: "close" }), 800);
   };
@@ -92,15 +116,25 @@ const Dropdowns = props => {
           alt="favourites"
           name="Favourites▾"
         />
-        {dropdownState.favsMenuIsShown && <FavsDropdown favs={favs} />}
+        {dropdownState.favsMenuIsShown && <FavsCartDropdown items={favs} />}
       </div>
-      <HeaderIconButton
-        onClick={showCartHandler}
-        items={items}
-        img="/src/assets/icons/shopping-cart.png"
-        alt="shopping cart"
-        name="My Cart▾"
-      />
+      <div
+        onClick={suddenClose}
+        onMouseLeave={closeCurrentDropdown}
+        onMouseEnter={openCartDropdown}
+      >
+        <HeaderIconButton
+          onClick={showCartHandler}
+          items={items}
+          img="/src/assets/icons/shopping-cart.png"
+          alt="shopping cart"
+          name="My Cart▾"
+        />
+        {dropdownState.cartMenuIsShown && (
+          <FavsCartDropdown items={items} cart />
+        )}
+      </div>
+
       {/* <HeaderCartButton onClick={showCartHandler} items={items} /> */}
       {cartIsShown && <Cart onClose={hideCartHandler} />}
       {cartIsShown && <Backdrop onClick={hideCartHandler} dark />}

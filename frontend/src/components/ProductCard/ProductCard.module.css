@@ -121,3 +121,21 @@
     transform: translateX(0);
   }
 }
+
+/* .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+} */
+
+td button span {
+  color: black !important;
+}
+
+.icon img {
+  height: 1rem;
+  width: auto;
+  object-fit: scale-down;
+  transform: rotate(9deg);
+}

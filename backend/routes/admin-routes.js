@@ -1,6 +1,6 @@
 const express = require("express");
 const imageUpload = require("../middleware/file-upload.js");
-const protect = require("../middleware/check-auth.js");
+const checkRole = require("../middleware/check-auth-role.js");
 const { body } = require("express-validator");
 
 const adminController = require("../controllers/admin-controllers.js");
@@ -8,7 +8,7 @@ const catchAsync = require("../middleware/catch-async.js");
 
 const router = express.Router();
 
-router.get("/users", catchAsync(adminController.getAllUsers));
+router.get("/users", checkRole, catchAsync(adminController.getAllUsers));
 
 router.post(
   "/addproduct",

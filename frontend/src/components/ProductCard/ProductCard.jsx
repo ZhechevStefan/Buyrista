@@ -188,6 +188,17 @@ const ProductCard = props => {
                     onClick={addOrRemFavHandler}
                   >
                     {isItFav ? "Added to Favourites" : "Add to Favourites"}
+                    {/* {
+                      <>
+                        <span className={styles.icon}>
+                          <img
+                            src="/src/assets/icons/star-icon-grey.png"
+                            alt="empty-star"
+                          />
+                        </span>
+                        <span> Add to Favourites</span>
+                      </>
+                    } */}
                   </Button>
                 </td>
               </tr>
