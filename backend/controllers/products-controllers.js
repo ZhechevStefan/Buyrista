@@ -33,15 +33,6 @@ exports.getProductById = async (req, res) => {
 
   let product = await productsDbController.getProductById(productId);
 
-  if (!product) {
-    const error = new HttpError(
-      "Could not find a product for the provided ID.",
-      404
-    );
-
-    throw error;
-  }
-
   if (userId) {
     let currUserReview = await reviewsDbController.getReviewByUserId(
       userId,

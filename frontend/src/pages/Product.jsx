@@ -52,13 +52,15 @@ export const loadProduct = async ({ request, params }) => {
     : `http://localhost:5000/products/${id}`;
   const response = await fetch(address);
 
+  console.log(response.status);
+  if (response.status === 404) {
+    throw new Response("Not found.", { status: 404 });
+  }
+
   if (!response.ok) {
-    throw json(
-      { message: "Could not fetch details for selected product." },
-      {
-        status: 500
-      }
-    );
+    throw new Response("Could not fetch details for selected product.", {
+      status: 500
+    });
   } else {
     const resData = await response.json();
     // console.log(resData);

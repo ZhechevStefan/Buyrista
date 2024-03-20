@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 
 import App from "./App.jsx";
+import AdminRoute from "./components/ProtectRoute/AdminRoute.jsx";
 import AddProductPage, {
   action as addProductAction
 } from "./pages/AddProduct.jsx";
@@ -57,17 +58,29 @@ const router = createBrowserRouter([
       },
       {
         path: "admin/users",
-        element: <UsersPage />,
+        element: (
+          <AdminRoute>
+            <UsersPage />
+          </AdminRoute>
+        ),
         loader: adminUsersLoader
       },
       {
         path: "admin/addproduct",
-        element: <AddProductPage />,
+        element: (
+          <AdminRoute>
+            <AddProductPage />
+          </AdminRoute>
+        ),
         action: addProductAction
       },
       {
         path: "admin/orders",
-        element: <OrdersPage />
+        element: (
+          <AdminRoute>
+            <OrdersPage />
+          </AdminRoute>
+        )
       }
     ]
   }

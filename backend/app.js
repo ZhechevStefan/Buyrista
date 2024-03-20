@@ -42,7 +42,8 @@ app.use((error, req, res, next) => {
   if (res.headerSent) {
     return next(error);
   }
-  console.log(error.code, error.message);
+  console.log(`${error}`);
+  console.log(`----------${error.code}, ${error.message}-----------`);
   res.status(error.code || 500);
   res.json({ message: error.message || "An unknown error occured!" });
 });

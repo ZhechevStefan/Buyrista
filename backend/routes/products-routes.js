@@ -2,7 +2,6 @@ const express = require("express");
 
 const productsController = require("../controllers/products-controllers.js");
 const catchAsync = require("../middleware/catch-async.js");
-const HttpError = require("../error-model/http-error.js");
 
 const router = express.Router();
 

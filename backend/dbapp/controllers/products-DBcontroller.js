@@ -1,4 +1,5 @@
 const db = require("../models/index.js");
+const HttpError = require("../../error-model/http-error.js");
 const { Op } = require("sequelize");
 
 const Product = db.products;
@@ -67,19 +68,56 @@ exports.getAllProducts = async (limit, offset, keyword) => {
 };
 
 exports.getProductById = async productId => {
-  const [product, metadata] = await db.sequelize
-    .query(`SELECT products.id, name, "imageType", "imageName", "imageData", description, 
-    price, "countInStock", AVG(rating) AS rating, COUNT(rating) AS "ratingCount" FROM products
-    LEFT JOIN reviews ON products.id=reviews."productId"
-    WHERE products.id='${productId}'
-    GROUP BY products.id;`);
+  // const [product, metadata] = await db.sequelize
+  //   .query(`SELECT products.id, name, "imageType", "imageName", "imageData", description,
+  //   price, "countInStock", AVG(rating) AS rating, COUNT(rating) AS "ratingCount" FROM products
+  //   LEFT JOIN reviews ON products.id=reviews."productId"
+  //   WHERE products.id='${productId}'
+  //   GROUP BY products.id;`);
 
-  if (!product[0].rating) {
-    product[0].rating = Math.round(Number(product[0].rating) * 10) / 10;
-    product[0].ratingCount = Number(product[0].ratingCount);
+  let product = await Product.findOne({
+    where: { id: productId },
+    include: [
+      {
+        model: Review,
+        attributes: [
+          [db.Sequelize.fn("avg", db.Sequelize.col("rating")), "rating"],
+          [db.Sequelize.fn("count", db.Sequelize.col("rating")), "ratingCount"]
+        ]
+      }
+    ],
+    raw: true,
+    group: ["product.id"]
+  });
+
+  if (!product) {
+    const error = new HttpError(
+      "Could not find a product for the provided ID.",
+      404
+    );
+
+    throw error;
   }
 
-  return product[0];
+  product = {
+    ...product,
+    rating: product["reviews.rating"],
+    ratingCount: product["reviews.ratingCount"]
+  };
+  delete product["reviews.rating"];
+  delete product["reviews.ratingCount"];
+
+  if (product.rating) {
+    product.rating = Math.round(Number(product.rating) * 10) / 10;
+    product.ratingCount = Number(product.ratingCount);
+  }
+
+  // if (!product[0].rating) {
+  //   product[0].rating = Math.round(Number(product[0].rating) * 10) / 10;
+  //   product[0].ratingCount = Number(product[0].ratingCount);
+  // }
+
+  return product;
 };
 
 exports.getPriceAndQuantity = async productsIdArray => {
