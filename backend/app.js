@@ -16,7 +16,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", req.get("origin"));
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // res.setHeader("Access-Control-Allow-Origin", req.get("origin"));
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
@@ -32,6 +33,9 @@ app.use("/users", usersRoutes);
 app.use("/products", productsRoutes);
 app.use("/admin", adminRoutes);
 app.use("/reviews", reviewsRoutes);
+app.get("/test", (req, res) => {
+  res.json("Testing Node.js Server");
+});
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);

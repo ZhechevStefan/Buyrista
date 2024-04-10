@@ -25,7 +25,7 @@ const AuthProvider = props => {
   useEffect(() => {
     async function checkCookie() {
       try {
-        const response = await fetch("http://localhost:5000/users/login/", {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/login/`, {
           credentials: "include"
         });
 
@@ -58,11 +58,7 @@ const AuthProvider = props => {
     setProfile();
   }, [logout]);
 
-  return (
-    <AuthContext.Provider value={authContext}>
-      {props.children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={authContext}>{props.children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

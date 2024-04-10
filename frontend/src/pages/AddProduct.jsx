@@ -64,13 +64,9 @@ const AddProductPage = props => {
         name: Yup.string().trim().required("All fields are required"),
         image: Yup.mixed()
           .required("All fields are required")
-          .test("is-valid-size", "Max allowed size is 100KB", value =>
-            checkSizeValidity(value)
-          )
-          .test(
-            "is-valid-ext",
-            "Only .jpg, .jpeg and .png are valid extensions.",
-            value => checkExtValidity(value)
+          .test("is-valid-size", "Max allowed size is 100KB", value => checkSizeValidity(value))
+          .test("is-valid-ext", "Only .jpg, .jpeg and .png are valid extensions.", value =>
+            checkExtValidity(value)
           ),
         description: Yup.string().trim().required("All fields are required"),
         brand: Yup.string().trim().required("All fields are required"),
@@ -80,9 +76,7 @@ const AddProductPage = props => {
             ["Electronics", "Accessories", "Others"],
             "Must be one of Electronics, Accessories or Others"
           ),
-        price: Yup.number()
-          .required("All fields are required")
-          .positive("Must be positive."),
+        price: Yup.number().required("All fields are required").positive("Must be positive."),
         countInStock: Yup.number()
           .required("All fields are required")
           .min(1, "Must be at least 1.")
@@ -176,9 +170,7 @@ const AddProductPage = props => {
             type="number"
             label="Count In Stock"
             placeholder="The count of the product in stock"
-            isInvalid={
-              formik.touched.countInStock && formik.errors.countInStock
-            }
+            isInvalid={formik.touched.countInStock && formik.errors.countInStock}
             errors={formik.errors.countInStock}
             {...formik.getFieldProps("countInStock")}
           />
@@ -198,7 +190,7 @@ export default AddProductPage;
 export async function action({ request }) {
   const data = await request.formData();
 
-  const response = await fetch("http://localhost:5000/admin/addproduct", {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/addproduct`, {
     method: "POST",
     credentials: "include",
     body: data

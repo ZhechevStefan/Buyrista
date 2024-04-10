@@ -19,18 +19,12 @@ const WriteAReview = props => {
     clearError();
     try {
       const address = currUserReview
-        ? `http://localhost:5000/reviews/${productId}?edit=true`
-        : `http://localhost:5000/reviews/${productId}`;
+        ? `${import.meta.env.VITE_BACKEND_URL}/reviews/${productId}?edit=true`
+        : `${import.meta.env.VITE_BACKEND_URL}/reviews/${productId}`;
 
-      const review = await sendRequest(
-        address,
-        "POST",
-        "include",
-        JSON.stringify(values),
-        {
-          "Content-Type": "application/json"
-        }
-      );
+      const review = await sendRequest(address, "POST", "include", JSON.stringify(values), {
+        "Content-Type": "application/json"
+      });
       review.review.name = userName;
       props.setNewReview(review);
     } catch (err) {
@@ -65,19 +59,13 @@ const WriteAReview = props => {
             .trim()
             .when("title", {
               is: ttl => !!ttl,
-              then: () =>
-                Yup.string().required(
-                  "Comment is required when you have a title."
-                )
+              then: () => Yup.string().required("Comment is required when you have a title.")
             }),
           title: Yup.string()
             .trim()
             .when("comment", {
               is: comm => !!comm,
-              then: () =>
-                Yup.string().required(
-                  "Title is required when you write a comment."
-                )
+              then: () => Yup.string().required("Title is required when you write a comment.")
             })
         },
         [["title", "comment"]]
@@ -89,10 +77,7 @@ const WriteAReview = props => {
       validateOnMount={true}
     >
       {formik => (
-        <div
-          className={styles["form-wrapper"]}
-          style={isHidden ? { display: "none" } : { display: "block" }}
-        >
+        <div className={styles["form-wrapper"]} style={isHidden ? { display: "none" } : { display: "block" }}>
           <Form method="POST">
             <div className={styles["title"]}>Write a Customer Review</div>
             <div className={styles["rating"]}>
@@ -136,10 +121,7 @@ const WriteAReview = props => {
               {...formik.getFieldProps("comment")}
             />
             <div className={styles.buttons}>
-              <div>
-                If you do not want to write a comment, you can leave us just a
-                rating.
-              </div>
+              <div>If you do not want to write a comment, you can leave us just a rating.</div>
               <Button
                 type="button"
                 disabled={isLoading}
@@ -149,12 +131,7 @@ const WriteAReview = props => {
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                disabled={!formik.isValid || isLoading}
-                width="6.2rem"
-                withMargins
-              >
+              <Button type="submit" disabled={!formik.isValid || isLoading} width="6.2rem" withMargins>
                 {isLoading ? "Submitting..." : "Send"}
               </Button>
             </div>

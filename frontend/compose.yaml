@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  frontend:
+    image: "node:20.9"
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_BACKEND_URL=http://localhost:5000
+    working_dir: /home/node/app
+    volumes:
+      - "/home/stefa/Buyrista:/home/node/app"
+    user: "node"
+    #command: '/home/node/start.sh'
+    command: "sleep infinity"

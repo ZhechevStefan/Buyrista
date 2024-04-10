@@ -1,10 +1,7 @@
 import { useRef, useState, useContext } from "react";
 
 import FavContext from "./fav-context.jsx";
-import {
-  saveFavsToLocalStorage,
-  getFullInfo
-} from "../utils/localStorageUtils.js";
+import { saveFavsToLocalStorage, getFullInfo } from "../utils/localStorageUtils.js";
 import AuthContext from "./auth-context.jsx";
 
 const FavProvider = props => {
@@ -38,7 +35,7 @@ const FavProvider = props => {
   };
 
   const getFavs = async userID => {
-    const response = await fetch(`http://localhost:5000/users/${userID}`);
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/${userID}`);
     let userFavs = await response.json();
 
     setFavs(state => {
@@ -87,11 +84,7 @@ const FavProvider = props => {
     }
   }
 
-  return (
-    <FavContext.Provider value={favContext}>
-      {props.children}
-    </FavContext.Provider>
-  );
+  return <FavContext.Provider value={favContext}>{props.children}</FavContext.Provider>;
 };
 
 export default FavProvider;

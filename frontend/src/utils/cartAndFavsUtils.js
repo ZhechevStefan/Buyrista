@@ -17,7 +17,7 @@ export const prepareFavsToSend = favs => {
 };
 
 export const fetchCartChange = async (method, productsIdsAndCount) => {
-  const response = await fetch("http://localhost:5000/users/cart", {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/cart`, {
     method: method,
     credentials: "include",
     body: JSON.stringify({ productsIdsAndCount })

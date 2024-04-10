@@ -61,7 +61,7 @@ const UsersPage = props => {
 export default UsersPage;
 
 export const loader = async () => {
-  const response = await fetch("http://localhost:5000/admin/users", {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/users`, {
     credentials: "include"
   });
 

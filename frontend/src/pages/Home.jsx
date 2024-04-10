@@ -33,7 +33,7 @@ const HomePage = props => {
 export default HomePage;
 
 export const loadProducts = async () => {
-  const response = await fetch("http://localhost:5000/products");
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/products`);
   //{ products: Array }
 
   if (!response.ok) {

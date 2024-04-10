@@ -1,5 +1,6 @@
 {
   "env": {
+    "DB_HOST": "database",
     "DB_USER": "postgres",
     "DB_PASSWORD": "levski1914",
     "DB_NAME": "buyrista",

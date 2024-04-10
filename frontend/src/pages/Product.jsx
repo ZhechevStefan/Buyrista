@@ -43,13 +43,11 @@ export default ProductPage;
 
 export const loadProduct = async ({ request, params }) => {
   const id = params.productId;
-  const userId = localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo")).id
-    : null;
+  const userId = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")).id : null;
 
   const address = userId
-    ? `http://localhost:5000/products/${id}?user=${userId}`
-    : `http://localhost:5000/products/${id}`;
+    ? `${import.meta.env.VITE_BACKEND_URL}/products/${id}?user=${userId}`
+    : `${import.meta.env.VITE_BACKEND_URL}/products/${id}`;
   const response = await fetch(address);
 
   console.log(response.status);

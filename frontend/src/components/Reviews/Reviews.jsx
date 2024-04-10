@@ -54,7 +54,7 @@ const Reviews = props => {
           userName={userName}
         />
         <InfiniteScroll
-          url={`http://localhost:5000/reviews/${productId}`}
+          url={`${import.meta.env.VITE_BACKEND_URL}/reviews/${productId}`}
           reviewCount={reviewCount}
           newReview={newReview}
           setNewReview={setNewReview}

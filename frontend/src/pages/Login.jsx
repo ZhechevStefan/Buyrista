@@ -10,10 +10,7 @@ import FavContext from "../context/fav-context.jsx";
 import Input from "../components/Input/Input.jsx";
 import Button from "../components/Button/Button.jsx";
 import { useHttpClient } from "../hooks/http-hook.jsx";
-import {
-  prepareCartToSend,
-  prepareFavsToSend
-} from "../utils/cartAndFavsUtils.js";
+import { prepareCartToSend, prepareFavsToSend } from "../utils/cartAndFavsUtils.js";
 import styles from "./Form.module.css";
 
 const LoginPage = () => {
@@ -37,7 +34,7 @@ const LoginPage = () => {
       }
 
       const { user } = await sendRequest(
-        "http://localhost:5000/users/login",
+        `${import.meta.env.VITE_BACKEND_URL}/users/login`,
         "POST",
         "include",
         JSON.stringify(values),
@@ -89,10 +86,7 @@ const LoginPage = () => {
           password: ""
         }}
         validationSchema={Yup.object({
-          email: Yup.string()
-            .trim()
-            .email("Invalid email address")
-            .required("All fields are required"),
+          email: Yup.string().trim().email("Invalid email address").required("All fields are required"),
           password: Yup.string()
             .trim()
             .required("All fields are required")
@@ -102,10 +96,7 @@ const LoginPage = () => {
         validateOnMount={true}
       >
         {formik => (
-          <Form
-            method="POST"
-            className={`${styles.wrapper} ${styles["slide-in-right"]}`}
-          >
+          <Form method="POST" className={`${styles.wrapper} ${styles["slide-in-right"]}`}>
             <div className={styles["title-wrapper"]}>
               <h2>Login</h2>
             </div>

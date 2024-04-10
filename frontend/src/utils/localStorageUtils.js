@@ -19,17 +19,12 @@ export const getFullInfo = async items => {
 
   const itemIdsStr = itemIdsArr.join("_");
 
-  const response = await fetch(
-    `http://localhost:5000/products/store/${itemIdsStr}`
-  );
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/products/store/${itemIdsStr}`);
   let productsInfo = await response.json();
   productsInfo = productsInfo.products;
 
   items = items.map(item => {
-    return Object.assign(
-      item,
-      productsInfo.filter(newItem => item.id === newItem.id)[0]
-    );
+    return Object.assign(item, productsInfo.filter(newItem => item.id === newItem.id)[0]);
   });
 
   return items;
