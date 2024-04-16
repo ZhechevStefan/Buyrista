@@ -1,66 +1,66 @@
 version: "3.9"
 services:
   db:
-    image: 'postgis/postgis:14-3.3'
+    image: "postgis/postgis:14-3.3"
     ports:
-      - '55432:5432'
+      - "55432:5432"
     environment:
       - POSTGRES_USER=buyrista
       - POSTGRES_PASSWORD=postgres
     restart: always
     networks:
       basicbridge:
-        ipv4_address: '10.8.0.2'
+        ipv4_address: "10.8.0.2"
     volumes:
-      - '/home/stefa/data/Buyrista:/var/lib/postgresql/data'
-    command: 'postgres -c shared_buffers=256MB -c max_connections=400'
+      - "/home/stefa/data/Buyrista:/var/lib/postgresql/data"
+    command: "postgres -c shared_buffers=256MB -c max_connections=400"
   load-balancer:
-    image: 'buyrista-load-balancer:dev'
+    image: "buyrista-load-balancer:dev"
     ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
-      - '3000:3000'
-      - '8080:8080'
-      - '8081:8081'
+      - "80:80"
+      - "81:81"
+      - "443:443"
+      - "3000:3000"
+      - "8080:8080"
+      - "8081:8081"
     environment:
       - DOMAIN_SUFFIX=lvh.me
     networks:
       basicbridge:
-        ipv4_address: '10.8.0.3'
+        ipv4_address: "10.8.0.3"
     command: bash -c "envsubst '$${DOMAIN_SUFFIX}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && /usr/bin/openresty -g 'daemon off;'"
   api:
-    image: 'node:20.9'
+    image: "node:20.9"
     networks:
       basicbridge:
-        ipv4_address: '10.8.0.4'
+        ipv4_address: "10.8.0.4"
     environment:
       - NODE_ENV=development
       - JWT_KEY=hmvWoialKfjwiOtuM
       - FRONTEND_HOST=10.8.0.5
     working_dir: /home/node/app/backend
-    user: 'node'
+    user: "node"
     volumes:
-      - '/home/stefa/Buyrista/backend:/home/node/app/backend'
+      - "/home/stefa/Buyrista/backend:/home/node/app/backend"
     depends_on:
-      - 'db'
-    # command: '/home/node/start.sh'
-    command: 'sleep infinity'                                               
+      - "db"
+    command: "/home/node/app/backend/start.sh"
+    # command: 'sleep infinity'
   web-app:
-    image: 'node:20.9'
+    image: "node:20.9"
     networks:
       basicbridge:
-        ipv4_address: '10.8.0.5'
+        ipv4_address: "10.8.0.5"
     environment:
       - VITE_BACKEND_URL=10.8.0.4:3000
     working_dir: /home/node/app/frontend
     volumes:
-      - '/home/stefa/Buyrista/frontend:/home/node/app/frontend'
+      - "/home/stefa/Buyrista/frontend:/home/node/app/frontend"
     depends_on:
-      - 'db'
-    user: 'node'
-    # command: '/home/node/start.sh'
-    command: 'sleep infinity'
+      - "db"
+    user: "node"
+    command: "/home/node/app/frontend/start.sh"
+    # command: 'sleep infinity'
 volumes:
   postgres-data:
   redis-data:
@@ -71,5 +71,3 @@ networks:
       config:
         - subnet: 10.8.0.0/16
           gateway: 10.8.0.1
-  
-  

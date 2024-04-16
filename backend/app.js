@@ -15,16 +15,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", req.get("origin"));
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", req.get("origin"));
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   res.setHeader("Access-Control-Allow-Credentials", true);
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+//   next();
+// });
 
 // db.sequelize.sync();
 
@@ -51,8 +51,8 @@ app.use((error, req, res, next) => {
 try {
   async () => await db.sequelize.authenticate();
   console.log("Connection has been established successfully.");
-  app.listen(5000);
-  console.log("Listening to port 5000");
+  app.listen(3000);
+  console.log("Listening to port 3000");
 } catch (error) {
   console.error("Unable to connect to the database:", error);
 }
