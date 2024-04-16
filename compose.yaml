@@ -44,8 +44,8 @@ services:
       - "/home/stefa/Buyrista/backend:/home/node/app/backend"
     depends_on:
       - "db"
-    # command: "/home/node/app/backend/start.sh"
-    command: "sleep infinity"
+    command: "/home/node/app/backend/start.sh"
+    # command: "sleep infinity"
   web-app:
     image: "node:20.9"
     networks:
@@ -59,8 +59,8 @@ services:
     depends_on:
       - "db"
     user: "node"
-    # command: "/home/node/app/frontend/start.sh"
-    command: "sleep infinity"
+    command: "/home/node/app/frontend/start.sh"
+    # command: "sleep infinity"
 volumes:
   postgres-data:
   redis-data:
