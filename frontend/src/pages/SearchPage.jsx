@@ -58,13 +58,9 @@ export default SearchPage;
 export const loadSearchedProducts = async ({ request }) => {
   const url = new URL(request.url);
   const page = url.searchParams.get("page");
-  const keyword = url.searchParams.get("keyword")
-    ? url.searchParams.get("keyword")
-    : "";
+  const keyword = url.searchParams.get("keyword") ? url.searchParams.get("keyword") : "";
 
-  const response = await fetch(
-    `http://localhost:5000/products/?keyword=${keyword}&page=${page}`
-  );
+  const response = await fetch(`http://web.lvh.me/api/products/?keyword=${keyword}&page=${page}`);
 
   if (!response.ok) {
     return json({ message: "Could not fetch events." }, { status: 500 });

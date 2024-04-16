@@ -1,6 +1,5 @@
 import { json, useLoaderData } from "react-router-dom";
 
-import Card from "../components/Card/Card.jsx";
 import ProductsCarousel from "../components/Carousel/ProductsCarousel.jsx";
 import WellcomeCarousel from "../components/Carousel/WellcomeCarousel.jsx";
 import styles from "./Home.module.css";
@@ -13,7 +12,7 @@ const HomePage = props => {
   const image3 = <img src="images/playstation.jpg" alt="playstation" />;
   const items = [image1, image2, image3];
 
-  if (products) {
+  if (products && products.length > 0) {
     return (
       <>
         <div className={styles["carousel-container"]}>
@@ -33,7 +32,7 @@ const HomePage = props => {
 export default HomePage;
 
 export const loadProducts = async () => {
-  const response = await fetch("http://localhost:5000/products");
+  const response = await fetch("http://web.lvh.me/api/products");
   //{ products: Array }
 
   if (!response.ok) {

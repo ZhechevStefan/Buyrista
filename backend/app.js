@@ -28,10 +28,10 @@ app.use((req, res, next) => {
 
 // db.sequelize.sync();
 
-app.use("/users", usersRoutes);
-app.use("/products", productsRoutes);
-app.use("/admin", adminRoutes);
-app.use("/reviews", reviewsRoutes);
+app.use("/api/users", usersRoutes);
+app.use("/api/products", productsRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/reviews", reviewsRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);

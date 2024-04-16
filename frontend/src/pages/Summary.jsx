@@ -22,11 +22,9 @@ const SummaryPage = props => {
 
   let paymentMessage = null;
   if (checkoutValues.paymentMethod === "Card Payment") {
-    paymentMessage =
-      "After the order is sent you are gonna be redirected to the payment page.(not really)";
+    paymentMessage = "After the order is sent you are gonna be redirected to the payment page.(not really)";
   } else {
-    paymentMessage =
-      "You are making the payment in the moment you receive your order.";
+    paymentMessage = "You are making the payment in the moment you receive your order.";
   }
 
   const sendOrder = async () => {
@@ -40,7 +38,7 @@ const SummaryPage = props => {
 
     try {
       await sendRequest(
-        "http://localhost:5000/users/orders",
+        "http://web.lvh.me/api/users/orders",
         "POST",
         "include",
         JSON.stringify(checkoutValues),
@@ -78,10 +76,7 @@ const SummaryPage = props => {
                 `${checkoutValues.country}, ${checkoutValues.postalCode} ${checkoutValues.city} ${checkoutValues.address}`
             ]}
           />
-          <SummaryCard
-            title="Payment"
-            content={[checkoutValues.paymentMethod, paymentMessage]}
-          />
+          <SummaryCard title="Payment" content={[checkoutValues.paymentMethod, paymentMessage]} />
         </div>
         <div className={styles.products}>
           <h3>Your order:</h3>
@@ -95,25 +90,16 @@ const SummaryPage = props => {
           </ul>
           <div className={styles["price-wrapper"]}>
             <div className={styles["price-item"]}>
-              <span>Price of all products:</span>{" "}
-              <span> ${cartCtx.totalAmount.toFixed(2)}</span>
+              <span>Price of all products:</span> <span> ${cartCtx.totalAmount.toFixed(2)}</span>
             </div>
             <div className={styles["price-item"]}>
               <span>Processing fee:</span>{" "}
-              <span>
-                {checkoutValues.paymentMethod === "Card Payment"
-                  ? "$0.00"
-                  : "$2.00"}
-              </span>
+              <span>{checkoutValues.paymentMethod === "Card Payment" ? "$0.00" : "$2.00"}</span>
             </div>
             <div className={styles["price-item"]}>
-              <span>Delivery fee:</span>{" "}
-              <span> {cartCtx.totalAmount > 99.99 ? "$0.00" : "$10.00"}</span>
+              <span>Delivery fee:</span> <span> {cartCtx.totalAmount > 99.99 ? "$0.00" : "$10.00"}</span>
             </div>
-            <div
-              className={styles["price-item"]}
-              style={{ fontSize: "1.4rem" }}
-            >
+            <div className={styles["price-item"]} style={{ fontSize: "1.4rem" }}>
               <span>Total price:</span> <span> ${totalPrice.toFixed(2)}</span>
             </div>
           </div>
@@ -123,11 +109,7 @@ const SummaryPage = props => {
         <Loader />
       ) : (
         <>
-          <Button
-            width={"30%"}
-            transparent
-            onClick={() => props.setIsSummary(false)}
-          >
+          <Button width={"30%"} transparent onClick={() => props.setIsSummary(false)}>
             Edit
           </Button>
 

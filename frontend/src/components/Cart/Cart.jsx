@@ -23,7 +23,7 @@ const Cart = props => {
 
     if (authCtx.userInfo && qtyInCart > 1) {
       const productsIdsAndCount = [{ id, count: -1 }];
-      fetch("http://localhost:5000/users/cart", {
+      fetch("http://web.lvh.me/api/users/cart", {
         method: "PATCH",
         credentials: "include",
         body: JSON.stringify({ productsIdsAndCount }),
@@ -32,7 +32,7 @@ const Cart = props => {
         }
       });
     } else if (authCtx.userInfo && qtyInCart === 1) {
-      fetch(`http://localhost:5000/users/cart/${id}`, {
+      fetch(`http://web.lvh.me/api/users/cart/${id}`, {
         method: "DELETE",
         credentials: "include"
       });
@@ -44,7 +44,7 @@ const Cart = props => {
     const productsIdsAndCount = [{ id: item.id, count: 1 }];
 
     if (authCtx.userInfo) {
-      fetch("http://localhost:5000/users/cart", {
+      fetch("http://web.lvh.me/api/users/cart", {
         method: "PATCH",
         credentials: "include",
         body: JSON.stringify({ productsIdsAndCount }),
@@ -81,21 +81,14 @@ const Cart = props => {
               ))}
             </ul>
           ) : (
-            <h4 className={styles["empty-basket"]}>
-              You have no items in your basket.
-            </h4>
+            <h4 className={styles["empty-basket"]}>You have no items in your basket.</h4>
           )}
           <div className={styles.total}>
             <span>Total Amount:</span>
             <span>{hasItems ? totalAmount : "$0.00"}</span>
           </div>
           <div className={styles.actions}>
-            <Button
-              type="button"
-              transparent
-              onClick={props.onClose}
-              withMargins
-            >
+            <Button type="button" transparent onClick={props.onClose} withMargins>
               Close
             </Button>
             {hasItems && (

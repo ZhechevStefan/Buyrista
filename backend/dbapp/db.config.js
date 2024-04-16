@@ -1,5 +1,5 @@
 module.exports = {
-  host: "localhost",
+  host: "10.8.0.2",
   user: `${process.env.DB_USER}`,
   password: `${process.env.DB_PASSWORD}`,
   DB: `${process.env.DB_NAME}`,

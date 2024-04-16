@@ -49,7 +49,7 @@ const ProductCard = props => {
       const productsIdsAndCount = [{ id: item.id, count: item.quantity }];
 
       if (itIsInCart) {
-        fetch("http://localhost:5000/users/cart", {
+        fetch("http://web.lvh.me/api/users/cart", {
           method: "PATCH",
           credentials: "include",
           body: JSON.stringify({ productsIdsAndCount }),
@@ -58,7 +58,7 @@ const ProductCard = props => {
           }
         });
       } else {
-        fetch("http://localhost:5000/users/cart", {
+        fetch("http://web.lvh.me/api/users/cart", {
           method: "POST",
           credentials: "include",
           body: JSON.stringify({ productsIdsAndCount }),
@@ -77,7 +77,7 @@ const ProductCard = props => {
       toast.success("Removed from Favourites!");
 
       if (authCtx.userInfo) {
-        fetch(`http://localhost:5000/users/favourites/${props.id}`, {
+        fetch(`http://web.lvh.me/api/users/favourites/${props.id}`, {
           method: "DELETE",
           credentials: "include"
         });
@@ -96,7 +96,7 @@ const ProductCard = props => {
 
       if (authCtx.userInfo) {
         const productsIds = [{ id: item.id, count: item.quantity }];
-        fetch("http://localhost:5000/users/favourites/", {
+        fetch("http://web.lvh.me/api/users/favourites/", {
           method: "POST",
           credentials: "include",
           body: JSON.stringify({ productsIds }),
@@ -110,9 +110,7 @@ const ProductCard = props => {
 
   return (
     <>
-      <article
-        className={`${styles["product-wrapper"]} ${styles["slide-in-right"]}`}
-      >
+      <article className={`${styles["product-wrapper"]} ${styles["slide-in-right"]}`}>
         <section className={styles["product-info"]}>
           <div className={styles["image-wrapper"]}>
             <img
@@ -129,9 +127,7 @@ const ProductCard = props => {
               <StarRating initialValue={props.rating} readOnly={true} />
               <p>{props.numReviews ? props.numReviews : "No"} reviews</p>
             </div>
-            <p className={styles.description}>
-              Description: {props.description}
-            </p>
+            <p className={styles.description}>Description: {props.description}</p>
           </div>
         </section>
 
@@ -169,24 +165,14 @@ const ProductCard = props => {
               </tr>
               <tr>
                 <td colSpan={2} style={{ textAlign: "center" }}>
-                  <Button
-                    type="submit"
-                    disabled={!props.countInStock}
-                    width="90%"
-                    onClick={addToCartHandler}
-                  >
+                  <Button type="submit" disabled={!props.countInStock} width="90%" onClick={addToCartHandler}>
                     Add to Cart
                   </Button>
                 </td>
               </tr>
               <tr>
                 <td colSpan={2} style={{ textAlign: "center" }}>
-                  <Button
-                    type="submit"
-                    width="90%"
-                    inverse
-                    onClick={addOrRemFavHandler}
-                  >
+                  <Button type="submit" width="90%" inverse onClick={addOrRemFavHandler}>
                     {isItFav ? "Added to Favourites" : "Add to Favourites"}
                     {/* {
                       <>
@@ -206,9 +192,7 @@ const ProductCard = props => {
           </table>
           {!quantityIsValid && (
             <div style={{ textAlign: "center" }}>
-              <p style={{ color: "red", fontSize: "0.8rem" }}>
-                Please enter a valid quantity.
-              </p>
+              <p style={{ color: "red", fontSize: "0.8rem" }}>Please enter a valid quantity.</p>
             </div>
           )}
         </form>

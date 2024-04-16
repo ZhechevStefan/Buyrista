@@ -10,10 +10,7 @@ import FavContext from "../context/fav-context.jsx";
 import Button from "../components/Button/Button.jsx";
 import Input from "../components/Input/Input.jsx";
 import { useHttpClient } from "../hooks/http-hook.jsx";
-import {
-  prepareCartToSend,
-  prepareFavsToSend
-} from "../utils/cartAndFavsUtils.js";
+import { prepareCartToSend, prepareFavsToSend } from "../utils/cartAndFavsUtils.js";
 import styles from "./Form.module.css";
 
 const RegisterPage = () => {
@@ -29,7 +26,7 @@ const RegisterPage = () => {
     clearError();
     try {
       const { user } = await sendRequest(
-        "http://localhost:5000/users/register",
+        "http://web.lvh.me/api/users/register",
         "POST",
         "include",
         JSON.stringify(values),
@@ -61,10 +58,7 @@ const RegisterPage = () => {
         validationSchema={Yup.object({
           firstName: Yup.string().trim().required("All fields are required"),
           lastName: Yup.string().trim().required("All fields are required"),
-          email: Yup.string()
-            .trim()
-            .email("Invalid email address")
-            .required("All fields are required"),
+          email: Yup.string().trim().email("Invalid email address").required("All fields are required"),
           password: Yup.string()
             .trim()
             .required("All fields are required")
@@ -74,10 +68,7 @@ const RegisterPage = () => {
         validateOnMount={true}
       >
         {formik => (
-          <Form
-            method="POST"
-            className={`${styles.wrapper} ${styles["slide-in-right"]}`}
-          >
+          <Form method="POST" className={`${styles.wrapper} ${styles["slide-in-right"]}`}>
             <div className={styles["title-wrapper"]}>
               <h2>Register</h2>
             </div>

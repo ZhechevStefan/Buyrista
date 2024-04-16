@@ -54,7 +54,7 @@ const Reviews = props => {
           userName={userName}
         />
         <InfiniteScroll
-          url={`http://localhost:5000/reviews/${productId}`}
+          url={`http://web.lvh.me/api/reviews/${productId}`}
           reviewCount={reviewCount}
           newReview={newReview}
           setNewReview={setNewReview}

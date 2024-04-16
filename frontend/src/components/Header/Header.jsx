@@ -18,7 +18,7 @@ const Header = () => {
   let { favs } = favCtx;
 
   const logout = async () => {
-    await fetch("http://localhost:5000/users/logout", {
+    await fetch("http://web.lvh.me/api/users/logout", {
       method: "POST",
       credentials: "include",
       body: null,
@@ -50,12 +50,7 @@ const Header = () => {
             Orders
           </NavLink>
         </div>
-        <Dropdowns
-          userInfo={userInfo}
-          items={items}
-          favs={favs}
-          logout={logout}
-        />
+        <Dropdowns userInfo={userInfo} items={items} favs={favs} logout={logout} />
       </nav>
     </header>
   );
