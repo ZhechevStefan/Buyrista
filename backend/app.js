@@ -26,7 +26,7 @@ app.use(cookieParser());
 //   next();
 // });
 
-// db.sequelize.sync();
+db.sequelize.sync();
 
 app.use("/api/users", usersRoutes);
 app.use("/api/products", productsRoutes);
