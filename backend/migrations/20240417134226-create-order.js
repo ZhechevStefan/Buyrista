@@ -3,29 +3,29 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Order", {
+    await queryInterface.createTable("orders", {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: Sequelize.DataTypes.UUID,
+        defaultValue: queryInterface.sequelize.fn("gen_random_uuid"),
         primaryKey: true
       },
       total: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DataTypes.DECIMAL(10, 2),
         allowNull: false,
         min: 0
       },
       isPaid: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.DataTypes.BOOLEAN,
         allowNull: false
       },
       isComplete: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.DataTypes.BOOLEAN,
         allowNull: false
       }
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("order");
+    await queryInterface.dropTable("orders");
   }
 };

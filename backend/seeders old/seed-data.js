@@ -38,7 +38,6 @@ const createProducts = async products => {
 
       await Product.create({
         name: product.name,
-        image: product.image,
         description: product.description,
         brand: product.brand,
         category: product.category,

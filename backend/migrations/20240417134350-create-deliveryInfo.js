@@ -3,48 +3,48 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("DeliveryInfo", {
+    await queryInterface.createTable("deliveryInfos", {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: Sequelize.DataTypes.UUID,
+        defaultValue: queryInterface.sequelize.fn("gen_random_uuid"),
         primaryKey: true
       },
       country: {
-        type: DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         allowNull: false
       },
       city: {
-        type: DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         allowNull: false
       },
       postalCode: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.DataTypes.INTEGER,
         allowNull: false
       },
       address: {
-        type: DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         allowNull: false
       },
       phone: {
-        type: DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         allowNull: false
       },
       contactName: {
-        type: DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         allowNull: false
       },
       billingAddress: {
-        type: DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         allowNull: true
       },
       billingName: {
-        type: DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         allowNull: true
       }
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("deliveryInfo");
+    await queryInterface.dropTable("deliveryInfos");
   }
 };

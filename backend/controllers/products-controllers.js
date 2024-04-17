@@ -8,16 +8,12 @@ exports.getAllProducts = async (req, res) => {
   const keyword = req.query.keyword ? req.query.keyword : "";
 
   const count = await productsDbController.getProductsCount(keyword);
-
+  console.log("---------------here------------------");
   // the offset is equal to the page number * the pageSize - the pageSize
   const productsOffset = pageNumber * pageSize - pageSize;
   const pageCount = Math.ceil(count / pageSize);
 
-  let data = await productsDbController.getAllProducts(
-    pageSize,
-    productsOffset,
-    keyword
-  );
+  let data = await productsDbController.getAllProducts(pageSize, productsOffset, keyword);
   data = data.map(product => {
     const productImage = product.imageData.toString("base64");
     product.imageData = productImage;
@@ -34,10 +30,7 @@ exports.getProductById = async (req, res) => {
   let product = await productsDbController.getProductById(productId);
 
   if (userId) {
-    let currUserReview = await reviewsDbController.getReviewByUserId(
-      userId,
-      productId
-    );
+    let currUserReview = await reviewsDbController.getReviewByUserId(userId, productId);
     product.currUserReview = currUserReview;
   }
 

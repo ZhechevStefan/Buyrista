@@ -3,10 +3,10 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Product", {
+    await queryInterface.createTable("products", {
       id: {
         type: Sequelize.DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: queryInterface.sequelize.fn("gen_random_uuid"),
         primaryKey: true
       },
       name: {
@@ -51,6 +51,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("product");
+    await queryInterface.dropTable("products");
   }
 };

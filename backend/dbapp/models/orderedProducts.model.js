@@ -2,14 +2,14 @@ module.exports = (sequelize, DataTypes) => {
   const OrderedProducts = sequelize.define("orderedProduct", {
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+      defaultValue: sequelize.fn("gen_random_uuid"),
       primaryKey: true
     },
     productId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: "Products",
+        model: "products",
         key: "id"
       }
     },
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: "Orders",
+        model: "orders",
         key: "id"
       }
     },

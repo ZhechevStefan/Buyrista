@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: "Products",
+          model: "products",
           key: "id"
         },
         unique: "actions_unique"
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: "Users",
+          model: "users",
           key: "id"
         },
         unique: "actions_unique"

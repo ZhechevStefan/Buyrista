@@ -4,42 +4,42 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Review",
+      "reviews",
       {
         id: {
-          type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
+          type: Sequelize.DataTypes.UUID,
+          defaultValue: queryInterface.sequelize.fn("gen_random_uuid"),
           primaryKey: true
         },
         rating: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.DataTypes.INTEGER,
           allowNull: false,
           min: 1,
           max: 5
         },
         title: {
-          type: DataTypes.TEXT,
+          type: Sequelize.DataTypes.TEXT,
           validate: {
             len: [0, 50]
           }
         },
         comment: {
-          type: DataTypes.TEXT
+          type: Sequelize.DataTypes.TEXT
         },
         productId: {
-          type: DataTypes.UUID,
+          type: Sequelize.DataTypes.UUID,
           allowNull: false,
           references: {
-            model: "Products",
+            model: "products",
             key: "id"
           },
           unique: "actions_unique"
         },
         userId: {
-          type: DataTypes.UUID,
+          type: Sequelize.DataTypes.UUID,
           allowNull: false,
           references: {
-            model: "Users",
+            model: "users",
             key: "id"
           },
           unique: "actions_unique"
@@ -68,6 +68,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("review");
+    await queryInterface.dropTable("reviews");
   }
 };

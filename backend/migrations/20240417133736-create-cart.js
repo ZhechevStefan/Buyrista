@@ -4,22 +4,27 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Favourite",
+      "carts",
       {
+        count: {
+          type: Sequelize.DataTypes.INTEGER,
+          allowNull: false,
+          min: 1
+        },
         productId: {
-          type: DataTypes.UUID,
+          type: Sequelize.DataTypes.UUID,
           allowNull: false,
           references: {
-            model: "Products",
+            model: "products",
             key: "id"
           },
           unique: "actions_unique"
         },
         userId: {
-          type: DataTypes.UUID,
+          type: Sequelize.DataTypes.UUID,
           allowNull: false,
           references: {
-            model: "Users",
+            model: "users",
             key: "id"
           },
           unique: "actions_unique"
@@ -37,6 +42,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("favourite");
+    await queryInterface.dropTable("carts");
   }
 };

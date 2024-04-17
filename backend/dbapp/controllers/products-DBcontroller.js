@@ -91,10 +91,7 @@ exports.getProductById = async productId => {
   });
 
   if (!product) {
-    const error = new HttpError(
-      "Could not find a product for the provided ID.",
-      404
-    );
+    const error = new HttpError("Could not find a product for the provided ID.", 404);
 
     throw error;
   }
@@ -131,8 +128,7 @@ exports.getPriceAndQuantity = async productsIdArray => {
     });
   }
 
-  const [products, metadata] = await db.sequelize
-    .query(`SELECT id, price, "countInStock" FROM products
+  const [products, metadata] = await db.sequelize.query(`SELECT id, price, "countInStock" FROM products
     WHERE ${queryString}`);
 
   // console.log(products);
