@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
 
-const dbConfig = require("../db.config.js");
+const dbConfig = require("../../config/config.js");
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.user, dbConfig.password, {
   host: dbConfig.host,
@@ -18,10 +18,7 @@ db.reviews = require("./reviews.model.js")(sequelize, Sequelize);
 db.carts = require("./carts.model.js")(sequelize, Sequelize);
 db.favourites = require("./favourites.model.js")(sequelize, Sequelize);
 db.orders = require("./orders.model.js")(sequelize, Sequelize);
-db.orderedProducts = require("./orderedProducts.model.js")(
-  sequelize,
-  Sequelize
-);
+db.orderedProducts = require("./orderedProducts.model.js")(sequelize, Sequelize);
 db.deliveryInfo = require("./deliveryInfos.model.js")(sequelize, Sequelize);
 
 db.users.belongsToMany(db.products, { through: db.reviews });
