@@ -21,10 +21,16 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   const sendRegister = async values => {
-    values.productsIdsAndCount = prepareCartToSend(cart.items);
-    values.productsIds = prepareFavsToSend(favs.items);
     clearError();
     try {
+      if (cart.items) {
+        values.productsIdsAndCount = prepareCartToSend(cart.items);
+      }
+
+      if (favs.items) {
+        values.productsIds = prepareFavsToSend(favs.items);
+      }
+
       const { user } = await sendRequest(
         "http://web.lvh.me/api/users/register",
         "POST",
@@ -35,6 +41,8 @@ const RegisterPage = () => {
         }
       );
       auth.login(user);
+      toast.success(`Wellcome, ${user.name}!`);
+
       if (location.state?.redirected) {
         navigate(-1, { replace: true });
       } else {

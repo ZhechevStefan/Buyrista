@@ -39,17 +39,19 @@ const Header = () => {
       </Link>
       <SearchInputAutocomplete />
       <nav className={styles.menus}>
-        <div className={styles.adminpanel}>
-          <NavLink to="admin/users" className={`${styles["admin-link"]}`}>
-            Users
-          </NavLink>
-          <NavLink to="admin/addproduct" className={`${styles["admin-link"]}`}>
-            Add Product
-          </NavLink>
-          <NavLink to="admin/orders" className={styles["admin-link"]}>
-            Orders
-          </NavLink>
-        </div>
+        {userInfo && userInfo.isAdmin && (
+          <div className={styles.adminpanel}>
+            <NavLink to="admin/users" className={`${styles["admin-link"]}`}>
+              Users
+            </NavLink>
+            <NavLink to="admin/addproduct" className={`${styles["admin-link"]}`}>
+              Add Product
+            </NavLink>
+            <NavLink to="admin/orders" className={styles["admin-link"]}>
+              Orders
+            </NavLink>
+          </div>
+        )}
         <Dropdowns userInfo={userInfo} items={items} favs={favs} logout={logout} />
       </nav>
     </header>

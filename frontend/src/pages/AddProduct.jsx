@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useNavigation, Form, redirect } from "react-router-dom";
 import { Formik } from "formik";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import Input from "../components/Input/Input.jsx";
@@ -190,17 +191,21 @@ export default AddProductPage;
 export async function action({ request }) {
   const data = await request.formData();
 
-  const response = await fetch("http://web.lvh.me/api/admin/addproduct", {
-    method: "POST",
-    credentials: "include",
-    body: data
-  });
+  try {
+    const response = await fetch("http://web.lvh.me/api/admin/addproduct", {
+      method: "POST",
+      credentials: "include",
+      body: data
+    });
 
-  if (response.status === 401 || response.status === 500) {
-    return response;
+    if (response.status === 401 || response.status === 500) {
+      return response;
+    }
+
+    const { productId } = await response.json();
+
+    return redirect(`/products/${productId}`);
+  } catch (err) {
+    toast.error(err.message);
   }
-
-  const { productId } = await response.json();
-
-  return redirect(`/products/${productId}`);
 }

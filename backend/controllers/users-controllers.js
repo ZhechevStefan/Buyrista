@@ -15,14 +15,23 @@ exports.register = async (req, res) => {
     throw error;
   }
 
-  const {
-    firstName,
-    lastName,
-    email,
-    password,
-    productsIds,
-    productsIdsAndCount
-  } = req.body;
+  // if (productsIds && productsIds.length > 0) {
+  //   cartAndFavsController.addFavsAfterLogin(
+  //     user.id,
+  //     user.favourites,
+  //     productsIds
+  //   );
+  // }
+
+  // if (productsIdsAndCount && productsIdsAndCount.length > 0) {
+  //   cartAndFavsController.addCartAfterLogin(
+  //     user.id,
+  //     user.carts,
+  //     productsIdsAndCount
+  //   );
+  // }
+
+  const { firstName, lastName, email, password, productsIds, productsIdsAndCount } = req.body;
 
   let user = await usersDbController.getUserByEmail(email);
 
@@ -76,29 +85,19 @@ exports.login = async (req, res) => {
   }
 
   if (productsIds && productsIds.length > 0) {
-    cartAndFavsController.addFavsAfterLogin(
-      user.id,
-      user.favourites,
-      productsIds
-    );
+    cartAndFavsController.addFavsAfterLogin(user.id, user.favourites, productsIds);
   }
 
   if (productsIdsAndCount && productsIdsAndCount.length > 0) {
-    cartAndFavsController.addCartAfterLogin(
-      user.id,
-      user.carts,
-      productsIdsAndCount
-    );
+    cartAndFavsController.addCartAfterLogin(user.id, user.carts, productsIdsAndCount);
   }
 
   user.dataValues.favourites.map(fav => {
-    fav.dataValues.product.imageData =
-      fav.dataValues.product.imageData.toString("base64");
+    fav.dataValues.product.imageData = fav.dataValues.product.imageData.toString("base64");
   });
 
   user.dataValues.carts.map(item => {
-    item.dataValues.product.imageData =
-      item.dataValues.product.imageData.toString("base64");
+    item.dataValues.product.imageData = item.dataValues.product.imageData.toString("base64");
   });
 
   delete user.dataValues.password;
@@ -137,9 +136,7 @@ exports.addOrder = async (req, res) => {
     address: allOrderData.address,
     phone: allOrderData.phoneNumber,
     contactName: allOrderData.contactName,
-    billingAddress: allOrderData.billingAddress
-      ? allOrderData.billingAddress
-      : "",
+    billingAddress: allOrderData.billingAddress ? allOrderData.billingAddress : "",
     billingName: allOrderData.billingName ? allOrderData.billingName : "",
     userId: userId,
     orderId: orderId
