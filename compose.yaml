@@ -35,6 +35,9 @@ services:
       basicbridge:
         ipv4_address: "10.8.0.4"
     environment:
+      - DB_NAME=buyrista
+      - POSTGRES_USER=buyrista
+      - POSTGRES_PASSWORD=postgres
       - NODE_ENV=development
       - JWT_KEY=hmvWoialKfjwiOtuM
       - FRONTEND_HOST=10.8.0.5

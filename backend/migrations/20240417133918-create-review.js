@@ -43,6 +43,16 @@ module.exports = {
             key: "id"
           },
           unique: "actions_unique"
+        },
+        createdAt: {
+          type: Sequelize.DataTypes.DATE,
+          allowNull: false,
+          defaultValue: queryInterface.sequelize.fn("now")
+        },
+        updatedAt: {
+          type: Sequelize.DataTypes.DATE,
+          allowNull: false,
+          defaultValue: queryInterface.sequelize.fn("now")
         }
       },
       {

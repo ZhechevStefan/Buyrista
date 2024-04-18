@@ -1,4 +1,4 @@
-const productsDbController = require("./dbapp/controllers/products-DBcontroller.js");
+const productsDbController = require("../dbapp/controllers/products-DBcontroller.js");
 
 db.sequelize.sync();
 

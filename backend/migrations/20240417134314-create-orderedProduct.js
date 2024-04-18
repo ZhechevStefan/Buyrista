@@ -33,6 +33,16 @@ module.exports = {
       price: {
         type: Sequelize.DataTypes.DECIMAL(10, 2),
         allowNull: false
+      },
+      createdAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: queryInterface.sequelize.fn("now")
+      },
+      updatedAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: queryInterface.sequelize.fn("now")
       }
     });
   },

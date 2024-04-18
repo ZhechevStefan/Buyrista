@@ -26,6 +26,16 @@ module.exports = {
       isAdmin: {
         type: Sequelize.DataTypes.BOOLEAN,
         allowNull: false
+      },
+      createdAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: queryInterface.sequelize.fn("now")
+      },
+      updatedAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: queryInterface.sequelize.fn("now")
       }
     });
   },
@@ -35,9 +45,21 @@ module.exports = {
   }
 };
 
-// id: {
-//   type: queryInterface.sequelize.Sequelize.DataTypes.UUID,
-//   defaultValue: queryInterface.sequelize.fn('gen_random_uuid'),
-//   allowNull: false,
-//   primaryKey: true,
-// },
+const timestampDefaults = queryInterface => {
+  return {
+    createdAt: {
+      type: queryInterface.sequelize.Sequelize.DataTypes.DATE,
+      allowNull: false,
+      defaultValue: queryInterface.sequelize.fn("now")
+    },
+    updatedAt: {
+      type: queryInterface.sequelize.Sequelize.DataTypes.DATE,
+      allowNull: false,
+      defaultValue: queryInterface.sequelize.fn("now")
+    },
+    deletedAt: {
+      type: queryInterface.sequelize.Sequelize.DataTypes.DATE,
+      allowNull: true
+    }
+  };
+};

@@ -1,5 +1,5 @@
 // const usersDbController = require("./dbapp/controllers/users-DBcontroller.js");
-const usersControllers = require("./controllers/users-controllers");
+const usersControllers = require("../controllers/users-controllers");
 
 // db.sequelize.sync();
 

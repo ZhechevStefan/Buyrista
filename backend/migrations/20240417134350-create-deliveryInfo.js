@@ -40,6 +40,16 @@ module.exports = {
       billingName: {
         type: Sequelize.DataTypes.STRING,
         allowNull: true
+      },
+      createdAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: queryInterface.sequelize.fn("now")
+      },
+      updatedAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: queryInterface.sequelize.fn("now")
       }
     });
   },

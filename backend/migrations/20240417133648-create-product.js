@@ -46,6 +46,16 @@ module.exports = {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false,
         min: 0
+      },
+      createdAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: queryInterface.sequelize.fn("now")
+      },
+      updatedAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: queryInterface.sequelize.fn("now")
       }
     });
   },
