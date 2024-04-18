@@ -4,9 +4,7 @@ import ReactDOM from "react-dom/client";
 
 import App from "./App.jsx";
 import AdminRoute from "./components/ProtectRoute/AdminRoute.jsx";
-import AddProductPage, {
-  action as addProductAction
-} from "./pages/AddProduct.jsx";
+import AddProductPage, { action as addProductAction } from "./pages/AddProduct.jsx";
 import CheckoutPage from "./pages/Checkout.jsx";
 import ErrorPage from "./pages/Error.jsx";
 import HomePage, { loadProducts } from "./pages/Home.jsx";
@@ -16,7 +14,7 @@ import ProtectedRoute from "./components/ProtectRoute/ProtectRoute.jsx";
 import ProductPage, { loadProduct } from "./pages/Product.jsx";
 import RegisterPage from "./pages/Register.jsx";
 import SearchPage, { loadSearchedProducts } from "./pages/SearchPage.jsx";
-import UsersPage, { loader as adminUsersLoader } from "./pages/Users.jsx";
+import UsersPage from "./pages/Users.jsx";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -62,8 +60,7 @@ const router = createBrowserRouter([
           <AdminRoute>
             <UsersPage />
           </AdminRoute>
-        ),
-        loader: adminUsersLoader
+        )
       },
       {
         path: "admin/addproduct",

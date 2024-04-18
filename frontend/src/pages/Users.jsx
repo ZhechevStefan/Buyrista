@@ -1,12 +1,30 @@
-import { useMemo, useState } from "react";
-import { useLoaderData, json } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
 import Button from "../components/Button/Button.jsx";
+import { toast } from "react-toastify";
 
 import styles from "./Users.module.css";
 import Pagination from "../components/Pagination/Pagination.jsx";
 
 const UsersPage = props => {
-  const { users } = useLoaderData();
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    async function getUsers() {
+      const response = await fetch("http://web.lvh.me/api/admin/users", {
+        credentials: "include"
+      });
+      const data = await response.json();
+
+      return data;
+    }
+
+    async function assignUsers() {
+      const { users } = await getUsers();
+      setUsers(users);
+    }
+
+    assignUsers();
+  }, []);
 
   let pageSize = 8;
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,22 +77,3 @@ const UsersPage = props => {
 };
 
 export default UsersPage;
-
-export const loader = async () => {
-  const response = await fetch("http://web.lvh.me/api/admin/users", {
-    credentials: "include"
-  });
-
-  if (!response.ok) {
-    throw json(
-      { message: "Could not fetch details for selected event." },
-      {
-        status: 500
-      }
-    );
-  } else {
-    const resData = await response.json();
-    // console.log(resData);
-    return resData;
-  }
-};
